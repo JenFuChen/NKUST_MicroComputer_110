@@ -1,7 +1,7 @@
                               1 ;--------------------------------------------------------
                               2 ; File Created by SDCC : free open source ANSI-C Compiler
                               3 ; Version 3.0.1 #6083 (Dec 17 2010) (MINGW32)
-                              4 ; This file was generated Tue Nov 01 23:38:39 2022
+                              4 ; This file was generated Tue Nov 01 23:52:27 2022
                               5 ;--------------------------------------------------------
                               6 	.module hw
                               7 	.optsdcc -mmcs51 --model-small
@@ -282,15 +282,15 @@
                             282 	.area HOME    (CODE)
    0000                     283 __interrupt_vect:
    0000 02 00 2B            284 	ljmp	__sdcc_gsinit_startup
-   0003 02 00 AD            285 	ljmp	_INT0_ISR
+   0003 02 00 BC            285 	ljmp	_INT0_ISR
    0006                     286 	.ds	5
-   000B 02 00 AE            287 	ljmp	_T0_ISR
+   000B 02 00 BD            287 	ljmp	_T0_ISR
    000E                     288 	.ds	5
-   0013 02 00 AF            289 	ljmp	_INT1_ISR
+   0013 02 00 BE            289 	ljmp	_INT1_ISR
    0016                     290 	.ds	5
-   001B 02 00 B0            291 	ljmp	_T1_ISR
+   001B 02 00 BF            291 	ljmp	_T1_ISR
    001E                     292 	.ds	5
-   0023 02 00 B1            293 	ljmp	_UART_ISR
+   0023 02 00 C0            293 	ljmp	_UART_ISR
                             294 ;--------------------------------------------------------
                             295 ; global & static initialisations
                             296 ;--------------------------------------------------------
@@ -338,110 +338,124 @@
                     0007    338 	ar7 = 0x07
                     0000    339 	ar0 = 0x00
                     0001    340 	ar1 = 0x01
-                            341 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:16: for(i = 0 ; i < 5 ; i++){
-   0087 7A 00               342 	mov	r2,#0x00
-   0089 7B 00               343 	mov	r3,#0x00
-   008B                     344 00106$:
-   008B C3                  345 	clr	c
-   008C EA                  346 	mov	a,r2
-   008D 94 05               347 	subb	a,#0x05
-   008F EB                  348 	mov	a,r3
-   0090 64 80               349 	xrl	a,#0x80
-   0092 94 80               350 	subb	a,#0x80
-   0094 50 16               351 	jnc	00110$
-                            352 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:17: if(i > 2){
-   0096 C3                  353 	clr	c
-   0097 74 02               354 	mov	a,#0x02
-   0099 9A                  355 	subb	a,r2
-   009A 74 80               356 	mov	a,#(0x00 ^ 0x80)
-   009C 8B F0               357 	mov	b,r3
-   009E 63 F0 80            358 	xrl	b,#0x80
-   00A1 95 F0               359 	subb	a,b
-   00A3 E4                  360 	clr	a
-   00A4 33                  361 	rlc	a
-                            362 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:16: for(i = 0 ; i < 5 ; i++){
-   00A5 0A                  363 	inc	r2
-   00A6 BA 00 E2            364 	cjne	r2,#0x00,00106$
-   00A9 0B                  365 	inc	r3
-   00AA 80 DF               366 	sjmp	00106$
-   00AC                     367 00110$:
-   00AC 22                  368 	ret
-                            369 ;------------------------------------------------------------
-                            370 ;Allocation info for local variables in function 'INT0_ISR'
-                            371 ;------------------------------------------------------------
-                            372 ;------------------------------------------------------------
-                            373 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:24: void INT0_ISR(void) __interrupt 0 {}
-                            374 ;	-----------------------------------------
-                            375 ;	 function INT0_ISR
-                            376 ;	-----------------------------------------
-   00AD                     377 _INT0_ISR:
-   00AD 32                  378 	reti
-                            379 ;	eliminated unneeded push/pop psw
-                            380 ;	eliminated unneeded push/pop dpl
-                            381 ;	eliminated unneeded push/pop dph
-                            382 ;	eliminated unneeded push/pop b
-                            383 ;	eliminated unneeded push/pop acc
-                            384 ;------------------------------------------------------------
-                            385 ;Allocation info for local variables in function 'T0_ISR'
+                            341 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:17: P0 == 255;
+   0087 E5 80               342 	mov	a,_P0
+                            343 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:19: for(i = 0 ; i < 5 ; i++){
+   0089 7A 00               344 	mov	r2,#0x00
+   008B 7B 00               345 	mov	r3,#0x00
+   008D                     346 00108$:
+   008D C3                  347 	clr	c
+   008E EA                  348 	mov	a,r2
+   008F 94 05               349 	subb	a,#0x05
+   0091 EB                  350 	mov	a,r3
+   0092 64 80               351 	xrl	a,#0x80
+   0094 94 80               352 	subb	a,#0x80
+   0096 50 23               353 	jnc	00112$
+                            354 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:20: if(i > 2){
+   0098 C3                  355 	clr	c
+   0099 74 02               356 	mov	a,#0x02
+   009B 9A                  357 	subb	a,r2
+   009C 74 80               358 	mov	a,#(0x00 ^ 0x80)
+   009E 8B F0               359 	mov	b,r3
+   00A0 63 F0 80            360 	xrl	b,#0x80
+   00A3 95 F0               361 	subb	a,b
+   00A5 E4                  362 	clr	a
+   00A6 33                  363 	rlc	a
+   00A7 FC                  364 	mov	r4,a
+   00A8 60 05               365 	jz	00106$
+                            366 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:21: P0 = 255;
+   00AA 75 80 FF            367 	mov	_P0,#0xFF
+   00AD 80 05               368 	sjmp	00110$
+   00AF                     369 00106$:
+                            370 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:22: }else if(i<=2 ){
+   00AF EC                  371 	mov	a,r4
+                            372 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:23: P0 = 0;}
+   00B0 70 02               373 	jnz	00110$
+   00B2 F5 80               374 	mov	_P0,a
+   00B4                     375 00110$:
+                            376 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:19: for(i = 0 ; i < 5 ; i++){
+   00B4 0A                  377 	inc	r2
+   00B5 BA 00 D5            378 	cjne	r2,#0x00,00108$
+   00B8 0B                  379 	inc	r3
+   00B9 80 D2               380 	sjmp	00108$
+   00BB                     381 00112$:
+   00BB 22                  382 	ret
+                            383 ;------------------------------------------------------------
+                            384 ;Allocation info for local variables in function 'INT0_ISR'
+                            385 ;------------------------------------------------------------
                             386 ;------------------------------------------------------------
-                            387 ;------------------------------------------------------------
-                            388 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:25: void T0_ISR(void) __interrupt 1 {}
-                            389 ;	-----------------------------------------
-                            390 ;	 function T0_ISR
-                            391 ;	-----------------------------------------
-   00AE                     392 _T0_ISR:
-   00AE 32                  393 	reti
-                            394 ;	eliminated unneeded push/pop psw
-                            395 ;	eliminated unneeded push/pop dpl
-                            396 ;	eliminated unneeded push/pop dph
-                            397 ;	eliminated unneeded push/pop b
-                            398 ;	eliminated unneeded push/pop acc
-                            399 ;------------------------------------------------------------
-                            400 ;Allocation info for local variables in function 'INT1_ISR'
+                            387 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:27: void INT0_ISR(void) __interrupt 0 {}
+                            388 ;	-----------------------------------------
+                            389 ;	 function INT0_ISR
+                            390 ;	-----------------------------------------
+   00BC                     391 _INT0_ISR:
+   00BC 32                  392 	reti
+                            393 ;	eliminated unneeded push/pop psw
+                            394 ;	eliminated unneeded push/pop dpl
+                            395 ;	eliminated unneeded push/pop dph
+                            396 ;	eliminated unneeded push/pop b
+                            397 ;	eliminated unneeded push/pop acc
+                            398 ;------------------------------------------------------------
+                            399 ;Allocation info for local variables in function 'T0_ISR'
+                            400 ;------------------------------------------------------------
                             401 ;------------------------------------------------------------
-                            402 ;------------------------------------------------------------
-                            403 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:26: void INT1_ISR(void) __interrupt 2 {}
-                            404 ;	-----------------------------------------
-                            405 ;	 function INT1_ISR
-                            406 ;	-----------------------------------------
-   00AF                     407 _INT1_ISR:
-   00AF 32                  408 	reti
-                            409 ;	eliminated unneeded push/pop psw
-                            410 ;	eliminated unneeded push/pop dpl
-                            411 ;	eliminated unneeded push/pop dph
-                            412 ;	eliminated unneeded push/pop b
-                            413 ;	eliminated unneeded push/pop acc
-                            414 ;------------------------------------------------------------
-                            415 ;Allocation info for local variables in function 'T1_ISR'
+                            402 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:28: void T0_ISR(void) __interrupt 1 {}
+                            403 ;	-----------------------------------------
+                            404 ;	 function T0_ISR
+                            405 ;	-----------------------------------------
+   00BD                     406 _T0_ISR:
+   00BD 32                  407 	reti
+                            408 ;	eliminated unneeded push/pop psw
+                            409 ;	eliminated unneeded push/pop dpl
+                            410 ;	eliminated unneeded push/pop dph
+                            411 ;	eliminated unneeded push/pop b
+                            412 ;	eliminated unneeded push/pop acc
+                            413 ;------------------------------------------------------------
+                            414 ;Allocation info for local variables in function 'INT1_ISR'
+                            415 ;------------------------------------------------------------
                             416 ;------------------------------------------------------------
-                            417 ;------------------------------------------------------------
-                            418 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:27: void T1_ISR(void) __interrupt 3 {}
-                            419 ;	-----------------------------------------
-                            420 ;	 function T1_ISR
-                            421 ;	-----------------------------------------
-   00B0                     422 _T1_ISR:
-   00B0 32                  423 	reti
-                            424 ;	eliminated unneeded push/pop psw
-                            425 ;	eliminated unneeded push/pop dpl
-                            426 ;	eliminated unneeded push/pop dph
-                            427 ;	eliminated unneeded push/pop b
-                            428 ;	eliminated unneeded push/pop acc
-                            429 ;------------------------------------------------------------
-                            430 ;Allocation info for local variables in function 'UART_ISR'
+                            417 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:29: void INT1_ISR(void) __interrupt 2 {}
+                            418 ;	-----------------------------------------
+                            419 ;	 function INT1_ISR
+                            420 ;	-----------------------------------------
+   00BE                     421 _INT1_ISR:
+   00BE 32                  422 	reti
+                            423 ;	eliminated unneeded push/pop psw
+                            424 ;	eliminated unneeded push/pop dpl
+                            425 ;	eliminated unneeded push/pop dph
+                            426 ;	eliminated unneeded push/pop b
+                            427 ;	eliminated unneeded push/pop acc
+                            428 ;------------------------------------------------------------
+                            429 ;Allocation info for local variables in function 'T1_ISR'
+                            430 ;------------------------------------------------------------
                             431 ;------------------------------------------------------------
-                            432 ;------------------------------------------------------------
-                            433 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:28: void UART_ISR(void) __interrupt 4 {}
-                            434 ;	-----------------------------------------
-                            435 ;	 function UART_ISR
-                            436 ;	-----------------------------------------
-   00B1                     437 _UART_ISR:
-   00B1 32                  438 	reti
-                            439 ;	eliminated unneeded push/pop psw
-                            440 ;	eliminated unneeded push/pop dpl
-                            441 ;	eliminated unneeded push/pop dph
-                            442 ;	eliminated unneeded push/pop b
-                            443 ;	eliminated unneeded push/pop acc
-                            444 	.area CSEG    (CODE)
-                            445 	.area CONST   (CODE)
-                            446 	.area XINIT   (CODE)
-                            447 	.area CABS    (ABS,CODE)
+                            432 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:30: void T1_ISR(void) __interrupt 3 {}
+                            433 ;	-----------------------------------------
+                            434 ;	 function T1_ISR
+                            435 ;	-----------------------------------------
+   00BF                     436 _T1_ISR:
+   00BF 32                  437 	reti
+                            438 ;	eliminated unneeded push/pop psw
+                            439 ;	eliminated unneeded push/pop dpl
+                            440 ;	eliminated unneeded push/pop dph
+                            441 ;	eliminated unneeded push/pop b
+                            442 ;	eliminated unneeded push/pop acc
+                            443 ;------------------------------------------------------------
+                            444 ;Allocation info for local variables in function 'UART_ISR'
+                            445 ;------------------------------------------------------------
+                            446 ;------------------------------------------------------------
+                            447 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:31: void UART_ISR(void) __interrupt 4 {}
+                            448 ;	-----------------------------------------
+                            449 ;	 function UART_ISR
+                            450 ;	-----------------------------------------
+   00C0                     451 _UART_ISR:
+   00C0 32                  452 	reti
+                            453 ;	eliminated unneeded push/pop psw
+                            454 ;	eliminated unneeded push/pop dpl
+                            455 ;	eliminated unneeded push/pop dph
+                            456 ;	eliminated unneeded push/pop b
+                            457 ;	eliminated unneeded push/pop acc
+                            458 	.area CSEG    (CODE)
+                            459 	.area CONST   (CODE)
+                            460 	.area XINIT   (CODE)
+                            461 	.area CABS    (ABS,CODE)

@@ -12,12 +12,15 @@ void UART_ISR(void) __interrupt 4;  // ISR for UART Interrupt
 void main(void) {
 	
 	int i = 0 ;
-	int a = 0;
+	int a = 1;
+	if(a > i ){
+	P0 == 255;
+	}
 	for(i = 0 ; i < 5 ; i++){
 		if(i > 2){
-		a = 255;
+		P0 = 255;
 		}else if(i<=2 ){
-		a = 0;}
+		P0 = 0;}
 	}
 }
 

@@ -71,16 +71,16 @@ CABS                               0000   0000 =      0. bytes (ABS,CON,CODE)
        0C:  002B  s_GSINIT0                        
        0C:  002E  s_GSINIT1                        
        0C:  002E  s_GSINIT2                        
-       0C:  002F  l_CSEG                           
        0C:  0038  s_GSINIT3                        
+       0C:  003E  l_CSEG                           
        0C:  005A  s_GSINIT4                        
        0C:  0080  l_DSEG                           
        0C:  0084  s_GSFINAL                        
        0C:  0084  s_GSINIT                         
        0C:  0084  s_GSINIT5                        
        0C:  0087  s_CSEG                           
-       0C:  00B6  s_CONST                          
-       0C:  00B6  s_XINIT                          
+       0C:  00C5  s_CONST                          
+       0C:  00C5  s_XINIT                          
        0C:  00F8  l_SSEG                           
        0C:  0100  l_IRAM                           
 
@@ -478,24 +478,24 @@ Hexadecimal
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-CSEG                               0087   002F =     47. bytes (REL,CON,CODE)
+CSEG                               0087   003E =     62. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  ---------------------------------   ------------------------
        0C:  0087  _main                            
-       0C:  00AD  _INT0_ISR                        
-       0C:  00AE  _T0_ISR                          
-       0C:  00AF  _INT1_ISR                        
-       0C:  00B0  _T1_ISR                          
-       0C:  00B1  _UART_ISR                        
-       0C:  00B2  __sdcc_external_startup          
+       0C:  00BC  _INT0_ISR                        
+       0C:  00BD  _T0_ISR                          
+       0C:  00BE  _INT1_ISR                        
+       0C:  00BF  _T1_ISR                          
+       0C:  00C0  _UART_ISR                        
+       0C:  00C1  __sdcc_external_startup          
 
 ASxxxx Linker V02.00 + NoICE + sdld,  page 35.
 Hexadecimal
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-CONST                              00B6   0000 =      0. bytes (REL,CON,CODE)
+CONST                              00C5   0000 =      0. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  ---------------------------------   ------------------------
@@ -504,7 +504,7 @@ Hexadecimal
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-XINIT                              00B6   0000 =      0. bytes (REL,CON,CODE)
+XINIT                              00C5   0000 =      0. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  ---------------------------------   ------------------------
