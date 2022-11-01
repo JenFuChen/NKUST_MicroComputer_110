@@ -1,0 +1,119 @@
+A51 MACRO ASSEMBLER  EXTERNALINTERRUPT                                                    10/24/2022 10:54:59 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\ExternalInterrupt.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE ExternalInterrupt.a51 SET(SMALL) DEBUG PRINT(.\Listings\ExternalInterru
+                      pt.lst) OBJECT(.\Objects\ExternalInterrupt.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ; Example Program 02: External Interrupt
+                       2     ; Chin-Shiuh Shieh
+                       3     ; 2003-03-08
+                       4     ;
+                       5     ; Memory Allocation
+  0030                 6     LED_DATA        EQU             30h             ;Byte for LED Data
+                       7     ; Pin Assignment
+  00A0                 8     LED_PORT        EQU             P2
+                       9     ;
+                      10     
+  0000                11     PROG    EQU             0000h
+0000                  12                     ORG             PROG+0000h
+0000 802E             13                     SJMP    START
+                      14     ;Interrupt Vector Table
+0003                  15                     ORG             PROG+0003h
+0003 120045           16                     LCALL   INT0_ISR
+0006 32               17                     RETI
+000B                  18                     ORG             PROG+000Bh
+000B 120064           19                     LCALL   T0_ISR
+000E 32               20                     RETI
+0013                  21                     ORG             PROG+0013h
+0013 120065           22                     LCALL   INT1_ISR
+0016 32               23                     RETI
+001B                  24                     ORG             PROG+001Bh
+001B 120066           25                     LCALL   T1_ISR
+001E 32               26                     RETI
+0023                  27                     ORG             PROG+0023h
+0023 120067           28                     LCALL   UART_ISR
+0026 32               29                     RETI
+                      30     ;
+0030                  31                     ORG             PROG+0030h
+0030                  32     START:
+0030 753001           33                     MOV             LED_DATA,#01h
+0033 D288             34                     SETB    IT0             ; Set External Interrupt 0 to be falling edge trigg
+                             ered
+0035 D2A8             35                     SETB    EX0             ; Enable External Interrut 0
+0037 D2AF             36                     SETB    EA              ; Enable Interrupt
+0039                  37     LOOP:
+0039 E530             38                     MOV             A,LED_DATA
+003B 03               39                     RR              A
+003C F530             40                     MOV             LED_DATA,A
+003E F4               41                     CPL             A
+003F F5A0             42                     MOV             LED_PORT,A
+0041 1168             43                     CALL    DELAY
+0043 80F4             44                     SJMP    LOOP
+                      45     ;
+0045                  46     INT0_ISR:
+0045 75A000           47                     MOV             P2,#00h
+0048 1168             48                     CALL    DELAY
+004A 75A0FF           49                     MOV             P2,#0FFh
+004D 1168             50                     CALL    DELAY
+004F 75A000           51                     MOV             P2,#00h
+0052 1168             52                     CALL    DELAY
+0054 75A0FF           53                     MOV             P2,#0FFh
+0057 1168             54                     CALL    DELAY
+0059 75A000           55                     MOV             P2,#00h
+005C 1168             56                     CALL    DELAY
+A51 MACRO ASSEMBLER  EXTERNALINTERRUPT                                                    10/24/2022 10:54:59 PAGE     2
+
+005E 75A0FF           57                     MOV             P2,#0FFh
+0061 1168             58                     CALL    DELAY
+0063 22               59                     RET
+0064                  60     T0_ISR:
+0064 22               61                     RET
+0065                  62     INT1_ISR:
+0065 22               63                     RET
+0066                  64     T1_ISR:
+0066 22               65                     RET
+0067                  66     UART_ISR:
+0067 22               67                     RET
+                      68     ;Delay
+0068 7800             69     DELAY:  MOV             R0,#00h
+006A 7900             70     DELAY0: MOV             R1,#00h
+006C D9FE             71     DELAY1: DJNZ    R1,DELAY1
+006E D8FA             72                     DJNZ    R0,DELAY0
+0070 22               73                     RET
+                      74     ;
+                      75                     END
+A51 MACRO ASSEMBLER  EXTERNALINTERRUPT                                                    10/24/2022 10:54:59 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+DELAY. . . . . . .  C ADDR   0068H   A   
+DELAY0 . . . . . .  C ADDR   006AH   A   
+DELAY1 . . . . . .  C ADDR   006CH   A   
+EA . . . . . . . .  B ADDR   00A8H.7 A   
+EX0. . . . . . . .  B ADDR   00A8H.0 A   
+INT0_ISR . . . . .  C ADDR   0045H   A   
+INT1_ISR . . . . .  C ADDR   0065H   A   
+IT0. . . . . . . .  B ADDR   0088H.0 A   
+LED_DATA . . . . .  N NUMB   0030H   A   
+LED_PORT . . . . .  D ADDR   00A0H   A   
+LOOP . . . . . . .  C ADDR   0039H   A   
+P2 . . . . . . . .  D ADDR   00A0H   A   
+PROG . . . . . . .  N NUMB   0000H   A   
+START. . . . . . .  C ADDR   0030H   A   
+T0_ISR . . . . . .  C ADDR   0064H   A   
+T1_ISR . . . . . .  C ADDR   0066H   A   
+UART_ISR . . . . .  C ADDR   0067H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
