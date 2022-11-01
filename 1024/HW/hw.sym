@@ -197,9 +197,9 @@ Symbol Table
     _IE0                                                        =  0089 G
     _IE1                                                        =  008B G
     _INT0                                                       =  00B2 G
- 18 _INT0_ISR                                                      0019 GR
+ 18 _INT0_ISR                                                      000E GR
     _INT1                                                       =  00B3 G
- 18 _INT1_ISR                                                      001B GR
+ 18 _INT1_ISR                                                      0010 GR
     _IP                                                         =  00B8 G
     _IT0                                                        =  0088 G
     _IT1                                                        =  008A G
@@ -262,9 +262,9 @@ Symbol Table
     _SM2                                                        =  009D G
     _SP                                                         =  0081 G
     _T0                                                         =  00B4 G
- 18 _T0_ISR                                                        001A GR
+ 18 _T0_ISR                                                        000F GR
     _T1                                                         =  00B5 G
- 18 _T1_ISR                                                        001C GR
+ 18 _T1_ISR                                                        0011 GR
     _TB8                                                        =  009B G
     _TCON                                                       =  0088 G
     _TF0                                                        =  008D G
@@ -278,7 +278,7 @@ Symbol Table
     _TR0                                                        =  008C G
     _TR1                                                        =  008E G
     _TXD                                                        =  00B1 G
- 18 _UART_ISR                                                      001D GR
+ 18 _UART_ISR                                                      0012 GR
     _WR                                                         =  00B6 G
   F __interrupt_vect                                               0000 R
     __mcs51_genRAMCLEAR                                            **** GX
@@ -501,7 +501,7 @@ Area Table
   15 GSINIT5                                    size    0   flags 20
   16 GSINIT                                     size    0   flags 20
   17 GSFINAL                                    size    3   flags 20
-  18 CSEG                                       size   1E   flags 20
+  18 CSEG                                       size   13   flags 20
   19 CONST                                      size    0   flags 20
   1A XINIT                                      size    0   flags 20
   1B CABS                                       size    0   flags 28
