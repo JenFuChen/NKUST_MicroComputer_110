@@ -13,12 +13,11 @@ void main(void) {
 	
 	int i = 0 ;
 	int a = 0;
-	for(i = 0 ; i < 10 ; i++){
-		if(i > 5){
-			a = 0x01 ;		
-		}else if(i < 5){
-			a = 0x10 ;
-		}
+	for(i = 0 ; i < 5 ; i++){
+		if(i > 2){
+		a = 255;
+		}else if(i<=2 ){
+		a = 0;}
 	}
 }
 
