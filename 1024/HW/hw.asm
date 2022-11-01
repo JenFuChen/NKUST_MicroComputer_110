@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
 ; Version 3.0.1 #6083 (Dec 17 2010) (MINGW32)
-; This file was generated Tue Nov 01 23:05:10 2022
+; This file was generated Tue Nov 01 23:14:43 2022
 ;--------------------------------------------------------
 	.module hw
 	.optsdcc -mmcs51 --model-small
@@ -323,6 +323,7 @@ __sdcc_program_startup:
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
 ;i                         Allocated to registers r2 r3 
+;a                         Allocated to registers 
 ;------------------------------------------------------------
 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:12: void main(void) {
 ;	-----------------------------------------
@@ -337,23 +338,39 @@ _main:
 	ar7 = 0x07
 	ar0 = 0x00
 	ar1 = 0x01
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:14: for(i = 0 ; i < 10; i ++);
-	mov	r2,#0x0A
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:16: for(i = 0 ; i < 10 ; i++){
+	mov	r2,#0x00
 	mov	r3,#0x00
-00103$:
-	dec	r2
-	cjne	r2,#0xff,00109$
-	dec	r3
-00109$:
+00106$:
+	clr	c
 	mov	a,r2
-	orl	a,r3
-	jnz	00103$
+	subb	a,#0x0A
+	mov	a,r3
+	xrl	a,#0x80
+	subb	a,#0x80
+	jnc	00110$
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:17: if(i > 5){
+	clr	c
+	mov	a,#0x05
+	subb	a,r2
+	mov	a,#(0x00 ^ 0x80)
+	mov	b,r3
+	xrl	b,#0x80
+	subb	a,b
+	clr	a
+	rlc	a
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:16: for(i = 0 ; i < 10 ; i++){
+	inc	r2
+	cjne	r2,#0x00,00106$
+	inc	r3
+	sjmp	00106$
+00110$:
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'INT0_ISR'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:17: void INT0_ISR(void) __interrupt 0 {}
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:25: void INT0_ISR(void) __interrupt 0 {}
 ;	-----------------------------------------
 ;	 function INT0_ISR
 ;	-----------------------------------------
@@ -368,7 +385,7 @@ _INT0_ISR:
 ;Allocation info for local variables in function 'T0_ISR'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:18: void T0_ISR(void) __interrupt 1 {}
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:26: void T0_ISR(void) __interrupt 1 {}
 ;	-----------------------------------------
 ;	 function T0_ISR
 ;	-----------------------------------------
@@ -383,7 +400,7 @@ _T0_ISR:
 ;Allocation info for local variables in function 'INT1_ISR'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:19: void INT1_ISR(void) __interrupt 2 {}
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:27: void INT1_ISR(void) __interrupt 2 {}
 ;	-----------------------------------------
 ;	 function INT1_ISR
 ;	-----------------------------------------
@@ -398,7 +415,7 @@ _INT1_ISR:
 ;Allocation info for local variables in function 'T1_ISR'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:20: void T1_ISR(void) __interrupt 3 {}
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:28: void T1_ISR(void) __interrupt 3 {}
 ;	-----------------------------------------
 ;	 function T1_ISR
 ;	-----------------------------------------
@@ -413,7 +430,7 @@ _T1_ISR:
 ;Allocation info for local variables in function 'UART_ISR'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:21: void UART_ISR(void) __interrupt 4 {}
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:29: void UART_ISR(void) __interrupt 4 {}
 ;	-----------------------------------------
 ;	 function UART_ISR
 ;	-----------------------------------------

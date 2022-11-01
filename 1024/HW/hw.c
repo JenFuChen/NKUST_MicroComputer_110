@@ -10,8 +10,16 @@ void T1_ISR(void) __interrupt 3;  // ISR for Timer1/Counter1 Overflow Interrupt
 void UART_ISR(void) __interrupt 4;  // ISR for UART Interrupt
 
 void main(void) {
-	int i = 0;
-    for(i = 0 ; i < 10; i ++);
+	
+	int i = 0 ;
+	int a = 0;
+	for(i = 0 ; i < 10 ; i++){
+		if(i > 5){
+			a = 0x01 ;		
+		}else if(i < 5){
+			a = 0x10 ;
+		}
+	}
 }
 
 void INT0_ISR(void) __interrupt 0 {}
