@@ -275,15 +275,43 @@ Symbol Table
     _TR1                                                        =  008E G
     _TXD                                                        =  00B1 G
     _WR                                                         =  00B6 G
+    __divsint                                                      **** GX
+    __gptrget                                                      **** GX
+    __gptrput                                                      **** GX
   F __interrupt_vect                                               0000 R
     __mcs51_genRAMCLEAR                                            **** GX
     __mcs51_genXINIT                                               **** GX
     __mcs51_genXRAMCLEAR                                           **** GX
+    __modsint                                                      **** GX
+    __mulint                                                       **** GX
     __sdcc_gsinit_startup                                          **** GX
   F __sdcc_program_startup                                         0003 GR
   7 __start__stack                                                 0000 GR
- 18 _delay                                                         0000 GR
- 18 _main                                                          001F GR
+ 19 __str_0                                                        0011 R
+ 19 __str_1                                                        0018 R
+ 19 __str_2                                                        001B R
+ 19 __str_3                                                        0023 R
+ 19 __str_4                                                        0027 R
+ 19 __str_5                                                        002B R
+ 19 __str_6                                                        002F R
+    _bp                                                            **** GX
+ 18 _main                                                          0447 GR
+ 19 _uart_ASCII                                                    0000 GR
+ 18 _uart_get_byte                                                 0411 GR
+ 18 _uart_get_char                                                 0022 GR
+ 18 _uart_get_char_echo                                            002B GR
+ 18 _uart_get_integer                                              0353 GR
+ 18 _uart_get_nibble                                               03BD GR
+ 18 _uart_get_string                                               0065 GR
+ 18 _uart_get_word                                                 0428 GR
+ 18 _uart_i2s                                                      009C GR
+ 18 _uart_initialize                                               0000 GR
+ 18 _uart_put_byte                                                 0386 GR
+ 18 _uart_put_char                                                 0019 GR
+ 18 _uart_put_integer                                              0312 GR
+ 18 _uart_put_string                                               003A GR
+ 18 _uart_put_word                                                 03A5 GR
+ 18 _uart_s2i                                                      0274 GR
     a                                                              00E0 
     a.0                                                            00E0 
     a.1                                                            00E1 
@@ -497,7 +525,7 @@ Area Table
   15 GSINIT5                                    size    0   flags 20
   16 GSINIT                                     size    0   flags 20
   17 GSFINAL                                    size    3   flags 20
-  18 CSEG                                       size   33   flags 20
-  19 CONST                                      size    0   flags 20
+  18 CSEG                                       size  540   flags 20
+  19 CONST                                      size   33   flags 20
   1A XINIT                                      size    0   flags 20
   1B CABS                                       size    0   flags 28

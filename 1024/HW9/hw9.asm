@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
 ; Version 3.0.1 #6083 (Dec 17 2010) (MINGW32)
-; This file was generated Mon Oct 24 11:42:11 2022
+; This file was generated Wed Nov 02 17:37:19 2022
 ;--------------------------------------------------------
 	.module hw9
 	.optsdcc -mmcs51 --model-small
@@ -10,6 +10,7 @@
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _main
+	.globl _delay
 	.globl _CY
 	.globl _AC
 	.globl _F0
@@ -106,11 +107,6 @@
 	.globl _DPL
 	.globl _SP
 	.globl _P0
-	.globl _INT0_ISR
-	.globl _T0_ISR
-	.globl _INT1_ISR
-	.globl _T1_ISR
-	.globl _UART_ISR
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -282,15 +278,6 @@ __start__stack:
 	.area HOME    (CODE)
 __interrupt_vect:
 	ljmp	__sdcc_gsinit_startup
-	ljmp	_INT0_ISR
-	.ds	5
-	ljmp	_T0_ISR
-	.ds	5
-	ljmp	_INT1_ISR
-	.ds	5
-	ljmp	_T1_ISR
-	.ds	5
-	ljmp	_UART_ISR
 ;--------------------------------------------------------
 ; global & static initialisations
 ;--------------------------------------------------------
@@ -320,14 +307,16 @@ __sdcc_program_startup:
 ;--------------------------------------------------------
 	.area CSEG    (CODE)
 ;------------------------------------------------------------
-;Allocation info for local variables in function 'main'
+;Allocation info for local variables in function 'delay'
 ;------------------------------------------------------------
+;t                         Allocated to registers r2 r3 
+;i                         Allocated to registers r4 r5 
 ;------------------------------------------------------------
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW9\hw9.c:12: void main(void)
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW9\hw9.c:2: void delay(int t){
 ;	-----------------------------------------
-;	 function main
+;	 function delay
 ;	-----------------------------------------
-_main:
+_delay:
 	ar2 = 0x02
 	ar3 = 0x03
 	ar4 = 0x04
@@ -336,88 +325,50 @@ _main:
 	ar7 = 0x07
 	ar0 = 0x00
 	ar1 = 0x01
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW9\hw9.c:14: }
+	mov	r2,dpl
+	mov	r3,dph
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW9\hw9.c:4: for(i=0;i<t;i++){}
+	mov	r4,#0x00
+	mov	r5,#0x00
+00101$:
+	clr	c
+	mov	a,r4
+	subb	a,r2
+	mov	a,r5
+	xrl	a,#0x80
+	mov	b,r3
+	xrl	b,#0x80
+	subb	a,b
+	jnc	00105$
+	inc	r4
+	cjne	r4,#0x00,00101$
+	inc	r5
+	sjmp	00101$
+00105$:
 	ret
 ;------------------------------------------------------------
-;Allocation info for local variables in function 'INT0_ISR'
+;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
+;j                         Allocated to registers 
 ;------------------------------------------------------------
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW9\hw9.c:16: void INT0_ISR(void) __interrupt 0
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW9\hw9.c:6: void main(){
 ;	-----------------------------------------
-;	 function INT0_ISR
+;	 function main
 ;	-----------------------------------------
-_INT0_ISR:
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW9\hw9.c:17: {}
-	reti
-;	eliminated unneeded push/pop psw
-;	eliminated unneeded push/pop dpl
-;	eliminated unneeded push/pop dph
-;	eliminated unneeded push/pop b
-;	eliminated unneeded push/pop acc
-;------------------------------------------------------------
-;Allocation info for local variables in function 'T0_ISR'
-;------------------------------------------------------------
-;------------------------------------------------------------
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW9\hw9.c:18: void T0_ISR(void) __interrupt 1
-;	-----------------------------------------
-;	 function T0_ISR
-;	-----------------------------------------
-_T0_ISR:
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW9\hw9.c:19: {}
-	reti
-;	eliminated unneeded push/pop psw
-;	eliminated unneeded push/pop dpl
-;	eliminated unneeded push/pop dph
-;	eliminated unneeded push/pop b
-;	eliminated unneeded push/pop acc
-;------------------------------------------------------------
-;Allocation info for local variables in function 'INT1_ISR'
-;------------------------------------------------------------
-;------------------------------------------------------------
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW9\hw9.c:20: void INT1_ISR(void) __interrupt 2
-;	-----------------------------------------
-;	 function INT1_ISR
-;	-----------------------------------------
-_INT1_ISR:
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW9\hw9.c:21: {}
-	reti
-;	eliminated unneeded push/pop psw
-;	eliminated unneeded push/pop dpl
-;	eliminated unneeded push/pop dph
-;	eliminated unneeded push/pop b
-;	eliminated unneeded push/pop acc
-;------------------------------------------------------------
-;Allocation info for local variables in function 'T1_ISR'
-;------------------------------------------------------------
-;------------------------------------------------------------
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW9\hw9.c:22: void T1_ISR(void) __interrupt 3
-;	-----------------------------------------
-;	 function T1_ISR
-;	-----------------------------------------
-_T1_ISR:
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW9\hw9.c:23: {}
-	reti
-;	eliminated unneeded push/pop psw
-;	eliminated unneeded push/pop dpl
-;	eliminated unneeded push/pop dph
-;	eliminated unneeded push/pop b
-;	eliminated unneeded push/pop acc
-;------------------------------------------------------------
-;Allocation info for local variables in function 'UART_ISR'
-;------------------------------------------------------------
-;------------------------------------------------------------
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW9\hw9.c:24: void UART_ISR(void) __interrupt 4
-;	-----------------------------------------
-;	 function UART_ISR
-;	-----------------------------------------
-_UART_ISR:
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW9\hw9.c:25: {}
-	reti
-;	eliminated unneeded push/pop psw
-;	eliminated unneeded push/pop dpl
-;	eliminated unneeded push/pop dph
-;	eliminated unneeded push/pop b
-;	eliminated unneeded push/pop acc
+_main:
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW9\hw9.c:8: while(1){
+00102$:
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW9\hw9.c:9: P2=0;
+	mov	_P2,#0x00
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW9\hw9.c:10: delay(10000);
+	mov	dptr,#0x2710
+	lcall	_delay
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW9\hw9.c:11: P2=1;
+	mov	_P2,#0x01
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW9\hw9.c:12: delay(10000);
+	mov	dptr,#0x2710
+	lcall	_delay
+	sjmp	00102$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 	.area XINIT   (CODE)

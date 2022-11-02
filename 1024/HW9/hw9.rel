@@ -1,5 +1,5 @@
 XH
-H 1C areas 6D global symbols
+H 1C areas 69 global symbols
 M hw9
 O -mmcs51 --model-small
 S _P1 Def0090
@@ -119,8 +119,8 @@ A PSEG size 0 flags 50 addr 0
 A XSEG size 0 flags 40 addr 0
 A XABS size 0 flags 48 addr 0
 A XISEG size 0 flags 40 addr 0
-A HOME size 2B flags 20 addr 0
-S __sdcc_program_startup Def0026
+A HOME size 8 flags 20 addr 0
+S __sdcc_program_startup Def0003
 A GSINIT0 size 0 flags 20 addr 0
 A GSINIT1 size 0 flags 20 addr 0
 A GSINIT2 size 0 flags 20 addr 0
@@ -129,13 +129,9 @@ A GSINIT4 size 0 flags 20 addr 0
 A GSINIT5 size 0 flags 20 addr 0
 A GSINIT size 0 flags 20 addr 0
 A GSFINAL size 3 flags 20 addr 0
-A CSEG size 6 flags 20 addr 0
-S _main Def0000
-S _INT0_ISR Def0001
-S _UART_ISR Def0005
-S _INT1_ISR Def0003
-S _T0_ISR Def0002
-S _T1_ISR Def0004
+A CSEG size 33 flags 20 addr 0
+S _main Def001F
+S _delay Def0000
 A CONST size 0 flags 20 addr 0
 A XINIT size 0 flags 20 addr 0
 A CABS size 0 flags 28 addr 0
@@ -151,51 +147,33 @@ T 00 00
 R 00 00 00 07
 T 00 00
 R 00 00 00 0F
-T 00 00 02 00 00 02 00 01
-R 00 00 00 0F 02 03 00 5E 00 06 00 18
-T 00 06
-R 00 00 00 0F
-T 00 0B 02 00 02
-R 00 00 00 0F 00 03 00 18
-T 00 0E
-R 00 00 00 0F
-T 00 13 02 00 03
-R 00 00 00 0F 00 03 00 18
-T 00 16
-R 00 00 00 0F
-T 00 1B 02 00 04
-R 00 00 00 0F 00 03 00 18
-T 00 1E
-R 00 00 00 0F
-T 00 23 02 00 05
-R 00 00 00 0F 00 03 00 18
-T 00 00 02 00 26
+T 00 00 02 00 00
+R 00 00 00 0F 02 03 00 5E
+T 00 00 02 00 03
 R 00 00 00 17 00 03 00 0F
-T 00 26
+T 00 03
 R 00 00 00 0F
-T 00 26 12 00 00 80 FE
+T 00 03 12 00 1F 80 FE
 R 00 00 00 0F 00 03 00 18
 T 00 00
 R 00 00 00 18
-T 00 00 22
+T 00 00 AA 82 AB 83 7C 00 7D 00
 R 00 00 00 18
-T 00 01
+T 00 08
 R 00 00 00 18
-T 00 01 32
+T 00 08 C3 EC 9A ED 64 80 8B F0 63 F0 80 95 F0 50
 R 00 00 00 18
-T 00 02
+T 00 16 07 0C BC 00 ED 0D 80 EA
 R 00 00 00 18
-T 00 02 32
+T 00 1E
 R 00 00 00 18
-T 00 03
+T 00 1E 22
 R 00 00 00 18
-T 00 03 32
+T 00 1F
 R 00 00 00 18
-T 00 04
+T 00 1F
 R 00 00 00 18
-T 00 04 32
-R 00 00 00 18
-T 00 05
-R 00 00 00 18
-T 00 05 32
-R 00 00 00 18
+T 00 1F 75 A0 00 90 27 10 12 00 00 75 A0 01 90
+R 00 00 00 18 00 09 00 18
+T 00 2C 27 10 12 00 00 80 EC
+R 00 00 00 18 00 05 00 18
