@@ -1,15 +1,16 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
 ; Version 3.0.1 #6083 (Dec 17 2010) (MINGW32)
-; This file was generated Tue Nov 01 23:52:27 2022
+; This file was generated Thu Nov 03 12:06:29 2022
 ;--------------------------------------------------------
-	.module hw
+	.module hw6
 	.optsdcc -mmcs51 --model-small
 	
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _main
+	.globl _delayms
 	.globl _CY
 	.globl _AC
 	.globl _F0
@@ -106,6 +107,9 @@
 	.globl _DPL
 	.globl _SP
 	.globl _P0
+	.globl _NIBBLE
+	.globl _FONT
+	.globl _LED_DATA
 	.globl _INT0_ISR
 	.globl _T0_ISR
 	.globl _INT1_ISR
@@ -226,6 +230,10 @@ _CY	=	0x00d7
 ; internal ram data
 ;--------------------------------------------------------
 	.area DSEG    (DATA)
+_LED_DATA::
+	.ds 1
+_FONT::
+	.ds 16
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
 ;--------------------------------------------------------
@@ -250,6 +258,8 @@ __start__stack:
 ; bit data
 ;--------------------------------------------------------
 	.area BSEG    (BIT)
+_NIBBLE::
+	.ds 1
 ;--------------------------------------------------------
 ; paged external ram data
 ;--------------------------------------------------------
@@ -304,6 +314,23 @@ __interrupt_vect:
 	.globl __mcs51_genXINIT
 	.globl __mcs51_genXRAMCLEAR
 	.globl __mcs51_genRAMCLEAR
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:12: char FONT[16]={	0xC0,0xF9,0xA4,0xB0,0x99,0x92,0x82,0xF8,
+	mov	_FONT,#0xC0
+	mov	(_FONT + 0x0001),#0xF9
+	mov	(_FONT + 0x0002),#0xA4
+	mov	(_FONT + 0x0003),#0xB0
+	mov	(_FONT + 0x0004),#0x99
+	mov	(_FONT + 0x0005),#0x92
+	mov	(_FONT + 0x0006),#0x82
+	mov	(_FONT + 0x0007),#0xF8
+	mov	(_FONT + 0x0008),#0x80
+	mov	(_FONT + 0x0009),#0x90
+	mov	(_FONT + 0x000a),#0x88
+	mov	(_FONT + 0x000b),#0x83
+	mov	(_FONT + 0x000c),#0xA7
+	mov	(_FONT + 0x000d),#0xA1
+	mov	(_FONT + 0x000e),#0x86
+	mov	(_FONT + 0x000f),#0x8E
 	.area GSFINAL (CODE)
 	ljmp	__sdcc_program_startup
 ;--------------------------------------------------------
@@ -320,16 +347,16 @@ __sdcc_program_startup:
 ;--------------------------------------------------------
 	.area CSEG    (CODE)
 ;------------------------------------------------------------
-;Allocation info for local variables in function 'main'
+;Allocation info for local variables in function 'delayms'
 ;------------------------------------------------------------
-;i                         Allocated to registers r2 r3 
-;a                         Allocated to registers 
+;time                      Allocated to registers r2 r3 
+;n                         Allocated to registers r4 r5 
 ;------------------------------------------------------------
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:12: void main(void) {
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:22: void delayms(unsigned int time)
 ;	-----------------------------------------
-;	 function main
+;	 function delayms
 ;	-----------------------------------------
-_main:
+_delayms:
 	ar2 = 0x02
 	ar3 = 0x03
 	ar4 = 0x04
@@ -338,57 +365,66 @@ _main:
 	ar7 = 0x07
 	ar0 = 0x00
 	ar1 = 0x01
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:17: P0 == 255;
-	mov	a,_P0
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:19: for(i = 0 ; i < 5 ; i++){
-	mov	r2,#0x00
-	mov	r3,#0x00
-00108$:
-	clr	c
+	mov	r2,dpl
+	mov	r3,dph
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:25: while (time>0)
+00104$:
 	mov	a,r2
-	subb	a,#0x05
-	mov	a,r3
-	xrl	a,#0x80
-	subb	a,#0x80
-	jnc	00112$
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:20: if(i > 2){
-	clr	c
-	mov	a,#0x02
-	subb	a,r2
-	mov	a,#(0x00 ^ 0x80)
-	mov	b,r3
-	xrl	b,#0x80
-	subb	a,b
-	clr	a
-	rlc	a
-	mov	r4,a
-	jz	00106$
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:21: P0 = 255;
-	mov	_P0,#0xFF
-	sjmp	00110$
-00106$:
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:22: }else if(i<=2 ){
+	orl	a,r3
+	jz	00107$
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:28: while(n>0) n--;
+	mov	r4,#0x78
+	mov	r5,#0x00
+00101$:
 	mov	a,r4
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:23: P0 = 0;}
-	jnz	00110$
-	mov	_P0,a
-00110$:
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:19: for(i = 0 ; i < 5 ; i++){
-	inc	r2
-	cjne	r2,#0x00,00108$
-	inc	r3
-	sjmp	00108$
-00112$:
+	orl	a,r5
+	jz	00103$
+	dec	r4
+	cjne	r4,#0xff,00101$
+	dec	r5
+	sjmp	00101$
+00103$:
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:29: time--;
+	dec	r2
+	cjne	r2,#0xff,00104$
+	dec	r3
+	sjmp	00104$
+00107$:
 	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'main'
+;------------------------------------------------------------
+;------------------------------------------------------------
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:33: void main(void)
+;	-----------------------------------------
+;	 function main
+;	-----------------------------------------
+_main:
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:36: TMOD=0x11;		// Set Timer to work in Mode 1 (16-bit Timer)
+	mov	_TMOD,#0x11
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:37: ET0=1;			// Enable Timer 0 Interrupt
+	setb	_ET0
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:38: EA=1;			// Enable Interrupt
+	setb	_EA
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:39: TR0=1;			// Start Timer 0
+	setb	_TR0
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:40: BUTTON=1;		// Set the output latch of BUTTON to 1
+	setb	_P1_0
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:41: LED_DATA++;
+	mov	_LED_DATA,#0x01
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:42: delayms(1000);
+	mov	dptr,#0x03E8
+	ljmp	_delayms
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'INT0_ISR'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:27: void INT0_ISR(void) __interrupt 0 {}
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:45: void INT0_ISR(void)	interrupt 0
 ;	-----------------------------------------
 ;	 function INT0_ISR
 ;	-----------------------------------------
 _INT0_ISR:
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:46: {}
 	reti
 ;	eliminated unneeded push/pop psw
 ;	eliminated unneeded push/pop dpl
@@ -399,26 +435,77 @@ _INT0_ISR:
 ;Allocation info for local variables in function 'T0_ISR'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:28: void T0_ISR(void) __interrupt 1 {}
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:47: void T0_ISR(void)	interrupt 1
 ;	-----------------------------------------
 ;	 function T0_ISR
 ;	-----------------------------------------
 _T0_ISR:
+	push	acc
+	push	ar0
+	push	psw
+	mov	psw,#0x00
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:49: TH0=0xFC;	// Timer 0 Interrupt will be generated
+	mov	_TH0,#0xFC
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:50: TL0=0x18;	// for every 1mS
+	mov	_TL0,#0x18
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:51: NIBBLE=!NIBBLE;
+	cpl	_NIBBLE
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:52: if(NIBBLE==1)
+	jnb	_NIBBLE,00102$
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:55: LOW_NIBBLE=1;
+	setb	_P2_0
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:56: ACC=LED_DATA;
+	mov	_ACC,_LED_DATA
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:57: ACC=ACC>>4;
+	mov	a,_ACC
+	swap	a
+	anl	a,#0x0f
+	mov	_ACC,a
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:58: ACC=FONT[ACC];
+	mov	a,_ACC
+	add	a,#_FONT
+	mov	r0,a
+	mov	_ACC,@r0
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:59: LED_PORT=ACC;
+	mov	_P0,_ACC
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:60: HIGH_NIBBLE=0;
+	clr	_P2_1
+	sjmp	00104$
+00102$:
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:65: HIGH_NIBBLE=1;
+	setb	_P2_1
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:66: ACC=LED_DATA;
+	mov	_ACC,_LED_DATA
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:67: ACC=ACC&0X0F;
+	anl	_ACC,#0x0F
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:68: ACC=FONT[ACC];
+	mov	a,_ACC
+	add	a,#_FONT
+	mov	r0,a
+	mov	_ACC,@r0
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:69: LED_PORT=ACC;
+	mov	_P0,_ACC
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:70: LOW_NIBBLE=0;
+	clr	_P2_0
+00104$:
+	pop	psw
+	pop	ar0
+	pop	acc
 	reti
-;	eliminated unneeded push/pop psw
+;	eliminated unneeded push/pop ar1
 ;	eliminated unneeded push/pop dpl
 ;	eliminated unneeded push/pop dph
 ;	eliminated unneeded push/pop b
-;	eliminated unneeded push/pop acc
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'INT1_ISR'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:29: void INT1_ISR(void) __interrupt 2 {}
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:73: void INT1_ISR(void)	interrupt 2
 ;	-----------------------------------------
 ;	 function INT1_ISR
 ;	-----------------------------------------
 _INT1_ISR:
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:74: {}
 	reti
 ;	eliminated unneeded push/pop psw
 ;	eliminated unneeded push/pop dpl
@@ -429,11 +516,12 @@ _INT1_ISR:
 ;Allocation info for local variables in function 'T1_ISR'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:30: void T1_ISR(void) __interrupt 3 {}
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:75: void T1_ISR(void)	interrupt 3
 ;	-----------------------------------------
 ;	 function T1_ISR
 ;	-----------------------------------------
 _T1_ISR:
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:76: {}
 	reti
 ;	eliminated unneeded push/pop psw
 ;	eliminated unneeded push/pop dpl
@@ -444,11 +532,12 @@ _T1_ISR:
 ;Allocation info for local variables in function 'UART_ISR'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\1024\HW\hw.c:31: void UART_ISR(void) __interrupt 4 {}
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:77: void UART_ISR(void) interrupt 4
 ;	-----------------------------------------
 ;	 function UART_ISR
 ;	-----------------------------------------
 _UART_ISR:
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW6\hw6.c:78: {}
 	reti
 ;	eliminated unneeded push/pop psw
 ;	eliminated unneeded push/pop dpl

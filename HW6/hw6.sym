@@ -193,16 +193,19 @@ Symbol Table
     _EX1                                                        =  00AA G
     _F0                                                         =  00D5 G
     _F1                                                         =  00D1 G
+  5 _FONT                                                          0001 GR
     _IE                                                         =  00A8 G
     _IE0                                                        =  0089 G
     _IE1                                                        =  008B G
     _INT0                                                       =  00B2 G
- 18 _INT0_ISR                                                      0035 GR
+ 18 _INT0_ISR                                                      0033 GR
     _INT1                                                       =  00B3 G
- 18 _INT1_ISR                                                      0037 GR
+ 18 _INT1_ISR                                                      007D GR
     _IP                                                         =  00B8 G
     _IT0                                                        =  0088 G
     _IT1                                                        =  008A G
+  5 _LED_DATA                                                      0000 GR
+  A _NIBBLE                                                        0000 GR
     _OV                                                         =  00D2 G
     _P                                                          =  00D0 G
     _P0                                                         =  0080 G
@@ -262,9 +265,9 @@ Symbol Table
     _SM2                                                        =  009D G
     _SP                                                         =  0081 G
     _T0                                                         =  00B4 G
- 18 _T0_ISR                                                        0036 GR
+ 18 _T0_ISR                                                        0034 GR
     _T1                                                         =  00B5 G
- 18 _T1_ISR                                                        0038 GR
+ 18 _T1_ISR                                                        007E GR
     _TB8                                                        =  009B G
     _TCON                                                       =  0088 G
     _TF0                                                        =  008D G
@@ -278,7 +281,7 @@ Symbol Table
     _TR0                                                        =  008C G
     _TR1                                                        =  008E G
     _TXD                                                        =  00B1 G
- 18 _UART_ISR                                                      0039 GR
+ 18 _UART_ISR                                                      007F GR
     _WR                                                         =  00B6 G
   F __interrupt_vect                                               0000 R
     __mcs51_genRAMCLEAR                                            **** GX
@@ -287,7 +290,8 @@ Symbol Table
     __sdcc_gsinit_startup                                          **** GX
   F __sdcc_program_startup                                         0026 GR
   7 __start__stack                                                 0000 GR
- 18 _main                                                          0000 GR
+ 18 _delayms                                                       0000 GR
+ 18 _main                                                          001F GR
     a                                                              00E0 
     a.0                                                            00E0 
     a.1                                                            00E1 
@@ -482,12 +486,12 @@ Area Table
    2 RSEG0                                      size    0   flags 8
    3 RSEG1                                      size    0   flags 8
    4 REG_BANK_0                                 size    8   flags 4
-   5 DSEG                                       size    0   flags 0
+   5 DSEG                                       size   11   flags 0
    6 OSEG                                       size    0   flags 4
    7 SSEG                                       size    1   flags 0
    8 ISEG                                       size    0   flags 0
    9 IABS                                       size    0   flags 8
-   A BSEG                                       size    0   flags 80
+   A BSEG                                       size    1   flags 80
    B PSEG                                       size    0   flags 50
    C XSEG                                       size    0   flags 40
    D XABS                                       size    0   flags 48
@@ -499,9 +503,9 @@ Area Table
   13 GSINIT3                                    size    0   flags 20
   14 GSINIT4                                    size    0   flags 20
   15 GSINIT5                                    size    0   flags 20
-  16 GSINIT                                     size    0   flags 20
+  16 GSINIT                                     size   30   flags 20
   17 GSFINAL                                    size    3   flags 20
-  18 CSEG                                       size   3A   flags 20
+  18 CSEG                                       size   80   flags 20
   19 CONST                                      size    0   flags 20
   1A XINIT                                      size    0   flags 20
   1B CABS                                       size    0   flags 28

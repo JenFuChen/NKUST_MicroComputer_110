@@ -1,5 +1,5 @@
 -myux
--i hw.ihx
+-i hw6.ihx
 -Y
 -b HOME = 0x0000
 -b ISEG = 0x0000
@@ -10,6 +10,6 @@
 -l libint
 -l liblong
 -l libfloat
-hw.rel
+hw6.rel
 
 -e
