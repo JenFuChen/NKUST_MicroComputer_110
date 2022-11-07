@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\hw7.obj" 
+TO ".\Objects\hw7" 
+PRINT(".\Listings\hw7.m51") RAMSIZE(256) 

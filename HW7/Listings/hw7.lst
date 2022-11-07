@@ -1,0 +1,127 @@
+A51 MACRO ASSEMBLER  HW7                                                                  11/07/2022 10:02:27 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\hw7.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE hw7.a51 SET(SMALL) DEBUG PRINT(.\Listings\hw7.lst) OBJECT(.\Objects\hw7
+                      .obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ; Example program 05: UART-RS232
+                       2     ; Chin-Shiuh Shieh
+                       3     ; 2003-03-09
+                       4     ;
+                       5     ; Memory Allocation
+  0000                 6     UART_BUSY  EQU  00h
+                       7     ; Pin Assignment
+  00A0                 8     LED_PORT  EQU  P2
+                       9     ;
+  0000                10     PROG EQU  0000h
+0000                  11       ORG  PROG+0000h
+0000 802E             12       SJMP  START
+                      13     ;Interrupt Vector Table
+0003                  14       ORG  PROG+0003h
+0003 12004D           15       LCALL INT0_ISR
+0006 32               16       RETI
+000B                  17       ORG  PROG+000Bh
+000B 12004E           18       LCALL T0_ISR
+000E 32               19       RETI
+0013                  20       ORG  PROG+0013h
+0013 12004F           21       LCALL INT1_ISR
+0016 32               22       RETI
+001B                  23       ORG  PROG+001Bh
+001B 120050           24       LCALL T1_ISR
+001E 32               25       RETI
+0023                  26       ORG  PROG+0023h
+0023 120051           27       LCALL UART_ISR
+0026 32               28       RETI
+                      29     ;
+0030                  30       ORG  PROG+0030h
+0030                  31     START:
+0030 C200             32       CLR  UART_BUSY
+0032 758921           33             MOV     TMOD,#00100001b ; Timer1 in Mode 2, Timer0 in Mode 1
+0035 758DFD           34             MOV     TH1, #0FDh  ; Baud Rate = 9600 bps at 11.0592MHz
+0038 759850           35             MOV     SCON,#01010000b ; UART in Mode 1
+003B D2AC             36       SETB ES    ; Enable UART Interrupt
+003D D2AF             37       SETB EA    ; Enable Interrupt
+003F D28E             38       SETB TR1    ; Start Timer 1
+                      39       
+                      40       
+0041                  41       MOV   P1,#FFh
+*** _____________________________________^
+*** ERROR #A45 IN 41 (hw7.a51, LINE 41): UNDEFINED SYMBOL (PASS-2)
+0044 8590F0           42       MOV  B,P1
+                      43       
+0047 E5F0             44       MOV  A,B  ; Cartage Return
+0049 1161             45       CALL UART_PUTC
+004B 80E3             46       SJMP START
+                      47     ;
+004D                  48     INT0_ISR:
+004D 22               49       RET
+004E                  50     T0_ISR:
+004E 22               51             RET
+004F                  52     INT1_ISR:
+004F 22               53       RET
+0050                  54     T1_ISR:
+0050 22               55       RET
+A51 MACRO ASSEMBLER  HW7                                                                  11/07/2022 10:02:27 PAGE     2
+
+0051                  56     UART_ISR:
+0051 209805           57             JB      RI,RECEIVED
+0054                  58     TRANSMITTED:
+0054 C200             59       CLR  UART_BUSY
+0056 C299             60             CLR     TI
+0058 22               61             RET
+0059                  62     RECEIVED:
+0059 E599             63       MOV  A,SBUF
+005B F4               64       CPL  A
+005C F5A0             65       MOV  P2,A
+005E C298             66       CLR     RI
+0060 22               67       RET
+                      68     ;
+0061                  69     UART_PUTC:
+0061 2000FD           70       JB  UART_BUSY,UART_PUTC
+0064 D200             71       SETB UART_BUSY
+0066 F599             72       MOV  SBUF,A
+0068 22               73       RET
+                      74             END
+A51 MACRO ASSEMBLER  HW7                                                                  11/07/2022 10:02:27 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+EA . . . . . . . .  B ADDR   00A8H.7 A   
+ES . . . . . . . .  B ADDR   00A8H.4 A   
+FFH. . . . . . . .    ----   -----       
+INT0_ISR . . . . .  C ADDR   004DH   A   
+INT1_ISR . . . . .  C ADDR   004FH   A   
+LED_PORT . . . . .  D ADDR   00A0H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+P2 . . . . . . . .  D ADDR   00A0H   A   
+PROG . . . . . . .  N NUMB   0000H   A   
+RECEIVED . . . . .  C ADDR   0059H   A   
+RI . . . . . . . .  B ADDR   0098H.0 A   
+SBUF . . . . . . .  D ADDR   0099H   A   
+SCON . . . . . . .  D ADDR   0098H   A   
+START. . . . . . .  C ADDR   0030H   A   
+T0_ISR . . . . . .  C ADDR   004EH   A   
+T1_ISR . . . . . .  C ADDR   0050H   A   
+TH1. . . . . . . .  D ADDR   008DH   A   
+TI . . . . . . . .  B ADDR   0098H.1 A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+TR1. . . . . . . .  B ADDR   0088H.6 A   
+TRANSMITTED. . . .  C ADDR   0054H   A   
+UART_BUSY. . . . .  N NUMB   0000H   A   
+UART_ISR . . . . .  C ADDR   0051H   A   
+UART_PUTC. . . . .  C ADDR   0061H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 1 ERROR(S)
