@@ -1,0 +1,117 @@
+A51 MACRO ASSEMBLER  HW6                                                                  11/07/2022 09:55:53 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\hw6.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE hw6.a51 SET(SMALL) DEBUG PRINT(.\Listings\hw6.lst) OBJECT(.\Objects\hw6
+                      .obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ; Example Program 02: External Interrupt
+                       2     ; Chin-Shiuh Shieh
+                       3     ; 2003-03-08
+                       4     ;
+                       5     ; Memory Allocation
+  0030                 6     LED_DATA EQU  30h  ;Byte for LED Data
+                       7     ; Pin Assignment
+  00A0                 8     LED_PORT EQU  P2
+                       9     ;
+  0000                10     PROG EQU  0000h
+0000                  11       ORG  PROG+0000h
+0000 802E             12       SJMP START
+                      13     ;Interrupt Vector Table
+0003                  14       ORG  PROG+0003h
+0003 120045           15       LCALL INT0_ISR
+0006 32               16       RETI
+000B                  17       ORG  PROG+000Bh
+000B 120064           18       LCALL T0_ISR
+000E 32               19       RETI
+0013                  20       ORG  PROG+0013h
+0013 120065           21       LCALL INT1_ISR
+0016 32               22       RETI
+001B                  23       ORG  PROG+001Bh
+001B 120066           24       LCALL T1_ISR
+001E 32               25       RETI
+0023                  26       ORG  PROG+0023h
+0023 120067           27       LCALL UART_ISR
+0026 32               28       RETI
+                      29     ;
+0030                  30       ORG  PROG+0030h
+0030                  31     START:
+0030 753001           32       MOV  LED_DATA,#01h
+0033 D288             33       SETB IT0  ; Set External Interrupt 0 to be falling edge triggered
+0035 D2A8             34       SETB EX0  ; Enable External Interrut 0
+0037 D2AF             35       SETB EA  ; Enable Interrupt
+0039                  36     LOOP:
+0039 E530             37       MOV  A,LED_DATA
+003B 03               38       RR  A
+003C F530             39       MOV  LED_DATA,A
+003E F4               40       CPL  A
+003F F5A0             41       MOV  LED_PORT,A
+0041 1168             42       CALL DELAY
+0043 80F4             43       SJMP LOOP
+                      44     ;
+0045                  45     INT0_ISR:
+0045 75A000           46       MOV  P2,#00h
+0048 1168             47       CALL DELAY
+004A 75A0FF           48       MOV  P2,#0FFh
+004D 1168             49       CALL DELAY
+004F 75A000           50       MOV  P2,#00h
+0052 1168             51       CALL DELAY
+0054 75A0FF           52       MOV  P2,#0FFh
+0057 1168             53       CALL DELAY
+0059 75A000           54       MOV  P2,#00h
+005C 1168             55       CALL DELAY
+005E 75A0FF           56       MOV  P2,#0FFh
+0061 1168             57       CALL DELAY
+A51 MACRO ASSEMBLER  HW6                                                                  11/07/2022 09:55:53 PAGE     2
+
+0063 22               58       RET
+0064                  59     T0_ISR:
+0064 22               60       RET
+0065                  61     INT1_ISR:
+0065 22               62       RET
+0066                  63     T1_ISR:
+0066 22               64       RET
+0067                  65     UART_ISR:
+0067 22               66       RET
+                      67     ;Delay
+0068 7800             68     DELAY: MOV  R0,#00h
+006A 7900             69     DELAY0: MOV  R1,#00h
+006C D9FE             70     DELAY1: DJNZ R1,DELAY1
+006E D8FA             71       DJNZ R0,DELAY0
+0070 22               72       RET
+                      73     ;
+                      74       END
+A51 MACRO ASSEMBLER  HW6                                                                  11/07/2022 09:55:53 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+DELAY. . . . . . .  C ADDR   0068H   A   
+DELAY0 . . . . . .  C ADDR   006AH   A   
+DELAY1 . . . . . .  C ADDR   006CH   A   
+EA . . . . . . . .  B ADDR   00A8H.7 A   
+EX0. . . . . . . .  B ADDR   00A8H.0 A   
+INT0_ISR . . . . .  C ADDR   0045H   A   
+INT1_ISR . . . . .  C ADDR   0065H   A   
+IT0. . . . . . . .  B ADDR   0088H.0 A   
+LED_DATA . . . . .  N NUMB   0030H   A   
+LED_PORT . . . . .  D ADDR   00A0H   A   
+LOOP . . . . . . .  C ADDR   0039H   A   
+P2 . . . . . . . .  D ADDR   00A0H   A   
+PROG . . . . . . .  N NUMB   0000H   A   
+START. . . . . . .  C ADDR   0030H   A   
+T0_ISR . . . . . .  C ADDR   0064H   A   
+T1_ISR . . . . . .  C ADDR   0066H   A   
+UART_ISR . . . . .  C ADDR   0067H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
