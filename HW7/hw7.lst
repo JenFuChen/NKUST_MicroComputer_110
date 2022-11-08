@@ -1,0 +1,1210 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : free open source ANSI-C Compiler
+                              3 ; Version 3.0.1 #6083 (Dec 17 2010) (MINGW32)
+                              4 ; This file was generated Mon Nov 07 10:24:09 2022
+                              5 ;--------------------------------------------------------
+                              6 	.module hw7
+                              7 	.optsdcc -mmcs51 --model-small
+                              8 	
+                              9 ;--------------------------------------------------------
+                             10 ; Public variables in this module
+                             11 ;--------------------------------------------------------
+                             12 	.globl _uart_ASCII
+                             13 	.globl _main
+                             14 	.globl _CY
+                             15 	.globl _AC
+                             16 	.globl _F0
+                             17 	.globl _RS1
+                             18 	.globl _RS0
+                             19 	.globl _OV
+                             20 	.globl _F1
+                             21 	.globl _P
+                             22 	.globl _PS
+                             23 	.globl _PT1
+                             24 	.globl _PX1
+                             25 	.globl _PT0
+                             26 	.globl _PX0
+                             27 	.globl _RD
+                             28 	.globl _WR
+                             29 	.globl _T1
+                             30 	.globl _T0
+                             31 	.globl _INT1
+                             32 	.globl _INT0
+                             33 	.globl _TXD
+                             34 	.globl _RXD
+                             35 	.globl _P3_7
+                             36 	.globl _P3_6
+                             37 	.globl _P3_5
+                             38 	.globl _P3_4
+                             39 	.globl _P3_3
+                             40 	.globl _P3_2
+                             41 	.globl _P3_1
+                             42 	.globl _P3_0
+                             43 	.globl _EA
+                             44 	.globl _ES
+                             45 	.globl _ET1
+                             46 	.globl _EX1
+                             47 	.globl _ET0
+                             48 	.globl _EX0
+                             49 	.globl _P2_7
+                             50 	.globl _P2_6
+                             51 	.globl _P2_5
+                             52 	.globl _P2_4
+                             53 	.globl _P2_3
+                             54 	.globl _P2_2
+                             55 	.globl _P2_1
+                             56 	.globl _P2_0
+                             57 	.globl _SM0
+                             58 	.globl _SM1
+                             59 	.globl _SM2
+                             60 	.globl _REN
+                             61 	.globl _TB8
+                             62 	.globl _RB8
+                             63 	.globl _TI
+                             64 	.globl _RI
+                             65 	.globl _P1_7
+                             66 	.globl _P1_6
+                             67 	.globl _P1_5
+                             68 	.globl _P1_4
+                             69 	.globl _P1_3
+                             70 	.globl _P1_2
+                             71 	.globl _P1_1
+                             72 	.globl _P1_0
+                             73 	.globl _TF1
+                             74 	.globl _TR1
+                             75 	.globl _TF0
+                             76 	.globl _TR0
+                             77 	.globl _IE1
+                             78 	.globl _IT1
+                             79 	.globl _IE0
+                             80 	.globl _IT0
+                             81 	.globl _P0_7
+                             82 	.globl _P0_6
+                             83 	.globl _P0_5
+                             84 	.globl _P0_4
+                             85 	.globl _P0_3
+                             86 	.globl _P0_2
+                             87 	.globl _P0_1
+                             88 	.globl _P0_0
+                             89 	.globl _B
+                             90 	.globl _ACC
+                             91 	.globl _PSW
+                             92 	.globl _IP
+                             93 	.globl _P3
+                             94 	.globl _IE
+                             95 	.globl _P2
+                             96 	.globl _SBUF
+                             97 	.globl _SCON
+                             98 	.globl _P1
+                             99 	.globl _TH1
+                            100 	.globl _TH0
+                            101 	.globl _TL1
+                            102 	.globl _TL0
+                            103 	.globl _TMOD
+                            104 	.globl _TCON
+                            105 	.globl _PCON
+                            106 	.globl _DPH
+                            107 	.globl _DPL
+                            108 	.globl _SP
+                            109 	.globl _P0
+                            110 	.globl _uart_initialize
+                            111 	.globl _uart_put_char
+                            112 	.globl _uart_get_char
+                            113 	.globl _uart_get_char_echo
+                            114 	.globl _uart_put_string
+                            115 	.globl _uart_get_string
+                            116 	.globl _uart_i2s
+                            117 	.globl _uart_s2i
+                            118 	.globl _uart_put_integer
+                            119 	.globl _uart_get_integer
+                            120 	.globl _uart_put_byte
+                            121 	.globl _uart_put_word
+                            122 	.globl _uart_get_nibble
+                            123 	.globl _uart_get_byte
+                            124 	.globl _uart_get_word
+                            125 ;--------------------------------------------------------
+                            126 ; special function registers
+                            127 ;--------------------------------------------------------
+                            128 	.area RSEG    (ABS,DATA)
+   0000                     129 	.org 0x0000
+                    0080    130 _P0	=	0x0080
+                    0081    131 _SP	=	0x0081
+                    0082    132 _DPL	=	0x0082
+                    0083    133 _DPH	=	0x0083
+                    0087    134 _PCON	=	0x0087
+                    0088    135 _TCON	=	0x0088
+                    0089    136 _TMOD	=	0x0089
+                    008A    137 _TL0	=	0x008a
+                    008B    138 _TL1	=	0x008b
+                    008C    139 _TH0	=	0x008c
+                    008D    140 _TH1	=	0x008d
+                    0090    141 _P1	=	0x0090
+                    0098    142 _SCON	=	0x0098
+                    0099    143 _SBUF	=	0x0099
+                    00A0    144 _P2	=	0x00a0
+                    00A8    145 _IE	=	0x00a8
+                    00B0    146 _P3	=	0x00b0
+                    00B8    147 _IP	=	0x00b8
+                    00D0    148 _PSW	=	0x00d0
+                    00E0    149 _ACC	=	0x00e0
+                    00F0    150 _B	=	0x00f0
+                            151 ;--------------------------------------------------------
+                            152 ; special function bits
+                            153 ;--------------------------------------------------------
+                            154 	.area RSEG    (ABS,DATA)
+   0000                     155 	.org 0x0000
+                    0080    156 _P0_0	=	0x0080
+                    0081    157 _P0_1	=	0x0081
+                    0082    158 _P0_2	=	0x0082
+                    0083    159 _P0_3	=	0x0083
+                    0084    160 _P0_4	=	0x0084
+                    0085    161 _P0_5	=	0x0085
+                    0086    162 _P0_6	=	0x0086
+                    0087    163 _P0_7	=	0x0087
+                    0088    164 _IT0	=	0x0088
+                    0089    165 _IE0	=	0x0089
+                    008A    166 _IT1	=	0x008a
+                    008B    167 _IE1	=	0x008b
+                    008C    168 _TR0	=	0x008c
+                    008D    169 _TF0	=	0x008d
+                    008E    170 _TR1	=	0x008e
+                    008F    171 _TF1	=	0x008f
+                    0090    172 _P1_0	=	0x0090
+                    0091    173 _P1_1	=	0x0091
+                    0092    174 _P1_2	=	0x0092
+                    0093    175 _P1_3	=	0x0093
+                    0094    176 _P1_4	=	0x0094
+                    0095    177 _P1_5	=	0x0095
+                    0096    178 _P1_6	=	0x0096
+                    0097    179 _P1_7	=	0x0097
+                    0098    180 _RI	=	0x0098
+                    0099    181 _TI	=	0x0099
+                    009A    182 _RB8	=	0x009a
+                    009B    183 _TB8	=	0x009b
+                    009C    184 _REN	=	0x009c
+                    009D    185 _SM2	=	0x009d
+                    009E    186 _SM1	=	0x009e
+                    009F    187 _SM0	=	0x009f
+                    00A0    188 _P2_0	=	0x00a0
+                    00A1    189 _P2_1	=	0x00a1
+                    00A2    190 _P2_2	=	0x00a2
+                    00A3    191 _P2_3	=	0x00a3
+                    00A4    192 _P2_4	=	0x00a4
+                    00A5    193 _P2_5	=	0x00a5
+                    00A6    194 _P2_6	=	0x00a6
+                    00A7    195 _P2_7	=	0x00a7
+                    00A8    196 _EX0	=	0x00a8
+                    00A9    197 _ET0	=	0x00a9
+                    00AA    198 _EX1	=	0x00aa
+                    00AB    199 _ET1	=	0x00ab
+                    00AC    200 _ES	=	0x00ac
+                    00AF    201 _EA	=	0x00af
+                    00B0    202 _P3_0	=	0x00b0
+                    00B1    203 _P3_1	=	0x00b1
+                    00B2    204 _P3_2	=	0x00b2
+                    00B3    205 _P3_3	=	0x00b3
+                    00B4    206 _P3_4	=	0x00b4
+                    00B5    207 _P3_5	=	0x00b5
+                    00B6    208 _P3_6	=	0x00b6
+                    00B7    209 _P3_7	=	0x00b7
+                    00B0    210 _RXD	=	0x00b0
+                    00B1    211 _TXD	=	0x00b1
+                    00B2    212 _INT0	=	0x00b2
+                    00B3    213 _INT1	=	0x00b3
+                    00B4    214 _T0	=	0x00b4
+                    00B5    215 _T1	=	0x00b5
+                    00B6    216 _WR	=	0x00b6
+                    00B7    217 _RD	=	0x00b7
+                    00B8    218 _PX0	=	0x00b8
+                    00B9    219 _PT0	=	0x00b9
+                    00BA    220 _PX1	=	0x00ba
+                    00BB    221 _PT1	=	0x00bb
+                    00BC    222 _PS	=	0x00bc
+                    00D0    223 _P	=	0x00d0
+                    00D1    224 _F1	=	0x00d1
+                    00D2    225 _OV	=	0x00d2
+                    00D3    226 _RS0	=	0x00d3
+                    00D4    227 _RS1	=	0x00d4
+                    00D5    228 _F0	=	0x00d5
+                    00D6    229 _AC	=	0x00d6
+                    00D7    230 _CY	=	0x00d7
+                            231 ;--------------------------------------------------------
+                            232 ; overlayable register banks
+                            233 ;--------------------------------------------------------
+                            234 	.area REG_BANK_0	(REL,OVR,DATA)
+   0000                     235 	.ds 8
+                            236 ;--------------------------------------------------------
+                            237 ; internal ram data
+                            238 ;--------------------------------------------------------
+                            239 	.area DSEG    (DATA)
+                            240 ;--------------------------------------------------------
+                            241 ; overlayable items in internal ram 
+                            242 ;--------------------------------------------------------
+                            243 	.area OSEG    (OVR,DATA)
+                            244 ;--------------------------------------------------------
+                            245 ; Stack segment in internal ram 
+                            246 ;--------------------------------------------------------
+                            247 	.area	SSEG	(DATA)
+   0000                     248 __start__stack:
+   0000                     249 	.ds	1
+                            250 
+                            251 ;--------------------------------------------------------
+                            252 ; indirectly addressable internal ram data
+                            253 ;--------------------------------------------------------
+                            254 	.area ISEG    (DATA)
+                            255 ;--------------------------------------------------------
+                            256 ; absolute internal ram data
+                            257 ;--------------------------------------------------------
+                            258 	.area IABS    (ABS,DATA)
+                            259 	.area IABS    (ABS,DATA)
+                            260 ;--------------------------------------------------------
+                            261 ; bit data
+                            262 ;--------------------------------------------------------
+                            263 	.area BSEG    (BIT)
+                            264 ;--------------------------------------------------------
+                            265 ; paged external ram data
+                            266 ;--------------------------------------------------------
+                            267 	.area PSEG    (PAG,XDATA)
+                            268 ;--------------------------------------------------------
+                            269 ; external ram data
+                            270 ;--------------------------------------------------------
+                            271 	.area XSEG    (XDATA)
+                            272 ;--------------------------------------------------------
+                            273 ; absolute external ram data
+                            274 ;--------------------------------------------------------
+                            275 	.area XABS    (ABS,XDATA)
+                            276 ;--------------------------------------------------------
+                            277 ; external initialized ram data
+                            278 ;--------------------------------------------------------
+                            279 	.area XISEG   (XDATA)
+                            280 	.area HOME    (CODE)
+                            281 	.area GSINIT0 (CODE)
+                            282 	.area GSINIT1 (CODE)
+                            283 	.area GSINIT2 (CODE)
+                            284 	.area GSINIT3 (CODE)
+                            285 	.area GSINIT4 (CODE)
+                            286 	.area GSINIT5 (CODE)
+                            287 	.area GSINIT  (CODE)
+                            288 	.area GSFINAL (CODE)
+                            289 	.area CSEG    (CODE)
+                            290 ;--------------------------------------------------------
+                            291 ; interrupt vector 
+                            292 ;--------------------------------------------------------
+                            293 	.area HOME    (CODE)
+   0000                     294 __interrupt_vect:
+   0000 02s00r00            295 	ljmp	__sdcc_gsinit_startup
+                            296 ;--------------------------------------------------------
+                            297 ; global & static initialisations
+                            298 ;--------------------------------------------------------
+                            299 	.area HOME    (CODE)
+                            300 	.area GSINIT  (CODE)
+                            301 	.area GSFINAL (CODE)
+                            302 	.area GSINIT  (CODE)
+                            303 	.globl __sdcc_gsinit_startup
+                            304 	.globl __sdcc_program_startup
+                            305 	.globl __start__stack
+                            306 	.globl __mcs51_genXINIT
+                            307 	.globl __mcs51_genXRAMCLEAR
+                            308 	.globl __mcs51_genRAMCLEAR
+                            309 	.area GSFINAL (CODE)
+   0000 02s00r03            310 	ljmp	__sdcc_program_startup
+                            311 ;--------------------------------------------------------
+                            312 ; Home
+                            313 ;--------------------------------------------------------
+                            314 	.area HOME    (CODE)
+                            315 	.area HOME    (CODE)
+   0003                     316 __sdcc_program_startup:
+   0003 12s04r47            317 	lcall	_main
+                            318 ;	return from main will lock up
+   0006 80 FE               319 	sjmp .
+                            320 ;--------------------------------------------------------
+                            321 ; code
+                            322 ;--------------------------------------------------------
+                            323 	.area CSEG    (CODE)
+                            324 ;------------------------------------------------------------
+                            325 ;Allocation info for local variables in function 'uart_initialize'
+                            326 ;------------------------------------------------------------
+                            327 ;------------------------------------------------------------
+                            328 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:24: void uart_initialize(void)
+                            329 ;	-----------------------------------------
+                            330 ;	 function uart_initialize
+                            331 ;	-----------------------------------------
+   0000                     332 _uart_initialize:
+                    0002    333 	ar2 = 0x02
+                    0003    334 	ar3 = 0x03
+                    0004    335 	ar4 = 0x04
+                    0005    336 	ar5 = 0x05
+                    0006    337 	ar6 = 0x06
+                    0007    338 	ar7 = 0x07
+                    0000    339 	ar0 = 0x00
+                    0001    340 	ar1 = 0x01
+                            341 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:26: PCON&=0x7F;		// Clear SMOD of PCON, No Double Baud Rate
+   0000 53 87 7F            342 	anl	_PCON,#0x7F
+                            343 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:27: TMOD&=0x2F;TMOD|=0x20;	// Set Timer1 to Mode 2 (8-bit auto reload) for Baud Rate Generation
+   0003 53 89 2F            344 	anl	_TMOD,#0x2F
+   0006 43 89 20            345 	orl	_TMOD,#0x20
+                            346 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:28: TH1=0xFD;		// Set Baud Rate to 9600 bps for 11.0592M Hz
+   0009 75 8D FD            347 	mov	_TH1,#0xFD
+                            348 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:29: SM0=0;SM1=1;		// Set UART to Mode 1 (8-bit UART)
+   000C C2 9F               349 	clr	_SM0
+   000E D2 9E               350 	setb	_SM1
+                            351 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:30: REN=1;			// Set REN of SCON to Enable UART Receive
+   0010 D2 9C               352 	setb	_REN
+                            353 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:31: TR1=1;			// Set TR1 of TCON to Start Timer1
+   0012 D2 8E               354 	setb	_TR1
+                            355 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:32: TI=0;RI=0;		// Clear TI/RI of SCON to Get Ready to Send/Receive
+   0014 C2 99               356 	clr	_TI
+   0016 C2 98               357 	clr	_RI
+   0018 22                  358 	ret
+                            359 ;------------------------------------------------------------
+                            360 ;Allocation info for local variables in function 'uart_put_char'
+                            361 ;------------------------------------------------------------
+                            362 ;c                         Allocated to registers 
+                            363 ;------------------------------------------------------------
+                            364 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:35: void uart_put_char(char c)	// Put Character to UART
+                            365 ;	-----------------------------------------
+                            366 ;	 function uart_put_char
+                            367 ;	-----------------------------------------
+   0019                     368 _uart_put_char:
+   0019 85 82 99            369 	mov	_SBUF,dpl
+                            370 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:38: while(TI==0);TI=0;
+   001C                     371 00101$:
+   001C 10 99 02            372 	jbc	_TI,00108$
+   001F 80 FB               373 	sjmp	00101$
+   0021                     374 00108$:
+   0021 22                  375 	ret
+                            376 ;------------------------------------------------------------
+                            377 ;Allocation info for local variables in function 'uart_get_char'
+                            378 ;------------------------------------------------------------
+                            379 ;------------------------------------------------------------
+                            380 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:41: char uart_get_char(void)	// Get Character from UART
+                            381 ;	-----------------------------------------
+                            382 ;	 function uart_get_char
+                            383 ;	-----------------------------------------
+   0022                     384 _uart_get_char:
+                            385 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:43: while(RI==0);RI=0;
+   0022                     386 00101$:
+   0022 10 98 02            387 	jbc	_RI,00108$
+   0025 80 FB               388 	sjmp	00101$
+   0027                     389 00108$:
+                            390 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:44: return SBUF;
+   0027 85 99 82            391 	mov	dpl,_SBUF
+   002A 22                  392 	ret
+                            393 ;------------------------------------------------------------
+                            394 ;Allocation info for local variables in function 'uart_get_char_echo'
+                            395 ;------------------------------------------------------------
+                            396 ;------------------------------------------------------------
+                            397 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:47: char uart_get_char_echo(void)	// Get Character from UART with Echo, Require uart_put_char()
+                            398 ;	-----------------------------------------
+                            399 ;	 function uart_get_char_echo
+                            400 ;	-----------------------------------------
+   002B                     401 _uart_get_char_echo:
+                            402 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:49: while(RI==0);RI=0;
+   002B                     403 00101$:
+   002B 10 98 02            404 	jbc	_RI,00108$
+   002E 80 FB               405 	sjmp	00101$
+   0030                     406 00108$:
+                            407 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:50: uart_put_char(SBUF);
+   0030 85 99 82            408 	mov	dpl,_SBUF
+   0033 12s00r19            409 	lcall	_uart_put_char
+                            410 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:51: return SBUF;
+   0036 85 99 82            411 	mov	dpl,_SBUF
+   0039 22                  412 	ret
+                            413 ;------------------------------------------------------------
+                            414 ;Allocation info for local variables in function 'uart_put_string'
+                            415 ;------------------------------------------------------------
+                            416 ;s                         Allocated to registers r2 r3 r4 
+                            417 ;------------------------------------------------------------
+                            418 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:54: void uart_put_string(char *s)	// Put String to UART, Require uart_put_char()
+                            419 ;	-----------------------------------------
+                            420 ;	 function uart_put_string
+                            421 ;	-----------------------------------------
+   003A                     422 _uart_put_string:
+   003A AA 82               423 	mov	r2,dpl
+   003C AB 83               424 	mov	r3,dph
+   003E AC F0               425 	mov	r4,b
+                            426 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:56: while(*s!=0){uart_put_char(*s);s++;}
+   0040                     427 00101$:
+   0040 8A 82               428 	mov	dpl,r2
+   0042 8B 83               429 	mov	dph,r3
+   0044 8C F0               430 	mov	b,r4
+   0046 12s00r00            431 	lcall	__gptrget
+   0049 FD                  432 	mov	r5,a
+   004A 60 18               433 	jz	00104$
+   004C 8D 82               434 	mov	dpl,r5
+   004E C0 02               435 	push	ar2
+   0050 C0 03               436 	push	ar3
+   0052 C0 04               437 	push	ar4
+   0054 12s00r19            438 	lcall	_uart_put_char
+   0057 D0 04               439 	pop	ar4
+   0059 D0 03               440 	pop	ar3
+   005B D0 02               441 	pop	ar2
+   005D 0A                  442 	inc	r2
+   005E BA 00 DF            443 	cjne	r2,#0x00,00101$
+   0061 0B                  444 	inc	r3
+   0062 80 DC               445 	sjmp	00101$
+   0064                     446 00104$:
+   0064 22                  447 	ret
+                            448 ;------------------------------------------------------------
+                            449 ;Allocation info for local variables in function 'uart_get_string'
+                            450 ;------------------------------------------------------------
+                            451 ;s                         Allocated to registers r2 r3 r4 
+                            452 ;------------------------------------------------------------
+                            453 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:59: void uart_get_string(char *s)	// Get String from UART, Require uart_get_char_echo()
+                            454 ;	-----------------------------------------
+                            455 ;	 function uart_get_string
+                            456 ;	-----------------------------------------
+   0065                     457 _uart_get_string:
+   0065 AA 82               458 	mov	r2,dpl
+   0067 AB 83               459 	mov	r3,dph
+   0069 AC F0               460 	mov	r4,b
+                            461 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:61: while(((*s)=uart_get_char_echo())!=13)s++;
+   006B                     462 00101$:
+   006B C0 02               463 	push	ar2
+   006D C0 03               464 	push	ar3
+   006F C0 04               465 	push	ar4
+   0071 12s00r2B            466 	lcall	_uart_get_char_echo
+   0074 AD 82               467 	mov	r5,dpl
+   0076 D0 04               468 	pop	ar4
+   0078 D0 03               469 	pop	ar3
+   007A D0 02               470 	pop	ar2
+   007C 8A 82               471 	mov	dpl,r2
+   007E 8B 83               472 	mov	dph,r3
+   0080 8C F0               473 	mov	b,r4
+   0082 ED                  474 	mov	a,r5
+   0083 12s00r00            475 	lcall	__gptrput
+   0086 BD 0D 02            476 	cjne	r5,#0x0D,00109$
+   0089 80 07               477 	sjmp	00103$
+   008B                     478 00109$:
+   008B 0A                  479 	inc	r2
+   008C BA 00 DC            480 	cjne	r2,#0x00,00101$
+   008F 0B                  481 	inc	r3
+   0090 80 D9               482 	sjmp	00101$
+   0092                     483 00103$:
+                            484 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:62: *s=0;
+   0092 8A 82               485 	mov	dpl,r2
+   0094 8B 83               486 	mov	dph,r3
+   0096 8C F0               487 	mov	b,r4
+   0098 E4                  488 	clr	a
+   0099 02s00r00            489 	ljmp	__gptrput
+                            490 ;------------------------------------------------------------
+                            491 ;Allocation info for local variables in function 'uart_i2s'
+                            492 ;------------------------------------------------------------
+                            493 ;s                         Allocated to stack - offset -5
+                            494 ;i                         Allocated to stack - offset 1
+                            495 ;sign                      Allocated to stack - offset 3
+                            496 ;len                       Allocated to registers r6 
+                            497 ;p                         Allocated to stack - offset 4
+                            498 ;sloc0                     Allocated to stack - offset 8
+                            499 ;sloc1                     Allocated to stack - offset 7
+                            500 ;sloc2                     Allocated to stack - offset 8
+                            501 ;------------------------------------------------------------
+                            502 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:65: void uart_i2s(int i,char *s)	// Convert Integer to String
+                            503 ;	-----------------------------------------
+                            504 ;	 function uart_i2s
+                            505 ;	-----------------------------------------
+   009C                     506 _uart_i2s:
+   009C C0*00               507 	push	_bp
+   009E 85 81*00            508 	mov	_bp,sp
+   00A1 C0 82               509 	push	dpl
+   00A3 C0 83               510 	push	dph
+   00A5 E5 81               511 	mov	a,sp
+   00A7 24 0A               512 	add	a,#0x0a
+   00A9 F5 81               513 	mov	sp,a
+                            514 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:68: sign='+';len=0;p=s;
+   00AB E5*00               515 	mov	a,_bp
+   00AD 24 03               516 	add	a,#0x03
+   00AF F8                  517 	mov	r0,a
+   00B0 76 2B               518 	mov	@r0,#0x2B
+   00B2 E5*00               519 	mov	a,_bp
+   00B4 24 FB               520 	add	a,#0xfb
+   00B6 F8                  521 	mov	r0,a
+   00B7 E5*00               522 	mov	a,_bp
+   00B9 24 04               523 	add	a,#0x04
+   00BB F9                  524 	mov	r1,a
+   00BC E6                  525 	mov	a,@r0
+   00BD F7                  526 	mov	@r1,a
+   00BE 08                  527 	inc	r0
+   00BF 09                  528 	inc	r1
+   00C0 E6                  529 	mov	a,@r0
+   00C1 F7                  530 	mov	@r1,a
+   00C2 08                  531 	inc	r0
+   00C3 09                  532 	inc	r1
+   00C4 E6                  533 	mov	a,@r0
+   00C5 F7                  534 	mov	@r1,a
+                            535 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:69: if(i<0){sign='-';i=-i;}
+   00C6 A8*00               536 	mov	r0,_bp
+   00C8 08                  537 	inc	r0
+   00C9 08                  538 	inc	r0
+   00CA E6                  539 	mov	a,@r0
+   00CB 30 E7 12            540 	jnb	acc.7,00115$
+   00CE E5*00               541 	mov	a,_bp
+   00D0 24 03               542 	add	a,#0x03
+   00D2 F8                  543 	mov	r0,a
+   00D3 76 2D               544 	mov	@r0,#0x2D
+   00D5 A8*00               545 	mov	r0,_bp
+   00D7 08                  546 	inc	r0
+   00D8 C3                  547 	clr	c
+   00D9 E4                  548 	clr	a
+   00DA 96                  549 	subb	a,@r0
+   00DB F6                  550 	mov	@r0,a
+   00DC 08                  551 	inc	r0
+   00DD E4                  552 	clr	a
+   00DE 96                  553 	subb	a,@r0
+   00DF F6                  554 	mov	@r0,a
+                            555 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:70: do{*s=(i%10)+'0';s++;len++;i/=10;}while(i!=0);
+   00E0                     556 00115$:
+   00E0 E5*00               557 	mov	a,_bp
+   00E2 24 04               558 	add	a,#0x04
+   00E4 F8                  559 	mov	r0,a
+   00E5 86 04               560 	mov	ar4,@r0
+   00E7 08                  561 	inc	r0
+   00E8 86 02               562 	mov	ar2,@r0
+   00EA 08                  563 	inc	r0
+   00EB 86 03               564 	mov	ar3,@r0
+   00ED 7D 00               565 	mov	r5,#0x00
+   00EF                     566 00103$:
+   00EF C0 02               567 	push	ar2
+   00F1 C0 03               568 	push	ar3
+   00F3 C0 04               569 	push	ar4
+   00F5 C0 05               570 	push	ar5
+   00F7 74 0A               571 	mov	a,#0x0A
+   00F9 C0 E0               572 	push	acc
+   00FB E4                  573 	clr	a
+   00FC C0 E0               574 	push	acc
+   00FE A8*00               575 	mov	r0,_bp
+   0100 08                  576 	inc	r0
+   0101 86 82               577 	mov	dpl,@r0
+   0103 08                  578 	inc	r0
+   0104 86 83               579 	mov	dph,@r0
+   0106 12s00r00            580 	lcall	__modsint
+   0109 AE 82               581 	mov	r6,dpl
+   010B 15 81               582 	dec	sp
+   010D 15 81               583 	dec	sp
+   010F D0 05               584 	pop	ar5
+   0111 D0 04               585 	pop	ar4
+   0113 D0 03               586 	pop	ar3
+   0115 D0 02               587 	pop	ar2
+   0117 74 30               588 	mov	a,#0x30
+   0119 2E                  589 	add	a,r6
+   011A 8C 82               590 	mov	dpl,r4
+   011C 8A 83               591 	mov	dph,r2
+   011E 8B F0               592 	mov	b,r3
+   0120 12s00r00            593 	lcall	__gptrput
+   0123 A3                  594 	inc	dptr
+   0124 AC 82               595 	mov	r4,dpl
+   0126 AA 83               596 	mov	r2,dph
+   0128 0D                  597 	inc	r5
+   0129 8D 06               598 	mov	ar6,r5
+   012B C0 02               599 	push	ar2
+   012D C0 03               600 	push	ar3
+   012F C0 04               601 	push	ar4
+   0131 C0 05               602 	push	ar5
+   0133 74 0A               603 	mov	a,#0x0A
+   0135 C0 E0               604 	push	acc
+   0137 E4                  605 	clr	a
+   0138 C0 E0               606 	push	acc
+   013A A8*00               607 	mov	r0,_bp
+   013C 08                  608 	inc	r0
+   013D 86 82               609 	mov	dpl,@r0
+   013F 08                  610 	inc	r0
+   0140 86 83               611 	mov	dph,@r0
+   0142 12s00r00            612 	lcall	__divsint
+   0145 A8*00               613 	mov	r0,_bp
+   0147 08                  614 	inc	r0
+   0148 A6 82               615 	mov	@r0,dpl
+   014A 08                  616 	inc	r0
+   014B A6 83               617 	mov	@r0,dph
+   014D 15 81               618 	dec	sp
+   014F 15 81               619 	dec	sp
+   0151 D0 05               620 	pop	ar5
+   0153 D0 04               621 	pop	ar4
+   0155 D0 03               622 	pop	ar3
+   0157 D0 02               623 	pop	ar2
+   0159 A8*00               624 	mov	r0,_bp
+   015B 08                  625 	inc	r0
+   015C E6                  626 	mov	a,@r0
+   015D 08                  627 	inc	r0
+   015E 46                  628 	orl	a,@r0
+   015F 70 8E               629 	jnz	00103$
+                            630 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:71: if(sign=='-'){*s='-';s++;len++;}
+   0161 8D 06               631 	mov	ar6,r5
+   0163 E5*00               632 	mov	a,_bp
+   0165 24 03               633 	add	a,#0x03
+   0167 F8                  634 	mov	r0,a
+   0168 B6 2D 0E            635 	cjne	@r0,#0x2D,00119$
+   016B 8C 82               636 	mov	dpl,r4
+   016D 8A 83               637 	mov	dph,r2
+   016F 8B F0               638 	mov	b,r3
+   0171 74 2D               639 	mov	a,#0x2D
+   0173 12s00r00            640 	lcall	__gptrput
+   0176 ED                  641 	mov	a,r5
+   0177 04                  642 	inc	a
+   0178 FE                  643 	mov	r6,a
+                            644 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:72: for(i=0;i<len/2;i++){p[len]=p[i];p[i]=p[len-1-i];p[len-1-i]=p[len];}
+   0179                     645 00119$:
+   0179 EE                  646 	mov	a,r6
+   017A C3                  647 	clr	c
+   017B 13                  648 	rrc	a
+   017C FA                  649 	mov	r2,a
+   017D A8*00               650 	mov	r0,_bp
+   017F 08                  651 	inc	r0
+   0180 E4                  652 	clr	a
+   0181 F6                  653 	mov	@r0,a
+   0182 08                  654 	inc	r0
+   0183 F6                  655 	mov	@r0,a
+   0184                     656 00108$:
+   0184 8A 05               657 	mov	ar5,r2
+   0186 7F 00               658 	mov	r7,#0x00
+   0188 A8*00               659 	mov	r0,_bp
+   018A 08                  660 	inc	r0
+   018B C3                  661 	clr	c
+   018C E6                  662 	mov	a,@r0
+   018D 9D                  663 	subb	a,r5
+   018E 08                  664 	inc	r0
+   018F E6                  665 	mov	a,@r0
+   0190 64 80               666 	xrl	a,#0x80
+   0192 8F F0               667 	mov	b,r7
+   0194 63 F0 80            668 	xrl	b,#0x80
+   0197 95 F0               669 	subb	a,b
+   0199 40 03               670 	jc	00126$
+   019B 02s02r55            671 	ljmp	00111$
+   019E                     672 00126$:
+   019E C0 02               673 	push	ar2
+   01A0 E5*00               674 	mov	a,_bp
+   01A2 24 04               675 	add	a,#0x04
+   01A4 F8                  676 	mov	r0,a
+   01A5 EE                  677 	mov	a,r6
+   01A6 26                  678 	add	a,@r0
+   01A7 FB                  679 	mov	r3,a
+   01A8 E4                  680 	clr	a
+   01A9 08                  681 	inc	r0
+   01AA 36                  682 	addc	a,@r0
+   01AB FC                  683 	mov	r4,a
+   01AC 08                  684 	inc	r0
+   01AD 86 05               685 	mov	ar5,@r0
+   01AF E5*00               686 	mov	a,_bp
+   01B1 24 04               687 	add	a,#0x04
+   01B3 F8                  688 	mov	r0,a
+   01B4 A9*00               689 	mov	r1,_bp
+   01B6 09                  690 	inc	r1
+   01B7 E7                  691 	mov	a,@r1
+   01B8 26                  692 	add	a,@r0
+   01B9 C0 E0               693 	push	acc
+   01BB 09                  694 	inc	r1
+   01BC E7                  695 	mov	a,@r1
+   01BD 08                  696 	inc	r0
+   01BE 36                  697 	addc	a,@r0
+   01BF C0 E0               698 	push	acc
+   01C1 08                  699 	inc	r0
+   01C2 E6                  700 	mov	a,@r0
+   01C3 C0 E0               701 	push	acc
+   01C5 E5*00               702 	mov	a,_bp
+   01C7 24 0A               703 	add	a,#0x0a
+   01C9 F8                  704 	mov	r0,a
+   01CA D0 E0               705 	pop	acc
+   01CC F6                  706 	mov	@r0,a
+   01CD 18                  707 	dec	r0
+   01CE D0 E0               708 	pop	acc
+   01D0 F6                  709 	mov	@r0,a
+   01D1 18                  710 	dec	r0
+   01D2 D0 E0               711 	pop	acc
+   01D4 F6                  712 	mov	@r0,a
+   01D5 E5*00               713 	mov	a,_bp
+   01D7 24 08               714 	add	a,#0x08
+   01D9 F8                  715 	mov	r0,a
+   01DA 86 82               716 	mov	dpl,@r0
+   01DC 08                  717 	inc	r0
+   01DD 86 83               718 	mov	dph,@r0
+   01DF 08                  719 	inc	r0
+   01E0 86 F0               720 	mov	b,@r0
+   01E2 E5*00               721 	mov	a,_bp
+   01E4 24 07               722 	add	a,#0x07
+   01E6 F9                  723 	mov	r1,a
+   01E7 12s00r00            724 	lcall	__gptrget
+   01EA F7                  725 	mov	@r1,a
+   01EB 8B 82               726 	mov	dpl,r3
+   01ED 8C 83               727 	mov	dph,r4
+   01EF 8D F0               728 	mov	b,r5
+   01F1 E5*00               729 	mov	a,_bp
+   01F3 24 07               730 	add	a,#0x07
+   01F5 F8                  731 	mov	r0,a
+   01F6 E6                  732 	mov	a,@r0
+   01F7 12s00r00            733 	lcall	__gptrput
+   01FA 8E 07               734 	mov	ar7,r6
+   01FC 7D 00               735 	mov	r5,#0x00
+   01FE 1F                  736 	dec	r7
+   01FF BF FF 01            737 	cjne	r7,#0xff,00127$
+   0202 1D                  738 	dec	r5
+   0203                     739 00127$:
+   0203 A8*00               740 	mov	r0,_bp
+   0205 08                  741 	inc	r0
+   0206 EF                  742 	mov	a,r7
+   0207 C3                  743 	clr	c
+   0208 96                  744 	subb	a,@r0
+   0209 FF                  745 	mov	r7,a
+   020A ED                  746 	mov	a,r5
+   020B 08                  747 	inc	r0
+   020C 96                  748 	subb	a,@r0
+   020D FD                  749 	mov	r5,a
+   020E E5*00               750 	mov	a,_bp
+   0210 24 04               751 	add	a,#0x04
+   0212 F8                  752 	mov	r0,a
+   0213 EF                  753 	mov	a,r7
+   0214 26                  754 	add	a,@r0
+   0215 FF                  755 	mov	r7,a
+   0216 ED                  756 	mov	a,r5
+   0217 08                  757 	inc	r0
+   0218 36                  758 	addc	a,@r0
+   0219 FD                  759 	mov	r5,a
+   021A 08                  760 	inc	r0
+   021B 86 02               761 	mov	ar2,@r0
+   021D 8F 82               762 	mov	dpl,r7
+   021F 8D 83               763 	mov	dph,r5
+   0221 8A F0               764 	mov	b,r2
+   0223 12s00r00            765 	lcall	__gptrget
+   0226 FB                  766 	mov	r3,a
+   0227 E5*00               767 	mov	a,_bp
+   0229 24 08               768 	add	a,#0x08
+   022B F8                  769 	mov	r0,a
+   022C 86 82               770 	mov	dpl,@r0
+   022E 08                  771 	inc	r0
+   022F 86 83               772 	mov	dph,@r0
+   0231 08                  773 	inc	r0
+   0232 86 F0               774 	mov	b,@r0
+   0234 EB                  775 	mov	a,r3
+   0235 12s00r00            776 	lcall	__gptrput
+   0238 8F 82               777 	mov	dpl,r7
+   023A 8D 83               778 	mov	dph,r5
+   023C 8A F0               779 	mov	b,r2
+   023E E5*00               780 	mov	a,_bp
+   0240 24 07               781 	add	a,#0x07
+   0242 F8                  782 	mov	r0,a
+   0243 E6                  783 	mov	a,@r0
+   0244 12s00r00            784 	lcall	__gptrput
+   0247 A8*00               785 	mov	r0,_bp
+   0249 08                  786 	inc	r0
+   024A 06                  787 	inc	@r0
+   024B B6 00 02            788 	cjne	@r0,#0x00,00128$
+   024E 08                  789 	inc	r0
+   024F 06                  790 	inc	@r0
+   0250                     791 00128$:
+   0250 D0 02               792 	pop	ar2
+   0252 02s01r84            793 	ljmp	00108$
+   0255                     794 00111$:
+                            795 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:73: p[len]=0;
+   0255 E5*00               796 	mov	a,_bp
+   0257 24 04               797 	add	a,#0x04
+   0259 F8                  798 	mov	r0,a
+   025A EE                  799 	mov	a,r6
+   025B 26                  800 	add	a,@r0
+   025C FE                  801 	mov	r6,a
+   025D E4                  802 	clr	a
+   025E 08                  803 	inc	r0
+   025F 36                  804 	addc	a,@r0
+   0260 FA                  805 	mov	r2,a
+   0261 08                  806 	inc	r0
+   0262 86 03               807 	mov	ar3,@r0
+   0264 8E 82               808 	mov	dpl,r6
+   0266 8A 83               809 	mov	dph,r2
+   0268 8B F0               810 	mov	b,r3
+   026A E4                  811 	clr	a
+   026B 12s00r00            812 	lcall	__gptrput
+   026E 85*00 81            813 	mov	sp,_bp
+   0271 D0*00               814 	pop	_bp
+   0273 22                  815 	ret
+                            816 ;------------------------------------------------------------
+                            817 ;Allocation info for local variables in function 'uart_s2i'
+                            818 ;------------------------------------------------------------
+                            819 ;s                         Allocated to registers r2 r3 r4 
+                            820 ;i                         Allocated to registers r5 r6 
+                            821 ;sign                      Allocated to stack - offset 1
+                            822 ;sloc0                     Allocated to stack - offset 7
+                            823 ;sloc1                     Allocated to stack - offset 2
+                            824 ;------------------------------------------------------------
+                            825 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:76: int uart_s2i(char *s)	// Convert String to Integer
+                            826 ;	-----------------------------------------
+                            827 ;	 function uart_s2i
+                            828 ;	-----------------------------------------
+   0274                     829 _uart_s2i:
+   0274 C0*00               830 	push	_bp
+   0276 E5 81               831 	mov	a,sp
+   0278 F5*00               832 	mov	_bp,a
+   027A 24 04               833 	add	a,#0x04
+   027C F5 81               834 	mov	sp,a
+   027E AA 82               835 	mov	r2,dpl
+   0280 AB 83               836 	mov	r3,dph
+   0282 AC F0               837 	mov	r4,b
+                            838 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:78: int i=0;char sign='+';
+   0284 7D 00               839 	mov	r5,#0x00
+   0286 7E 00               840 	mov	r6,#0x00
+   0288 A8*00               841 	mov	r0,_bp
+   028A 08                  842 	inc	r0
+   028B 76 2B               843 	mov	@r0,#0x2B
+                            844 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:79: if(*s=='-'){sign='-';s++;}
+   028D 8A 82               845 	mov	dpl,r2
+   028F 8B 83               846 	mov	dph,r3
+   0291 8C F0               847 	mov	b,r4
+   0293 12s00r00            848 	lcall	__gptrget
+   0296 FF                  849 	mov	r7,a
+   0297 BF 2D 0A            850 	cjne	r7,#0x2D,00112$
+   029A A8*00               851 	mov	r0,_bp
+   029C 08                  852 	inc	r0
+   029D 76 2D               853 	mov	@r0,#0x2D
+   029F 0A                  854 	inc	r2
+   02A0 BA 00 01            855 	cjne	r2,#0x00,00117$
+   02A3 0B                  856 	inc	r3
+   02A4                     857 00117$:
+                            858 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:80: while(*s!=0){i=i*10+(*s-'0');s++;}
+   02A4                     859 00112$:
+   02A4 A8*00               860 	mov	r0,_bp
+   02A6 08                  861 	inc	r0
+   02A7 08                  862 	inc	r0
+   02A8 A6 02               863 	mov	@r0,ar2
+   02AA 08                  864 	inc	r0
+   02AB A6 03               865 	mov	@r0,ar3
+   02AD 08                  866 	inc	r0
+   02AE A6 04               867 	mov	@r0,ar4
+   02B0                     868 00103$:
+   02B0 A8*00               869 	mov	r0,_bp
+   02B2 08                  870 	inc	r0
+   02B3 08                  871 	inc	r0
+   02B4 86 82               872 	mov	dpl,@r0
+   02B6 08                  873 	inc	r0
+   02B7 86 83               874 	mov	dph,@r0
+   02B9 08                  875 	inc	r0
+   02BA 86 F0               876 	mov	b,@r0
+   02BC 12s00r00            877 	lcall	__gptrget
+   02BF FB                  878 	mov	r3,a
+   02C0 60 39               879 	jz	00105$
+   02C2 C0 03               880 	push	ar3
+   02C4 C0 05               881 	push	ar5
+   02C6 C0 06               882 	push	ar6
+   02C8 90 00 0A            883 	mov	dptr,#0x000A
+   02CB 12s00r00            884 	lcall	__mulint
+   02CE AF 82               885 	mov	r7,dpl
+   02D0 AA 83               886 	mov	r2,dph
+   02D2 15 81               887 	dec	sp
+   02D4 15 81               888 	dec	sp
+   02D6 D0 03               889 	pop	ar3
+   02D8 EB                  890 	mov	a,r3
+   02D9 33                  891 	rlc	a
+   02DA 95 E0               892 	subb	a,acc
+   02DC FC                  893 	mov	r4,a
+   02DD EB                  894 	mov	a,r3
+   02DE 24 D0               895 	add	a,#0xd0
+   02E0 FB                  896 	mov	r3,a
+   02E1 EC                  897 	mov	a,r4
+   02E2 34 FF               898 	addc	a,#0xff
+   02E4 FC                  899 	mov	r4,a
+   02E5 EB                  900 	mov	a,r3
+   02E6 2F                  901 	add	a,r7
+   02E7 FF                  902 	mov	r7,a
+   02E8 EC                  903 	mov	a,r4
+   02E9 3A                  904 	addc	a,r2
+   02EA FA                  905 	mov	r2,a
+   02EB 8F 05               906 	mov	ar5,r7
+   02ED 8A 06               907 	mov	ar6,r2
+   02EF A8*00               908 	mov	r0,_bp
+   02F1 08                  909 	inc	r0
+   02F2 08                  910 	inc	r0
+   02F3 06                  911 	inc	@r0
+   02F4 B6 00 02            912 	cjne	@r0,#0x00,00119$
+   02F7 08                  913 	inc	r0
+   02F8 06                  914 	inc	@r0
+   02F9                     915 00119$:
+   02F9 80 B5               916 	sjmp	00103$
+   02FB                     917 00105$:
+                            918 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:81: if(sign=='-')i=-i;
+   02FB A8*00               919 	mov	r0,_bp
+   02FD 08                  920 	inc	r0
+   02FE B6 2D 07            921 	cjne	@r0,#0x2D,00107$
+   0301 C3                  922 	clr	c
+   0302 E4                  923 	clr	a
+   0303 9D                  924 	subb	a,r5
+   0304 FD                  925 	mov	r5,a
+   0305 E4                  926 	clr	a
+   0306 9E                  927 	subb	a,r6
+   0307 FE                  928 	mov	r6,a
+   0308                     929 00107$:
+                            930 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:82: return i;
+   0308 8D 82               931 	mov	dpl,r5
+   030A 8E 83               932 	mov	dph,r6
+   030C 85*00 81            933 	mov	sp,_bp
+   030F D0*00               934 	pop	_bp
+   0311 22                  935 	ret
+                            936 ;------------------------------------------------------------
+                            937 ;Allocation info for local variables in function 'uart_put_integer'
+                            938 ;------------------------------------------------------------
+                            939 ;i                         Allocated to registers r2 r3 
+                            940 ;s                         Allocated to stack - offset 1
+                            941 ;------------------------------------------------------------
+                            942 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:85: void uart_put_integer(int i)	// Put Integer to UART, Require uart_i2s(),uart_put_string()
+                            943 ;	-----------------------------------------
+                            944 ;	 function uart_put_integer
+                            945 ;	-----------------------------------------
+   0312                     946 _uart_put_integer:
+   0312 C0*00               947 	push	_bp
+   0314 E5 81               948 	mov	a,sp
+   0316 F5*00               949 	mov	_bp,a
+   0318 24 07               950 	add	a,#0x07
+   031A F5 81               951 	mov	sp,a
+   031C AA 82               952 	mov	r2,dpl
+   031E AB 83               953 	mov	r3,dph
+                            954 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:88: uart_i2s(i,s);uart_put_string(s);
+   0320 AC*00               955 	mov	r4,_bp
+   0322 0C                  956 	inc	r4
+   0323 8C 05               957 	mov	ar5,r4
+   0325 7E 00               958 	mov	r6,#0x00
+   0327 7F 40               959 	mov	r7,#0x40
+   0329 C0 04               960 	push	ar4
+   032B C0 05               961 	push	ar5
+   032D C0 06               962 	push	ar6
+   032F C0 07               963 	push	ar7
+   0331 8A 82               964 	mov	dpl,r2
+   0333 8B 83               965 	mov	dph,r3
+   0335 12s00r9C            966 	lcall	_uart_i2s
+   0338 15 81               967 	dec	sp
+   033A 15 81               968 	dec	sp
+   033C 15 81               969 	dec	sp
+   033E D0 04               970 	pop	ar4
+   0340 7A 00               971 	mov	r2,#0x00
+   0342 7B 40               972 	mov	r3,#0x40
+   0344 8C 82               973 	mov	dpl,r4
+   0346 8A 83               974 	mov	dph,r2
+   0348 8B F0               975 	mov	b,r3
+   034A 12s00r3A            976 	lcall	_uart_put_string
+   034D 85*00 81            977 	mov	sp,_bp
+   0350 D0*00               978 	pop	_bp
+   0352 22                  979 	ret
+                            980 ;------------------------------------------------------------
+                            981 ;Allocation info for local variables in function 'uart_get_integer'
+                            982 ;------------------------------------------------------------
+                            983 ;s                         Allocated to stack - offset 1
+                            984 ;------------------------------------------------------------
+                            985 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:91: int uart_get_integer()		// Get Integer from UART, Require uart_get_string(),uart_s2i()
+                            986 ;	-----------------------------------------
+                            987 ;	 function uart_get_integer
+                            988 ;	-----------------------------------------
+   0353                     989 _uart_get_integer:
+   0353 C0*00               990 	push	_bp
+   0355 E5 81               991 	mov	a,sp
+   0357 F5*00               992 	mov	_bp,a
+   0359 24 07               993 	add	a,#0x07
+   035B F5 81               994 	mov	sp,a
+                            995 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:94: uart_get_string(s);
+   035D AA*00               996 	mov	r2,_bp
+   035F 0A                  997 	inc	r2
+   0360 8A 03               998 	mov	ar3,r2
+   0362 7C 00               999 	mov	r4,#0x00
+   0364 7D 40              1000 	mov	r5,#0x40
+   0366 8B 82              1001 	mov	dpl,r3
+   0368 8C 83              1002 	mov	dph,r4
+   036A 8D F0              1003 	mov	b,r5
+   036C C0 02              1004 	push	ar2
+   036E 12s00r65           1005 	lcall	_uart_get_string
+   0371 D0 02              1006 	pop	ar2
+                           1007 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:95: return uart_s2i(s);
+   0373 7B 00              1008 	mov	r3,#0x00
+   0375 7C 40              1009 	mov	r4,#0x40
+   0377 8A 82              1010 	mov	dpl,r2
+   0379 8B 83              1011 	mov	dph,r3
+   037B 8C F0              1012 	mov	b,r4
+   037D 12s02r74           1013 	lcall	_uart_s2i
+   0380 85*00 81           1014 	mov	sp,_bp
+   0383 D0*00              1015 	pop	_bp
+   0385 22                 1016 	ret
+                           1017 ;------------------------------------------------------------
+                           1018 ;Allocation info for local variables in function 'uart_put_byte'
+                           1019 ;------------------------------------------------------------
+                           1020 ;byte_data                 Allocated to registers r2 
+                           1021 ;------------------------------------------------------------
+                           1022 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:98: void uart_put_byte(unsigned char byte_data)
+                           1023 ;	-----------------------------------------
+                           1024 ;	 function uart_put_byte
+                           1025 ;	-----------------------------------------
+   0386                    1026 _uart_put_byte:
+                           1027 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:100: uart_put_char(uart_ASCII[byte_data/16]);uart_put_char(uart_ASCII[byte_data%16]);
+   0386 E5 82              1028 	mov	a,dpl
+   0388 FA                 1029 	mov	r2,a
+   0389 C4                 1030 	swap	a
+   038A 54 0F              1031 	anl	a,#0x0f
+   038C 90s00r00           1032 	mov	dptr,#_uart_ASCII
+   038F 93                 1033 	movc	a,@a+dptr
+   0390 F5 82              1034 	mov	dpl,a
+   0392 C0 02              1035 	push	ar2
+   0394 12s00r19           1036 	lcall	_uart_put_char
+   0397 D0 02              1037 	pop	ar2
+   0399 74 0F              1038 	mov	a,#0x0F
+   039B 5A                 1039 	anl	a,r2
+   039C 90s00r00           1040 	mov	dptr,#_uart_ASCII
+   039F 93                 1041 	movc	a,@a+dptr
+   03A0 F5 82              1042 	mov	dpl,a
+   03A2 02s00r19           1043 	ljmp	_uart_put_char
+                           1044 ;------------------------------------------------------------
+                           1045 ;Allocation info for local variables in function 'uart_put_word'
+                           1046 ;------------------------------------------------------------
+                           1047 ;word_data                 Allocated to registers r2 r3 
+                           1048 ;------------------------------------------------------------
+                           1049 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:103: void uart_put_word(unsigned int word_data)
+                           1050 ;	-----------------------------------------
+                           1051 ;	 function uart_put_word
+                           1052 ;	-----------------------------------------
+   03A5                    1053 _uart_put_word:
+   03A5 AA 82              1054 	mov	r2,dpl
+   03A7 AB 83              1055 	mov	r3,dph
+                           1056 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:105: uart_put_byte(word_data/256);uart_put_byte(word_data%256);
+   03A9 8B 04              1057 	mov	ar4,r3
+   03AB 8C 82              1058 	mov	dpl,r4
+   03AD C0 02              1059 	push	ar2
+   03AF C0 03              1060 	push	ar3
+   03B1 12s03r86           1061 	lcall	_uart_put_byte
+   03B4 D0 03              1062 	pop	ar3
+   03B6 D0 02              1063 	pop	ar2
+   03B8 8A 82              1064 	mov	dpl,r2
+   03BA 02s03r86           1065 	ljmp	_uart_put_byte
+                           1066 ;------------------------------------------------------------
+                           1067 ;Allocation info for local variables in function 'uart_get_nibble'
+                           1068 ;------------------------------------------------------------
+                           1069 ;c                         Allocated to registers r2 
+                           1070 ;------------------------------------------------------------
+                           1071 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:108: char uart_get_nibble()
+                           1072 ;	-----------------------------------------
+                           1073 ;	 function uart_get_nibble
+                           1074 ;	-----------------------------------------
+   03BD                    1075 _uart_get_nibble:
+                           1076 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:111: c=uart_get_char_echo();
+   03BD 12s00r2B           1077 	lcall	_uart_get_char_echo
+   03C0 AA 82              1078 	mov	r2,dpl
+                           1079 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:112: if('0'<=c && c<='9')return(c-'0');
+   03C2 C3                 1080 	clr	c
+   03C3 EA                 1081 	mov	a,r2
+   03C4 64 80              1082 	xrl	a,#0x80
+   03C6 94 B0              1083 	subb	a,#0xb0
+   03C8 40 11              1084 	jc	00102$
+   03CA 74 B9              1085 	mov	a,#(0x39 ^ 0x80)
+   03CC 8A F0              1086 	mov	b,r2
+   03CE 63 F0 80           1087 	xrl	b,#0x80
+   03D1 95 F0              1088 	subb	a,b
+   03D3 40 06              1089 	jc	00102$
+   03D5 EA                 1090 	mov	a,r2
+   03D6 24 D0              1091 	add	a,#0xd0
+   03D8 F5 82              1092 	mov	dpl,a
+   03DA 22                 1093 	ret
+   03DB                    1094 00102$:
+                           1095 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:113: if('A'<=c && c<='F')return(10+c-'A');
+   03DB C3                 1096 	clr	c
+   03DC EA                 1097 	mov	a,r2
+   03DD 64 80              1098 	xrl	a,#0x80
+   03DF 94 C1              1099 	subb	a,#0xc1
+   03E1 40 11              1100 	jc	00105$
+   03E3 74 C6              1101 	mov	a,#(0x46 ^ 0x80)
+   03E5 8A F0              1102 	mov	b,r2
+   03E7 63 F0 80           1103 	xrl	b,#0x80
+   03EA 95 F0              1104 	subb	a,b
+   03EC 40 06              1105 	jc	00105$
+   03EE 74 C9              1106 	mov	a,#0xC9
+   03F0 2A                 1107 	add	a,r2
+   03F1 F5 82              1108 	mov	dpl,a
+   03F3 22                 1109 	ret
+   03F4                    1110 00105$:
+                           1111 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:114: if('a'<=c && c<='f')return(10+c-'a');
+   03F4 C3                 1112 	clr	c
+   03F5 EA                 1113 	mov	a,r2
+   03F6 64 80              1114 	xrl	a,#0x80
+   03F8 94 E1              1115 	subb	a,#0xe1
+   03FA 40 11              1116 	jc	00108$
+   03FC 74 E6              1117 	mov	a,#(0x66 ^ 0x80)
+   03FE 8A F0              1118 	mov	b,r2
+   0400 63 F0 80           1119 	xrl	b,#0x80
+   0403 95 F0              1120 	subb	a,b
+   0405 40 06              1121 	jc	00108$
+   0407 74 A9              1122 	mov	a,#0xA9
+   0409 2A                 1123 	add	a,r2
+   040A F5 82              1124 	mov	dpl,a
+                           1125 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:115: return(0);
+   040C 22                 1126 	ret
+   040D                    1127 00108$:
+   040D 75 82 00           1128 	mov	dpl,#0x00
+   0410 22                 1129 	ret
+                           1130 ;------------------------------------------------------------
+                           1131 ;Allocation info for local variables in function 'uart_get_byte'
+                           1132 ;------------------------------------------------------------
+                           1133 ;------------------------------------------------------------
+                           1134 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:118: unsigned char uart_get_byte()
+                           1135 ;	-----------------------------------------
+                           1136 ;	 function uart_get_byte
+                           1137 ;	-----------------------------------------
+   0411                    1138 _uart_get_byte:
+                           1139 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:120: return(16*uart_get_nibble()+uart_get_nibble());
+   0411 12s03rBD           1140 	lcall	_uart_get_nibble
+   0414 E5 82              1141 	mov	a,dpl
+   0416 C4                 1142 	swap	a
+   0417 54 F0              1143 	anl	a,#0xf0
+   0419 FA                 1144 	mov	r2,a
+   041A C0 02              1145 	push	ar2
+   041C 12s03rBD           1146 	lcall	_uart_get_nibble
+   041F AB 82              1147 	mov	r3,dpl
+   0421 D0 02              1148 	pop	ar2
+   0423 EB                 1149 	mov	a,r3
+   0424 2A                 1150 	add	a,r2
+   0425 F5 82              1151 	mov	dpl,a
+   0427 22                 1152 	ret
+                           1153 ;------------------------------------------------------------
+                           1154 ;Allocation info for local variables in function 'uart_get_word'
+                           1155 ;------------------------------------------------------------
+                           1156 ;------------------------------------------------------------
+                           1157 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:123: unsigned int uart_get_word()
+                           1158 ;	-----------------------------------------
+                           1159 ;	 function uart_get_word
+                           1160 ;	-----------------------------------------
+   0428                    1161 _uart_get_word:
+                           1162 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\/uart.c:125: return(256*uart_get_byte()+uart_get_byte());
+   0428 12s04r11           1163 	lcall	_uart_get_byte
+   042B AB 82              1164 	mov	r3,dpl
+   042D 7A 00              1165 	mov	r2,#0x00
+   042F C0 02              1166 	push	ar2
+   0431 C0 03              1167 	push	ar3
+   0433 12s04r11           1168 	lcall	_uart_get_byte
+   0436 AC 82              1169 	mov	r4,dpl
+   0438 D0 03              1170 	pop	ar3
+   043A D0 02              1171 	pop	ar2
+   043C 7D 00              1172 	mov	r5,#0x00
+   043E EC                 1173 	mov	a,r4
+   043F 2A                 1174 	add	a,r2
+   0440 F5 82              1175 	mov	dpl,a
+   0442 ED                 1176 	mov	a,r5
+   0443 3B                 1177 	addc	a,r3
+   0444 F5 83              1178 	mov	dph,a
+   0446 22                 1179 	ret
+                           1180 ;------------------------------------------------------------
+                           1181 ;Allocation info for local variables in function 'main'
+                           1182 ;------------------------------------------------------------
+                           1183 ;s                         Allocated to registers r2 r3 
+                           1184 ;------------------------------------------------------------
+                           1185 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\hw7.c:4: void main( void )
+                           1186 ;	-----------------------------------------
+                           1187 ;	 function main
+                           1188 ;	-----------------------------------------
+   0447                    1189 _main:
+                           1190 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\hw7.c:9: uart_initialize();
+   0447 12s00r00           1191 	lcall	_uart_initialize
+                           1192 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\hw7.c:11: while(1){  
+   044A                    1193 00102$:
+                           1194 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\hw7.c:12: P1=0xff;
+   044A 75 90 FF           1195 	mov	_P1,#0xFF
+                           1196 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\hw7.c:13: s=P1;
+   044D AA 90              1197 	mov	r2,_P1
+                           1198 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW7\hw7.c:14: uart_put_byte(s);
+   044F 8A 82              1199 	mov	dpl,r2
+   0451 12s03r86           1200 	lcall	_uart_put_byte
+   0454 80 F4              1201 	sjmp	00102$
+                           1202 	.area CSEG    (CODE)
+                           1203 	.area CONST   (CODE)
+   0000                    1204 _uart_ASCII:
+   0000 30 31 32 33 34 35  1205 	.ascii "0123456789ABCDEF"
+        36 37 38 39 41 42
+        43 44 45 46
+   0010 00                 1206 	.db 0x00
+                           1207 	.area XINIT   (CODE)
+                           1208 	.area CABS    (ABS,CODE)
