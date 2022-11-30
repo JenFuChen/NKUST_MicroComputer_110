@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
 ; Version 3.0.1 #6083 (Dec 17 2010) (MINGW32)
-; This file was generated Mon Nov 07 10:21:28 2022
+; This file was generated Mon Nov 21 10:47:53 2022
 ;--------------------------------------------------------
 	.module hw11
 	.optsdcc -mmcs51 --model-small
@@ -9,6 +9,7 @@
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
+	.globl _uart_ASCII
 	.globl _main
 	.globl _CY
 	.globl _AC
@@ -106,6 +107,21 @@
 	.globl _DPL
 	.globl _SP
 	.globl _P0
+	.globl _uart_initialize
+	.globl _uart_put_char
+	.globl _uart_get_char
+	.globl _uart_get_char_echo
+	.globl _uart_put_string
+	.globl _uart_get_string
+	.globl _uart_i2s
+	.globl _uart_s2i
+	.globl _uart_put_integer
+	.globl _uart_get_integer
+	.globl _uart_put_byte
+	.globl _uart_put_word
+	.globl _uart_get_nibble
+	.globl _uart_get_byte
+	.globl _uart_get_word
 	.globl _keypad_get_key
 	.globl _keypad_get_key_echo
 	.globl _keypad_get_byte
@@ -312,15 +328,14 @@ __sdcc_program_startup:
 ;--------------------------------------------------------
 	.area CSEG    (CODE)
 ;------------------------------------------------------------
-;Allocation info for local variables in function 'keypad_get_key'
+;Allocation info for local variables in function 'uart_initialize'
 ;------------------------------------------------------------
-;key                       Allocated to registers r2 
 ;------------------------------------------------------------
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/keypad.c:16: unsigned char keypad_get_key(void)
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:24: void uart_initialize(void)
 ;	-----------------------------------------
-;	 function keypad_get_key
+;	 function uart_initialize
 ;	-----------------------------------------
-_keypad_get_key:
+_uart_initialize:
 	ar2 = 0x02
 	ar3 = 0x03
 	ar4 = 0x04
@@ -329,18 +344,867 @@ _keypad_get_key:
 	ar7 = 0x07
 	ar0 = 0x00
 	ar1 = 0x01
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/keypad.c:19: KEYPAD_DO|=0x1F;
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:26: PCON&=0x7F;		// Clear SMOD of PCON, No Double Baud Rate
+	anl	_PCON,#0x7F
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:27: TMOD&=0x2F;TMOD|=0x20;	// Set Timer1 to Mode 2 (8-bit auto reload) for Baud Rate Generation
+	anl	_TMOD,#0x2F
+	orl	_TMOD,#0x20
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:28: TH1=0xFD;		// Set Baud Rate to 9600 bps for 11.0592M Hz
+	mov	_TH1,#0xFD
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:29: SM0=0;SM1=1;		// Set UART to Mode 1 (8-bit UART)
+	clr	_SM0
+	setb	_SM1
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:30: REN=1;			// Set REN of SCON to Enable UART Receive
+	setb	_REN
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:31: TR1=1;			// Set TR1 of TCON to Start Timer1
+	setb	_TR1
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:32: TI=0;RI=0;		// Clear TI/RI of SCON to Get Ready to Send/Receive
+	clr	_TI
+	clr	_RI
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'uart_put_char'
+;------------------------------------------------------------
+;c                         Allocated to registers 
+;------------------------------------------------------------
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:35: void uart_put_char(char c)	// Put Character to UART
+;	-----------------------------------------
+;	 function uart_put_char
+;	-----------------------------------------
+_uart_put_char:
+	mov	_SBUF,dpl
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:38: while(TI==0);TI=0;
+00101$:
+	jbc	_TI,00108$
+	sjmp	00101$
+00108$:
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'uart_get_char'
+;------------------------------------------------------------
+;------------------------------------------------------------
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:41: char uart_get_char(void)	// Get Character from UART
+;	-----------------------------------------
+;	 function uart_get_char
+;	-----------------------------------------
+_uart_get_char:
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:43: while(RI==0);RI=0;
+00101$:
+	jbc	_RI,00108$
+	sjmp	00101$
+00108$:
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:44: return SBUF;
+	mov	dpl,_SBUF
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'uart_get_char_echo'
+;------------------------------------------------------------
+;------------------------------------------------------------
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:47: char uart_get_char_echo(void)	// Get Character from UART with Echo, Require uart_put_char()
+;	-----------------------------------------
+;	 function uart_get_char_echo
+;	-----------------------------------------
+_uart_get_char_echo:
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:49: while(RI==0);RI=0;
+00101$:
+	jbc	_RI,00108$
+	sjmp	00101$
+00108$:
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:50: uart_put_char(SBUF);
+	mov	dpl,_SBUF
+	lcall	_uart_put_char
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:51: return SBUF;
+	mov	dpl,_SBUF
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'uart_put_string'
+;------------------------------------------------------------
+;s                         Allocated to registers r2 r3 r4 
+;------------------------------------------------------------
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:54: void uart_put_string(char *s)	// Put String to UART, Require uart_put_char()
+;	-----------------------------------------
+;	 function uart_put_string
+;	-----------------------------------------
+_uart_put_string:
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:56: while(*s!=0){uart_put_char(*s);s++;}
+00101$:
+	mov	dpl,r2
+	mov	dph,r3
+	mov	b,r4
+	lcall	__gptrget
+	mov	r5,a
+	jz	00104$
+	mov	dpl,r5
+	push	ar2
+	push	ar3
+	push	ar4
+	lcall	_uart_put_char
+	pop	ar4
+	pop	ar3
+	pop	ar2
+	inc	r2
+	cjne	r2,#0x00,00101$
+	inc	r3
+	sjmp	00101$
+00104$:
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'uart_get_string'
+;------------------------------------------------------------
+;s                         Allocated to registers r2 r3 r4 
+;------------------------------------------------------------
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:59: void uart_get_string(char *s)	// Get String from UART, Require uart_get_char_echo()
+;	-----------------------------------------
+;	 function uart_get_string
+;	-----------------------------------------
+_uart_get_string:
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:61: while(((*s)=uart_get_char_echo())!=13)s++;
+00101$:
+	push	ar2
+	push	ar3
+	push	ar4
+	lcall	_uart_get_char_echo
+	mov	r5,dpl
+	pop	ar4
+	pop	ar3
+	pop	ar2
+	mov	dpl,r2
+	mov	dph,r3
+	mov	b,r4
+	mov	a,r5
+	lcall	__gptrput
+	cjne	r5,#0x0D,00109$
+	sjmp	00103$
+00109$:
+	inc	r2
+	cjne	r2,#0x00,00101$
+	inc	r3
+	sjmp	00101$
+00103$:
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:62: *s=0;
+	mov	dpl,r2
+	mov	dph,r3
+	mov	b,r4
+	clr	a
+	ljmp	__gptrput
+;------------------------------------------------------------
+;Allocation info for local variables in function 'uart_i2s'
+;------------------------------------------------------------
+;s                         Allocated to stack - offset -5
+;i                         Allocated to stack - offset 1
+;sign                      Allocated to stack - offset 3
+;len                       Allocated to registers r6 
+;p                         Allocated to stack - offset 4
+;sloc0                     Allocated to stack - offset 8
+;sloc1                     Allocated to stack - offset 7
+;sloc2                     Allocated to stack - offset 8
+;------------------------------------------------------------
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:65: void uart_i2s(int i,char *s)	// Convert Integer to String
+;	-----------------------------------------
+;	 function uart_i2s
+;	-----------------------------------------
+_uart_i2s:
+	push	_bp
+	mov	_bp,sp
+	push	dpl
+	push	dph
+	mov	a,sp
+	add	a,#0x0a
+	mov	sp,a
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:68: sign='+';len=0;p=s;
+	mov	a,_bp
+	add	a,#0x03
+	mov	r0,a
+	mov	@r0,#0x2B
+	mov	a,_bp
+	add	a,#0xfb
+	mov	r0,a
+	mov	a,_bp
+	add	a,#0x04
+	mov	r1,a
+	mov	a,@r0
+	mov	@r1,a
+	inc	r0
+	inc	r1
+	mov	a,@r0
+	mov	@r1,a
+	inc	r0
+	inc	r1
+	mov	a,@r0
+	mov	@r1,a
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:69: if(i<0){sign='-';i=-i;}
+	mov	r0,_bp
+	inc	r0
+	inc	r0
+	mov	a,@r0
+	jnb	acc.7,00115$
+	mov	a,_bp
+	add	a,#0x03
+	mov	r0,a
+	mov	@r0,#0x2D
+	mov	r0,_bp
+	inc	r0
+	clr	c
+	clr	a
+	subb	a,@r0
+	mov	@r0,a
+	inc	r0
+	clr	a
+	subb	a,@r0
+	mov	@r0,a
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:70: do{*s=(i%10)+'0';s++;len++;i/=10;}while(i!=0);
+00115$:
+	mov	a,_bp
+	add	a,#0x04
+	mov	r0,a
+	mov	ar4,@r0
+	inc	r0
+	mov	ar2,@r0
+	inc	r0
+	mov	ar3,@r0
+	mov	r5,#0x00
+00103$:
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	mov	a,#0x0A
+	push	acc
+	clr	a
+	push	acc
+	mov	r0,_bp
+	inc	r0
+	mov	dpl,@r0
+	inc	r0
+	mov	dph,@r0
+	lcall	__modsint
+	mov	r6,dpl
+	dec	sp
+	dec	sp
+	pop	ar5
+	pop	ar4
+	pop	ar3
+	pop	ar2
+	mov	a,#0x30
+	add	a,r6
+	mov	dpl,r4
+	mov	dph,r2
+	mov	b,r3
+	lcall	__gptrput
+	inc	dptr
+	mov	r4,dpl
+	mov	r2,dph
+	inc	r5
+	mov	ar6,r5
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	mov	a,#0x0A
+	push	acc
+	clr	a
+	push	acc
+	mov	r0,_bp
+	inc	r0
+	mov	dpl,@r0
+	inc	r0
+	mov	dph,@r0
+	lcall	__divsint
+	mov	r0,_bp
+	inc	r0
+	mov	@r0,dpl
+	inc	r0
+	mov	@r0,dph
+	dec	sp
+	dec	sp
+	pop	ar5
+	pop	ar4
+	pop	ar3
+	pop	ar2
+	mov	r0,_bp
+	inc	r0
+	mov	a,@r0
+	inc	r0
+	orl	a,@r0
+	jnz	00103$
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:71: if(sign=='-'){*s='-';s++;len++;}
+	mov	ar6,r5
+	mov	a,_bp
+	add	a,#0x03
+	mov	r0,a
+	cjne	@r0,#0x2D,00119$
+	mov	dpl,r4
+	mov	dph,r2
+	mov	b,r3
+	mov	a,#0x2D
+	lcall	__gptrput
+	mov	a,r5
+	inc	a
+	mov	r6,a
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:72: for(i=0;i<len/2;i++){p[len]=p[i];p[i]=p[len-1-i];p[len-1-i]=p[len];}
+00119$:
+	mov	a,r6
+	clr	c
+	rrc	a
+	mov	r2,a
+	mov	r0,_bp
+	inc	r0
+	clr	a
+	mov	@r0,a
+	inc	r0
+	mov	@r0,a
+00108$:
+	mov	ar5,r2
+	mov	r7,#0x00
+	mov	r0,_bp
+	inc	r0
+	clr	c
+	mov	a,@r0
+	subb	a,r5
+	inc	r0
+	mov	a,@r0
+	xrl	a,#0x80
+	mov	b,r7
+	xrl	b,#0x80
+	subb	a,b
+	jc	00126$
+	ljmp	00111$
+00126$:
+	push	ar2
+	mov	a,_bp
+	add	a,#0x04
+	mov	r0,a
+	mov	a,r6
+	add	a,@r0
+	mov	r3,a
+	clr	a
+	inc	r0
+	addc	a,@r0
+	mov	r4,a
+	inc	r0
+	mov	ar5,@r0
+	mov	a,_bp
+	add	a,#0x04
+	mov	r0,a
+	mov	r1,_bp
+	inc	r1
+	mov	a,@r1
+	add	a,@r0
+	push	acc
+	inc	r1
+	mov	a,@r1
+	inc	r0
+	addc	a,@r0
+	push	acc
+	inc	r0
+	mov	a,@r0
+	push	acc
+	mov	a,_bp
+	add	a,#0x0a
+	mov	r0,a
+	pop	acc
+	mov	@r0,a
+	dec	r0
+	pop	acc
+	mov	@r0,a
+	dec	r0
+	pop	acc
+	mov	@r0,a
+	mov	a,_bp
+	add	a,#0x08
+	mov	r0,a
+	mov	dpl,@r0
+	inc	r0
+	mov	dph,@r0
+	inc	r0
+	mov	b,@r0
+	mov	a,_bp
+	add	a,#0x07
+	mov	r1,a
+	lcall	__gptrget
+	mov	@r1,a
+	mov	dpl,r3
+	mov	dph,r4
+	mov	b,r5
+	mov	a,_bp
+	add	a,#0x07
+	mov	r0,a
+	mov	a,@r0
+	lcall	__gptrput
+	mov	ar7,r6
+	mov	r5,#0x00
+	dec	r7
+	cjne	r7,#0xff,00127$
+	dec	r5
+00127$:
+	mov	r0,_bp
+	inc	r0
+	mov	a,r7
+	clr	c
+	subb	a,@r0
+	mov	r7,a
+	mov	a,r5
+	inc	r0
+	subb	a,@r0
+	mov	r5,a
+	mov	a,_bp
+	add	a,#0x04
+	mov	r0,a
+	mov	a,r7
+	add	a,@r0
+	mov	r7,a
+	mov	a,r5
+	inc	r0
+	addc	a,@r0
+	mov	r5,a
+	inc	r0
+	mov	ar2,@r0
+	mov	dpl,r7
+	mov	dph,r5
+	mov	b,r2
+	lcall	__gptrget
+	mov	r3,a
+	mov	a,_bp
+	add	a,#0x08
+	mov	r0,a
+	mov	dpl,@r0
+	inc	r0
+	mov	dph,@r0
+	inc	r0
+	mov	b,@r0
+	mov	a,r3
+	lcall	__gptrput
+	mov	dpl,r7
+	mov	dph,r5
+	mov	b,r2
+	mov	a,_bp
+	add	a,#0x07
+	mov	r0,a
+	mov	a,@r0
+	lcall	__gptrput
+	mov	r0,_bp
+	inc	r0
+	inc	@r0
+	cjne	@r0,#0x00,00128$
+	inc	r0
+	inc	@r0
+00128$:
+	pop	ar2
+	ljmp	00108$
+00111$:
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:73: p[len]=0;
+	mov	a,_bp
+	add	a,#0x04
+	mov	r0,a
+	mov	a,r6
+	add	a,@r0
+	mov	r6,a
+	clr	a
+	inc	r0
+	addc	a,@r0
+	mov	r2,a
+	inc	r0
+	mov	ar3,@r0
+	mov	dpl,r6
+	mov	dph,r2
+	mov	b,r3
+	clr	a
+	lcall	__gptrput
+	mov	sp,_bp
+	pop	_bp
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'uart_s2i'
+;------------------------------------------------------------
+;s                         Allocated to registers r2 r3 r4 
+;i                         Allocated to registers r5 r6 
+;sign                      Allocated to stack - offset 1
+;sloc0                     Allocated to stack - offset 7
+;sloc1                     Allocated to stack - offset 2
+;------------------------------------------------------------
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:76: int uart_s2i(char *s)	// Convert String to Integer
+;	-----------------------------------------
+;	 function uart_s2i
+;	-----------------------------------------
+_uart_s2i:
+	push	_bp
+	mov	a,sp
+	mov	_bp,a
+	add	a,#0x04
+	mov	sp,a
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:78: int i=0;char sign='+';
+	mov	r5,#0x00
+	mov	r6,#0x00
+	mov	r0,_bp
+	inc	r0
+	mov	@r0,#0x2B
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:79: if(*s=='-'){sign='-';s++;}
+	mov	dpl,r2
+	mov	dph,r3
+	mov	b,r4
+	lcall	__gptrget
+	mov	r7,a
+	cjne	r7,#0x2D,00112$
+	mov	r0,_bp
+	inc	r0
+	mov	@r0,#0x2D
+	inc	r2
+	cjne	r2,#0x00,00117$
+	inc	r3
+00117$:
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:80: while(*s!=0){i=i*10+(*s-'0');s++;}
+00112$:
+	mov	r0,_bp
+	inc	r0
+	inc	r0
+	mov	@r0,ar2
+	inc	r0
+	mov	@r0,ar3
+	inc	r0
+	mov	@r0,ar4
+00103$:
+	mov	r0,_bp
+	inc	r0
+	inc	r0
+	mov	dpl,@r0
+	inc	r0
+	mov	dph,@r0
+	inc	r0
+	mov	b,@r0
+	lcall	__gptrget
+	mov	r3,a
+	jz	00105$
+	push	ar3
+	push	ar5
+	push	ar6
+	mov	dptr,#0x000A
+	lcall	__mulint
+	mov	r7,dpl
+	mov	r2,dph
+	dec	sp
+	dec	sp
+	pop	ar3
+	mov	a,r3
+	rlc	a
+	subb	a,acc
+	mov	r4,a
+	mov	a,r3
+	add	a,#0xd0
+	mov	r3,a
+	mov	a,r4
+	addc	a,#0xff
+	mov	r4,a
+	mov	a,r3
+	add	a,r7
+	mov	r7,a
+	mov	a,r4
+	addc	a,r2
+	mov	r2,a
+	mov	ar5,r7
+	mov	ar6,r2
+	mov	r0,_bp
+	inc	r0
+	inc	r0
+	inc	@r0
+	cjne	@r0,#0x00,00119$
+	inc	r0
+	inc	@r0
+00119$:
+	sjmp	00103$
+00105$:
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:81: if(sign=='-')i=-i;
+	mov	r0,_bp
+	inc	r0
+	cjne	@r0,#0x2D,00107$
+	clr	c
+	clr	a
+	subb	a,r5
+	mov	r5,a
+	clr	a
+	subb	a,r6
+	mov	r6,a
+00107$:
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:82: return i;
+	mov	dpl,r5
+	mov	dph,r6
+	mov	sp,_bp
+	pop	_bp
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'uart_put_integer'
+;------------------------------------------------------------
+;i                         Allocated to registers r2 r3 
+;s                         Allocated to stack - offset 1
+;------------------------------------------------------------
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:85: void uart_put_integer(int i)	// Put Integer to UART, Require uart_i2s(),uart_put_string()
+;	-----------------------------------------
+;	 function uart_put_integer
+;	-----------------------------------------
+_uart_put_integer:
+	push	_bp
+	mov	a,sp
+	mov	_bp,a
+	add	a,#0x07
+	mov	sp,a
+	mov	r2,dpl
+	mov	r3,dph
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:88: uart_i2s(i,s);uart_put_string(s);
+	mov	r4,_bp
+	inc	r4
+	mov	ar5,r4
+	mov	r6,#0x00
+	mov	r7,#0x40
+	push	ar4
+	push	ar5
+	push	ar6
+	push	ar7
+	mov	dpl,r2
+	mov	dph,r3
+	lcall	_uart_i2s
+	dec	sp
+	dec	sp
+	dec	sp
+	pop	ar4
+	mov	r2,#0x00
+	mov	r3,#0x40
+	mov	dpl,r4
+	mov	dph,r2
+	mov	b,r3
+	lcall	_uart_put_string
+	mov	sp,_bp
+	pop	_bp
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'uart_get_integer'
+;------------------------------------------------------------
+;s                         Allocated to stack - offset 1
+;------------------------------------------------------------
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:91: int uart_get_integer()		// Get Integer from UART, Require uart_get_string(),uart_s2i()
+;	-----------------------------------------
+;	 function uart_get_integer
+;	-----------------------------------------
+_uart_get_integer:
+	push	_bp
+	mov	a,sp
+	mov	_bp,a
+	add	a,#0x07
+	mov	sp,a
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:94: uart_get_string(s);
+	mov	r2,_bp
+	inc	r2
+	mov	ar3,r2
+	mov	r4,#0x00
+	mov	r5,#0x40
+	mov	dpl,r3
+	mov	dph,r4
+	mov	b,r5
+	push	ar2
+	lcall	_uart_get_string
+	pop	ar2
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:95: return uart_s2i(s);
+	mov	r3,#0x00
+	mov	r4,#0x40
+	mov	dpl,r2
+	mov	dph,r3
+	mov	b,r4
+	lcall	_uart_s2i
+	mov	sp,_bp
+	pop	_bp
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'uart_put_byte'
+;------------------------------------------------------------
+;byte_data                 Allocated to registers r2 
+;------------------------------------------------------------
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:98: void uart_put_byte(unsigned char byte_data)
+;	-----------------------------------------
+;	 function uart_put_byte
+;	-----------------------------------------
+_uart_put_byte:
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:100: uart_put_char(uart_ASCII[byte_data/16]);uart_put_char(uart_ASCII[byte_data%16]);
+	mov	a,dpl
+	mov	r2,a
+	swap	a
+	anl	a,#0x0f
+	mov	dptr,#_uart_ASCII
+	movc	a,@a+dptr
+	mov	dpl,a
+	push	ar2
+	lcall	_uart_put_char
+	pop	ar2
+	mov	a,#0x0F
+	anl	a,r2
+	mov	dptr,#_uart_ASCII
+	movc	a,@a+dptr
+	mov	dpl,a
+	ljmp	_uart_put_char
+;------------------------------------------------------------
+;Allocation info for local variables in function 'uart_put_word'
+;------------------------------------------------------------
+;word_data                 Allocated to registers r2 r3 
+;------------------------------------------------------------
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:103: void uart_put_word(unsigned int word_data)
+;	-----------------------------------------
+;	 function uart_put_word
+;	-----------------------------------------
+_uart_put_word:
+	mov	r2,dpl
+	mov	r3,dph
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:105: uart_put_byte(word_data/256);uart_put_byte(word_data%256);
+	mov	ar4,r3
+	mov	dpl,r4
+	push	ar2
+	push	ar3
+	lcall	_uart_put_byte
+	pop	ar3
+	pop	ar2
+	mov	dpl,r2
+	ljmp	_uart_put_byte
+;------------------------------------------------------------
+;Allocation info for local variables in function 'uart_get_nibble'
+;------------------------------------------------------------
+;c                         Allocated to registers r2 
+;------------------------------------------------------------
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:108: char uart_get_nibble()
+;	-----------------------------------------
+;	 function uart_get_nibble
+;	-----------------------------------------
+_uart_get_nibble:
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:111: c=uart_get_char_echo();
+	lcall	_uart_get_char_echo
+	mov	r2,dpl
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:112: if('0'<=c && c<='9')return(c-'0');
+	clr	c
+	mov	a,r2
+	xrl	a,#0x80
+	subb	a,#0xb0
+	jc	00102$
+	mov	a,#(0x39 ^ 0x80)
+	mov	b,r2
+	xrl	b,#0x80
+	subb	a,b
+	jc	00102$
+	mov	a,r2
+	add	a,#0xd0
+	mov	dpl,a
+	ret
+00102$:
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:113: if('A'<=c && c<='F')return(10+c-'A');
+	clr	c
+	mov	a,r2
+	xrl	a,#0x80
+	subb	a,#0xc1
+	jc	00105$
+	mov	a,#(0x46 ^ 0x80)
+	mov	b,r2
+	xrl	b,#0x80
+	subb	a,b
+	jc	00105$
+	mov	a,#0xC9
+	add	a,r2
+	mov	dpl,a
+	ret
+00105$:
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:114: if('a'<=c && c<='f')return(10+c-'a');
+	clr	c
+	mov	a,r2
+	xrl	a,#0x80
+	subb	a,#0xe1
+	jc	00108$
+	mov	a,#(0x66 ^ 0x80)
+	mov	b,r2
+	xrl	b,#0x80
+	subb	a,b
+	jc	00108$
+	mov	a,#0xA9
+	add	a,r2
+	mov	dpl,a
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:115: return(0);
+	ret
+00108$:
+	mov	dpl,#0x00
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'uart_get_byte'
+;------------------------------------------------------------
+;------------------------------------------------------------
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:118: unsigned char uart_get_byte()
+;	-----------------------------------------
+;	 function uart_get_byte
+;	-----------------------------------------
+_uart_get_byte:
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:120: return(16*uart_get_nibble()+uart_get_nibble());
+	lcall	_uart_get_nibble
+	mov	a,dpl
+	swap	a
+	anl	a,#0xf0
+	mov	r2,a
+	push	ar2
+	lcall	_uart_get_nibble
+	mov	r3,dpl
+	pop	ar2
+	mov	a,r3
+	add	a,r2
+	mov	dpl,a
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'uart_get_word'
+;------------------------------------------------------------
+;------------------------------------------------------------
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:123: unsigned int uart_get_word()
+;	-----------------------------------------
+;	 function uart_get_word
+;	-----------------------------------------
+_uart_get_word:
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/uart.c:125: return(256*uart_get_byte()+uart_get_byte());
+	lcall	_uart_get_byte
+	mov	r3,dpl
+	mov	r2,#0x00
+	push	ar2
+	push	ar3
+	lcall	_uart_get_byte
+	mov	r4,dpl
+	pop	ar3
+	pop	ar2
+	mov	r5,#0x00
+	mov	a,r4
+	add	a,r2
+	mov	dpl,a
+	mov	a,r5
+	addc	a,r3
+	mov	dph,a
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'keypad_get_key'
+;------------------------------------------------------------
+;key                       Allocated to registers r2 
+;------------------------------------------------------------
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:17: unsigned char keypad_get_key(void)
+;	-----------------------------------------
+;	 function keypad_get_key
+;	-----------------------------------------
+_keypad_get_key:
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:20: KEYPAD_DO|=0x1F;
 	orl	_P1,#0x1F
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/keypad.c:20: while(KEYPAD_DA==0);
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:21: while(KEYPAD_DA==0);
 00101$:
 	jnb	_P1_4,00101$
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/keypad.c:21: key=KEYPAD_DO;key&=0x0F;
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:22: key=KEYPAD_DO;key&=0x0F;
 	mov	r2,_P1
 	anl	ar2,#0x0F
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/keypad.c:22: while(KEYPAD_DA==1);
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:23: while(KEYPAD_DA==1);
 00104$:
 	jb	_P1_4,00104$
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/keypad.c:23: return key;
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:24: return key;
 	mov	dpl,r2
 	ret
 ;------------------------------------------------------------
@@ -348,35 +1212,47 @@ _keypad_get_key:
 ;------------------------------------------------------------
 ;key                       Allocated to registers r2 
 ;------------------------------------------------------------
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/keypad.c:26: unsigned char keypad_get_key_echo(void)
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:27: unsigned char keypad_get_key_echo(void)
 ;	-----------------------------------------
 ;	 function keypad_get_key_echo
 ;	-----------------------------------------
 _keypad_get_key_echo:
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/keypad.c:29: KEYPAD_DO|=0x1F;
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:30: KEYPAD_DO|=0x1F;
 	orl	_P1,#0x1F
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/keypad.c:30: while(KEYPAD_DA==0);
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:31: while(KEYPAD_DA==0);
 00101$:
 	jnb	_P1_4,00101$
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/keypad.c:31: key=KEYPAD_DO;key&=0x0F;
-	mov	r2,_P1
-	anl	ar2,#0x0F
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/keypad.c:34: while(KEYPAD_DA==1);
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:32: key=KEYPAD_DO;key&=0x0F;
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:33: uart_put_char(uart_ASCII[key]);
+	mov	a,_P1
+	anl	a,#0x0F
+	mov	r2,a
+	mov	dptr,#_uart_ASCII
+	movc	a,@a+dptr
+	mov	dpl,a
+	push	ar2
+	lcall	_uart_put_char
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:34: uart_put_string("\r\n");
+	mov	dptr,#__str_0
+	mov	b,#0x80
+	lcall	_uart_put_string
+	pop	ar2
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:36: while(KEYPAD_DA==1);
 00104$:
 	jb	_P1_4,00104$
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/keypad.c:35: return key;
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:37: return key;
 	mov	dpl,r2
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'keypad_get_byte'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/keypad.c:38: unsigned char keypad_get_byte(void)
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:40: unsigned char keypad_get_byte(void)
 ;	-----------------------------------------
 ;	 function keypad_get_byte
 ;	-----------------------------------------
 _keypad_get_byte:
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/keypad.c:40: return(keypad_get_key_echo()*16+keypad_get_key_echo());
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:42: return(keypad_get_key_echo()*16+keypad_get_key_echo());
 	lcall	_keypad_get_key_echo
 	mov	a,dpl
 	swap	a
@@ -394,12 +1270,12 @@ _keypad_get_byte:
 ;Allocation info for local variables in function 'keypad_get_word'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/keypad.c:43: unsigned int keypad_get_word(void)
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:45: unsigned int keypad_get_word(void)
 ;	-----------------------------------------
 ;	 function keypad_get_word
 ;	-----------------------------------------
 _keypad_get_word:
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/keypad.c:45: return(keypad_get_byte()*256+keypad_get_byte());
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:47: return(keypad_get_byte()*256+keypad_get_byte());
 	lcall	_keypad_get_byte
 	mov	r3,dpl
 	mov	r2,#0x00
@@ -422,22 +1298,22 @@ _keypad_get_word:
 ;------------------------------------------------------------
 ;key                       Allocated to registers r2 
 ;------------------------------------------------------------
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/keypad.c:48: unsigned char keypad_check_key(void)
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:50: unsigned char keypad_check_key(void)
 ;	-----------------------------------------
 ;	 function keypad_check_key
 ;	-----------------------------------------
 _keypad_check_key:
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/keypad.c:51: KEYPAD_DO|=0x1F;
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:53: KEYPAD_DO|=0x1F;
 	orl	_P1,#0x1F
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/keypad.c:52: if(KEYPAD_DA==1)
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:54: if(KEYPAD_DA==1)
 	jnb	_P1_4,00105$
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/keypad.c:53: {key=KEYPAD_DO;key&=0x0F;while(KEYPAD_DA==1);return key;}
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:55: {key=KEYPAD_DO;key&=0x0F;while(KEYPAD_DA==1);return key;}
 	mov	r2,_P1
 	anl	ar2,#0x0F
 00101$:
 	jb	_P1_4,00101$
 	mov	dpl,r2
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/keypad.c:55: return KEYPAD_NULL;
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:57: return KEYPAD_NULL;
 	ret
 00105$:
 	mov	dpl,#0x10
@@ -448,15 +1324,15 @@ _keypad_check_key:
 ;value                     Allocated to registers r2 r3 
 ;key                       Allocated to registers r5 
 ;------------------------------------------------------------
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/keypad.c:58: unsigned int keypad_get_integer(void)
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:60: unsigned int keypad_get_integer(void)
 ;	-----------------------------------------
 ;	 function keypad_get_integer
 ;	-----------------------------------------
 _keypad_get_integer:
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/keypad.c:60: unsigned int value=0;
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:62: unsigned int value=0;
 	mov	r2,#0x00
 	mov	r3,#0x00
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/keypad.c:62: while((key=keypad_get_key())<0x0A)
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:64: while((key=keypad_get_key())<0x0A)
 00101$:
 	push	ar2
 	push	ar3
@@ -468,7 +1344,19 @@ _keypad_get_integer:
 	cjne	r4,#0x0A,00108$
 00108$:
 	jnc	00103$
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/keypad.c:66: value=value*10+key;
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:66: uart_put_char(uart_ASCII[key]);
+	mov	a,r5
+	mov	dptr,#_uart_ASCII
+	movc	a,@a+dptr
+	mov	dpl,a
+	push	ar2
+	push	ar3
+	push	ar5
+	lcall	_uart_put_char
+	pop	ar5
+	pop	ar3
+	pop	ar2
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:68: value=value*10+key;
 	push	ar5
 	push	ar2
 	push	ar3
@@ -490,22 +1378,119 @@ _keypad_get_integer:
 	mov	ar3,r6
 	sjmp	00101$
 00103$:
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\/keypad.c:68: return value;
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:70: return value;
 	mov	dpl,r2
 	mov	dph,r3
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
+;i                         Allocated to registers r2 r3 
+;j                         Allocated to registers r4 r5 
 ;------------------------------------------------------------
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:5: void main() {
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:72: void main(){
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
 _main:
-;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:8: }
-	ret
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:73: uart_initialize();
+	lcall	_uart_initialize
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:74: uart_put_string("Test:\r\n");
+	mov	dptr,#__str_1
+	mov	b,#0x80
+	lcall	_uart_put_string
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:75: while(1){
+00102$:
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:77: uart_put_string("First:\r\n");
+	mov	dptr,#__str_2
+	mov	b,#0x80
+	lcall	_uart_put_string
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:78: i = keypad_get_key_echo();
+	lcall	_keypad_get_key_echo
+	mov	r2,dpl
+	mov	r3,#0x00
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:79: uart_put_string("Second:\r\n");
+	mov	dptr,#__str_3
+	mov	b,#0x80
+	push	ar2
+	push	ar3
+	lcall	_uart_put_string
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:80: j = keypad_get_key_echo();
+	lcall	_keypad_get_key_echo
+	mov	r4,dpl
+	pop	ar3
+	pop	ar2
+	mov	r5,#0x00
+;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW11\hw11.c:81: uart_put_integer(i);uart_put_string(" * ");uart_put_integer(j);uart_put_string(" = ");uart_put_integer(i*j);uart_put_string("\r\n");
+	mov	dpl,r2
+	mov	dph,r3
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	lcall	_uart_put_integer
+	mov	dptr,#__str_4
+	mov	b,#0x80
+	lcall	_uart_put_string
+	pop	ar5
+	pop	ar4
+	mov	dpl,r4
+	mov	dph,r5
+	push	ar4
+	push	ar5
+	lcall	_uart_put_integer
+	mov	dptr,#__str_5
+	mov	b,#0x80
+	lcall	_uart_put_string
+	pop	ar5
+	pop	ar4
+	pop	ar3
+	pop	ar2
+	push	ar4
+	push	ar5
+	mov	dpl,r2
+	mov	dph,r3
+	lcall	__mulint
+	mov	r2,dpl
+	mov	r3,dph
+	dec	sp
+	dec	sp
+	mov	dpl,r2
+	mov	dph,r3
+	lcall	_uart_put_integer
+	mov	dptr,#__str_0
+	mov	b,#0x80
+	lcall	_uart_put_string
+	ljmp	00102$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
+_uart_ASCII:
+	.ascii "0123456789ABCDEF"
+	.db 0x00
+__str_0:
+	.db 0x0D
+	.db 0x0A
+	.db 0x00
+__str_1:
+	.ascii "Test:"
+	.db 0x0D
+	.db 0x0A
+	.db 0x00
+__str_2:
+	.ascii "First:"
+	.db 0x0D
+	.db 0x0A
+	.db 0x00
+__str_3:
+	.ascii "Second:"
+	.db 0x0D
+	.db 0x0A
+	.db 0x00
+__str_4:
+	.ascii " * "
+	.db 0x00
+__str_5:
+	.ascii " = "
+	.db 0x00
 	.area XINIT   (CODE)
 	.area CABS    (ABS,CODE)
