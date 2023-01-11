@@ -1,0 +1,1121 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : free open source ANSI-C Compiler
+                              3 ; Version 3.0.1 #6083 (Dec 17 2010) (MINGW32)
+                              4 ; This file was generated Mon Dec 26 10:14:06 2022
+                              5 ;--------------------------------------------------------
+                              6 	.module 0
+                              7 	.optsdcc -mmcs51 --model-small
+                              8 	
+                              9 ;--------------------------------------------------------
+                             10 ; Public variables in this module
+                             11 ;--------------------------------------------------------
+                             12 	.globl _ASCII
+                             13 	.globl _main
+                             14 	.globl _ACC_7
+                             15 	.globl _CY
+                             16 	.globl _AC
+                             17 	.globl _F0
+                             18 	.globl _RS1
+                             19 	.globl _RS0
+                             20 	.globl _OV
+                             21 	.globl _FL
+                             22 	.globl _P
+                             23 	.globl _PS
+                             24 	.globl _PT1
+                             25 	.globl _PX1
+                             26 	.globl _PT0
+                             27 	.globl _PX0
+                             28 	.globl _RD
+                             29 	.globl _WR
+                             30 	.globl _T1
+                             31 	.globl _T0
+                             32 	.globl _INT1
+                             33 	.globl _INT0
+                             34 	.globl _TXD
+                             35 	.globl _RXD
+                             36 	.globl _P3_7
+                             37 	.globl _P3_6
+                             38 	.globl _P3_5
+                             39 	.globl _P3_4
+                             40 	.globl _P3_3
+                             41 	.globl _P3_2
+                             42 	.globl _P3_1
+                             43 	.globl _P3_0
+                             44 	.globl _EA
+                             45 	.globl _ES
+                             46 	.globl _ET1
+                             47 	.globl _EX1
+                             48 	.globl _ET0
+                             49 	.globl _EX0
+                             50 	.globl _P2_7
+                             51 	.globl _P2_6
+                             52 	.globl _P2_5
+                             53 	.globl _P2_4
+                             54 	.globl _P2_3
+                             55 	.globl _P2_2
+                             56 	.globl _P2_1
+                             57 	.globl _P2_0
+                             58 	.globl _SM0
+                             59 	.globl _SM1
+                             60 	.globl _SM2
+                             61 	.globl _REN
+                             62 	.globl _TB8
+                             63 	.globl _RB8
+                             64 	.globl _TI
+                             65 	.globl _RI
+                             66 	.globl _P1_7
+                             67 	.globl _P1_6
+                             68 	.globl _P1_5
+                             69 	.globl _P1_4
+                             70 	.globl _P1_3
+                             71 	.globl _P1_2
+                             72 	.globl _P1_1
+                             73 	.globl _P1_0
+                             74 	.globl _TF1
+                             75 	.globl _TR1
+                             76 	.globl _TF0
+                             77 	.globl _TR0
+                             78 	.globl _IE1
+                             79 	.globl _IT1
+                             80 	.globl _IE0
+                             81 	.globl _IT0
+                             82 	.globl _P0_7
+                             83 	.globl _P0_6
+                             84 	.globl _P0_5
+                             85 	.globl _P0_4
+                             86 	.globl _P0_3
+                             87 	.globl _P0_2
+                             88 	.globl _P0_1
+                             89 	.globl _P0_0
+                             90 	.globl _B
+                             91 	.globl _A
+                             92 	.globl _ACC
+                             93 	.globl _PSW
+                             94 	.globl _IP
+                             95 	.globl _P3
+                             96 	.globl _IE
+                             97 	.globl _P2
+                             98 	.globl _SBUF
+                             99 	.globl _SCON
+                            100 	.globl _P1
+                            101 	.globl _TH1
+                            102 	.globl _TH0
+                            103 	.globl _TL1
+                            104 	.globl _TL0
+                            105 	.globl _TMOD
+                            106 	.globl _TCON
+                            107 	.globl _PCON
+                            108 	.globl _DPH
+                            109 	.globl _DPL
+                            110 	.globl _SP
+                            111 	.globl _P0
+                            112 	.globl _clcd_initialize
+                            113 	.globl _clcd_write_instruction
+                            114 	.globl _clcd_wait
+                            115 	.globl _clcd_cls
+                            116 	.globl _clcd_set_cursor
+                            117 	.globl _clcd_put_char
+                            118 	.globl _clcd_put_string
+                            119 	.globl _clcd_put_byte
+                            120 	.globl _clcd_put_word
+                            121 	.globl _i2s
+                            122 	.globl _clcd_put_integer
+                            123 	.globl _delay
+                            124 ;--------------------------------------------------------
+                            125 ; special function registers
+                            126 ;--------------------------------------------------------
+                            127 	.area RSEG    (ABS,DATA)
+   0000                     128 	.org 0x0000
+                    0080    129 _P0	=	0x0080
+                    0081    130 _SP	=	0x0081
+                    0082    131 _DPL	=	0x0082
+                    0083    132 _DPH	=	0x0083
+                    0087    133 _PCON	=	0x0087
+                    0088    134 _TCON	=	0x0088
+                    0089    135 _TMOD	=	0x0089
+                    008A    136 _TL0	=	0x008a
+                    008B    137 _TL1	=	0x008b
+                    008C    138 _TH0	=	0x008c
+                    008D    139 _TH1	=	0x008d
+                    0090    140 _P1	=	0x0090
+                    0098    141 _SCON	=	0x0098
+                    0099    142 _SBUF	=	0x0099
+                    00A0    143 _P2	=	0x00a0
+                    00A8    144 _IE	=	0x00a8
+                    00B0    145 _P3	=	0x00b0
+                    00B8    146 _IP	=	0x00b8
+                    00D0    147 _PSW	=	0x00d0
+                    00E0    148 _ACC	=	0x00e0
+                    00E0    149 _A	=	0x00e0
+                    00F0    150 _B	=	0x00f0
+                            151 ;--------------------------------------------------------
+                            152 ; special function bits
+                            153 ;--------------------------------------------------------
+                            154 	.area RSEG    (ABS,DATA)
+   0000                     155 	.org 0x0000
+                    0080    156 _P0_0	=	0x0080
+                    0081    157 _P0_1	=	0x0081
+                    0082    158 _P0_2	=	0x0082
+                    0083    159 _P0_3	=	0x0083
+                    0084    160 _P0_4	=	0x0084
+                    0085    161 _P0_5	=	0x0085
+                    0086    162 _P0_6	=	0x0086
+                    0087    163 _P0_7	=	0x0087
+                    0088    164 _IT0	=	0x0088
+                    0089    165 _IE0	=	0x0089
+                    008A    166 _IT1	=	0x008a
+                    008B    167 _IE1	=	0x008b
+                    008C    168 _TR0	=	0x008c
+                    008D    169 _TF0	=	0x008d
+                    008E    170 _TR1	=	0x008e
+                    008F    171 _TF1	=	0x008f
+                    0090    172 _P1_0	=	0x0090
+                    0091    173 _P1_1	=	0x0091
+                    0092    174 _P1_2	=	0x0092
+                    0093    175 _P1_3	=	0x0093
+                    0094    176 _P1_4	=	0x0094
+                    0095    177 _P1_5	=	0x0095
+                    0096    178 _P1_6	=	0x0096
+                    0097    179 _P1_7	=	0x0097
+                    0098    180 _RI	=	0x0098
+                    0099    181 _TI	=	0x0099
+                    009A    182 _RB8	=	0x009a
+                    009B    183 _TB8	=	0x009b
+                    009C    184 _REN	=	0x009c
+                    009D    185 _SM2	=	0x009d
+                    009E    186 _SM1	=	0x009e
+                    009F    187 _SM0	=	0x009f
+                    00A0    188 _P2_0	=	0x00a0
+                    00A1    189 _P2_1	=	0x00a1
+                    00A2    190 _P2_2	=	0x00a2
+                    00A3    191 _P2_3	=	0x00a3
+                    00A4    192 _P2_4	=	0x00a4
+                    00A5    193 _P2_5	=	0x00a5
+                    00A6    194 _P2_6	=	0x00a6
+                    00A7    195 _P2_7	=	0x00a7
+                    00A8    196 _EX0	=	0x00a8
+                    00A9    197 _ET0	=	0x00a9
+                    00AA    198 _EX1	=	0x00aa
+                    00AB    199 _ET1	=	0x00ab
+                    00AC    200 _ES	=	0x00ac
+                    00AF    201 _EA	=	0x00af
+                    00B0    202 _P3_0	=	0x00b0
+                    00B1    203 _P3_1	=	0x00b1
+                    00B2    204 _P3_2	=	0x00b2
+                    00B3    205 _P3_3	=	0x00b3
+                    00B4    206 _P3_4	=	0x00b4
+                    00B5    207 _P3_5	=	0x00b5
+                    00B6    208 _P3_6	=	0x00b6
+                    00B7    209 _P3_7	=	0x00b7
+                    00B0    210 _RXD	=	0x00b0
+                    00B1    211 _TXD	=	0x00b1
+                    00B2    212 _INT0	=	0x00b2
+                    00B3    213 _INT1	=	0x00b3
+                    00B4    214 _T0	=	0x00b4
+                    00B5    215 _T1	=	0x00b5
+                    00B6    216 _WR	=	0x00b6
+                    00B7    217 _RD	=	0x00b7
+                    00B8    218 _PX0	=	0x00b8
+                    00B9    219 _PT0	=	0x00b9
+                    00BA    220 _PX1	=	0x00ba
+                    00BB    221 _PT1	=	0x00bb
+                    00BC    222 _PS	=	0x00bc
+                    00D0    223 _P	=	0x00d0
+                    00D1    224 _FL	=	0x00d1
+                    00D2    225 _OV	=	0x00d2
+                    00D3    226 _RS0	=	0x00d3
+                    00D4    227 _RS1	=	0x00d4
+                    00D5    228 _F0	=	0x00d5
+                    00D6    229 _AC	=	0x00d6
+                    00D7    230 _CY	=	0x00d7
+                    00E7    231 _ACC_7	=	0x00e7
+                            232 ;--------------------------------------------------------
+                            233 ; overlayable register banks
+                            234 ;--------------------------------------------------------
+                            235 	.area REG_BANK_0	(REL,OVR,DATA)
+   0000                     236 	.ds 8
+                            237 ;--------------------------------------------------------
+                            238 ; internal ram data
+                            239 ;--------------------------------------------------------
+                            240 	.area DSEG    (DATA)
+                            241 ;--------------------------------------------------------
+                            242 ; overlayable items in internal ram 
+                            243 ;--------------------------------------------------------
+                            244 	.area OSEG    (OVR,DATA)
+                            245 ;--------------------------------------------------------
+                            246 ; Stack segment in internal ram 
+                            247 ;--------------------------------------------------------
+                            248 	.area	SSEG	(DATA)
+   0009                     249 __start__stack:
+   0009                     250 	.ds	1
+                            251 
+                            252 ;--------------------------------------------------------
+                            253 ; indirectly addressable internal ram data
+                            254 ;--------------------------------------------------------
+                            255 	.area ISEG    (DATA)
+                            256 ;--------------------------------------------------------
+                            257 ; absolute internal ram data
+                            258 ;--------------------------------------------------------
+                            259 	.area IABS    (ABS,DATA)
+                            260 	.area IABS    (ABS,DATA)
+                            261 ;--------------------------------------------------------
+                            262 ; bit data
+                            263 ;--------------------------------------------------------
+                            264 	.area BSEG    (BIT)
+                            265 ;--------------------------------------------------------
+                            266 ; paged external ram data
+                            267 ;--------------------------------------------------------
+                            268 	.area PSEG    (PAG,XDATA)
+                            269 ;--------------------------------------------------------
+                            270 ; external ram data
+                            271 ;--------------------------------------------------------
+                            272 	.area XSEG    (XDATA)
+                            273 ;--------------------------------------------------------
+                            274 ; absolute external ram data
+                            275 ;--------------------------------------------------------
+                            276 	.area XABS    (ABS,XDATA)
+                            277 ;--------------------------------------------------------
+                            278 ; external initialized ram data
+                            279 ;--------------------------------------------------------
+                            280 	.area XISEG   (XDATA)
+                            281 	.area HOME    (CODE)
+                            282 	.area GSINIT0 (CODE)
+                            283 	.area GSINIT1 (CODE)
+                            284 	.area GSINIT2 (CODE)
+                            285 	.area GSINIT3 (CODE)
+                            286 	.area GSINIT4 (CODE)
+                            287 	.area GSINIT5 (CODE)
+                            288 	.area GSINIT  (CODE)
+                            289 	.area GSFINAL (CODE)
+                            290 	.area CSEG    (CODE)
+                            291 ;--------------------------------------------------------
+                            292 ; interrupt vector 
+                            293 ;--------------------------------------------------------
+                            294 	.area HOME    (CODE)
+   0000                     295 __interrupt_vect:
+   0000 02 00 08            296 	ljmp	__sdcc_gsinit_startup
+                            297 ;--------------------------------------------------------
+                            298 ; global & static initialisations
+                            299 ;--------------------------------------------------------
+                            300 	.area HOME    (CODE)
+                            301 	.area GSINIT  (CODE)
+                            302 	.area GSFINAL (CODE)
+                            303 	.area GSINIT  (CODE)
+                            304 	.globl __sdcc_gsinit_startup
+                            305 	.globl __sdcc_program_startup
+                            306 	.globl __start__stack
+                            307 	.globl __mcs51_genXINIT
+                            308 	.globl __mcs51_genXRAMCLEAR
+                            309 	.globl __mcs51_genRAMCLEAR
+                            310 	.area GSFINAL (CODE)
+   0061 02 00 03            311 	ljmp	__sdcc_program_startup
+                            312 ;--------------------------------------------------------
+                            313 ; Home
+                            314 ;--------------------------------------------------------
+                            315 	.area HOME    (CODE)
+                            316 	.area HOME    (CODE)
+   0003                     317 __sdcc_program_startup:
+   0003 12 03 61            318 	lcall	_main
+                            319 ;	return from main will lock up
+   0006 80 FE               320 	sjmp .
+                            321 ;--------------------------------------------------------
+                            322 ; code
+                            323 ;--------------------------------------------------------
+                            324 	.area CSEG    (CODE)
+                            325 ;------------------------------------------------------------
+                            326 ;Allocation info for local variables in function 'clcd_initialize'
+                            327 ;------------------------------------------------------------
+                            328 ;------------------------------------------------------------
+                            329 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:25: void clcd_initialize(void)
+                            330 ;	-----------------------------------------
+                            331 ;	 function clcd_initialize
+                            332 ;	-----------------------------------------
+   0064                     333 _clcd_initialize:
+                    0002    334 	ar2 = 0x02
+                    0003    335 	ar3 = 0x03
+                    0004    336 	ar4 = 0x04
+                    0005    337 	ar5 = 0x05
+                    0006    338 	ar6 = 0x06
+                    0007    339 	ar7 = 0x07
+                    0000    340 	ar0 = 0x00
+                    0001    341 	ar1 = 0x01
+                            342 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:27: clcd_write_instruction(0x38);		// 8-bit interface, 2 lines, 5x7 dots
+   0064 75 82 38            343 	mov	dpl,#0x38
+   0067 12 00 7C            344 	lcall	_clcd_write_instruction
+                            345 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:28: clcd_write_instruction(0x0F);		// display on, cursor on, cursor blinking
+   006A 75 82 0F            346 	mov	dpl,#0x0F
+   006D 12 00 7C            347 	lcall	_clcd_write_instruction
+                            348 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:29: clcd_write_instruction(0x06);		// move cursor right when read/write
+   0070 75 82 06            349 	mov	dpl,#0x06
+   0073 12 00 7C            350 	lcall	_clcd_write_instruction
+                            351 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:30: clcd_write_instruction(0x01);		// clear display, cursor home
+   0076 75 82 01            352 	mov	dpl,#0x01
+   0079 02 00 7C            353 	ljmp	_clcd_write_instruction
+                            354 ;------------------------------------------------------------
+                            355 ;Allocation info for local variables in function 'clcd_write_instruction'
+                            356 ;------------------------------------------------------------
+                            357 ;instruction               Allocated to registers r2 
+                            358 ;------------------------------------------------------------
+                            359 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:33: void clcd_write_instruction(unsigned char instruction)
+                            360 ;	-----------------------------------------
+                            361 ;	 function clcd_write_instruction
+                            362 ;	-----------------------------------------
+   007C                     363 _clcd_write_instruction:
+   007C AA 82               364 	mov	r2,dpl
+                            365 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:35: clcd_wait();
+   007E C0 02               366 	push	ar2
+   0080 12 00 90            367 	lcall	_clcd_wait
+   0083 D0 02               368 	pop	ar2
+                            369 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:36: CLCD_RS=0;CLCD_RW=0;
+   0085 C2 A0               370 	clr	_P2_0
+   0087 C2 A1               371 	clr	_P2_1
+                            372 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:37: CLCD_DB=instruction;CLCD_E=1;CLCD_E=0;
+   0089 8A 90               373 	mov	_P1,r2
+   008B D2 A2               374 	setb	_P2_2
+   008D C2 A2               375 	clr	_P2_2
+   008F 22                  376 	ret
+                            377 ;------------------------------------------------------------
+                            378 ;Allocation info for local variables in function 'clcd_wait'
+                            379 ;------------------------------------------------------------
+                            380 ;------------------------------------------------------------
+                            381 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:40: void clcd_wait(void)
+                            382 ;	-----------------------------------------
+                            383 ;	 function clcd_wait
+                            384 ;	-----------------------------------------
+   0090                     385 _clcd_wait:
+                            386 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:42: CLCD_DB=0xFF;
+   0090 75 90 FF            387 	mov	_P1,#0xFF
+                            388 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:43: CLCD_RS=0;CLCD_RW=1;
+   0093 C2 A0               389 	clr	_P2_0
+   0095 D2 A1               390 	setb	_P2_1
+                            391 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:44: do
+   0097                     392 00101$:
+                            393 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:46: CLCD_E=1;ACC=CLCD_DB;CLCD_E=0;
+   0097 D2 A2               394 	setb	_P2_2
+   0099 85 90 E0            395 	mov	_ACC,_P1
+   009C C2 A2               396 	clr	_P2_2
+   009E 20 E7 F6            397 	jb	_ACC_7,00101$
+   00A1 22                  398 	ret
+                            399 ;------------------------------------------------------------
+                            400 ;Allocation info for local variables in function 'clcd_cls'
+                            401 ;------------------------------------------------------------
+                            402 ;------------------------------------------------------------
+                            403 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:51: void clcd_cls(void)
+                            404 ;	-----------------------------------------
+                            405 ;	 function clcd_cls
+                            406 ;	-----------------------------------------
+   00A2                     407 _clcd_cls:
+                            408 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:53: clcd_write_instruction(0x01);
+   00A2 75 82 01            409 	mov	dpl,#0x01
+   00A5 02 00 7C            410 	ljmp	_clcd_write_instruction
+                            411 ;------------------------------------------------------------
+                            412 ;Allocation info for local variables in function 'clcd_set_cursor'
+                            413 ;------------------------------------------------------------
+                            414 ;column                    Allocated to stack - offset -4
+                            415 ;row                       Allocated to registers r2 r3 
+                            416 ;instruction               Allocated to registers r4 r5 
+                            417 ;------------------------------------------------------------
+                            418 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:56: void clcd_set_cursor(unsigned int row,unsigned int column)
+                            419 ;	-----------------------------------------
+                            420 ;	 function clcd_set_cursor
+                            421 ;	-----------------------------------------
+   00A8                     422 _clcd_set_cursor:
+   00A8 C0 08               423 	push	_bp
+   00AA 85 81 08            424 	mov	_bp,sp
+   00AD AA 82               425 	mov	r2,dpl
+   00AF AB 83               426 	mov	r3,dph
+                            427 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:58: unsigned int instruction=0x80;
+   00B1 7C 80               428 	mov	r4,#0x80
+   00B3 7D 00               429 	mov	r5,#0x00
+                            430 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:59: if(row==1)instruction+=0x40;
+   00B5 BA 01 07            431 	cjne	r2,#0x01,00102$
+   00B8 BB 00 04            432 	cjne	r3,#0x00,00102$
+   00BB 7C C0               433 	mov	r4,#0xC0
+   00BD 7D 00               434 	mov	r5,#0x00
+   00BF                     435 00102$:
+                            436 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:60: instruction+=column;
+   00BF E5 08               437 	mov	a,_bp
+   00C1 24 FC               438 	add	a,#0xfc
+   00C3 F8                  439 	mov	r0,a
+   00C4 E6                  440 	mov	a,@r0
+   00C5 2C                  441 	add	a,r4
+   00C6 FC                  442 	mov	r4,a
+   00C7 08                  443 	inc	r0
+   00C8 E6                  444 	mov	a,@r0
+   00C9 3D                  445 	addc	a,r5
+                            446 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:61: clcd_write_instruction(instruction);
+   00CA 8C 82               447 	mov	dpl,r4
+   00CC 12 00 7C            448 	lcall	_clcd_write_instruction
+   00CF D0 08               449 	pop	_bp
+   00D1 22                  450 	ret
+                            451 ;------------------------------------------------------------
+                            452 ;Allocation info for local variables in function 'clcd_put_char'
+                            453 ;------------------------------------------------------------
+                            454 ;c                         Allocated to registers r2 
+                            455 ;------------------------------------------------------------
+                            456 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:64: void clcd_put_char(char c)
+                            457 ;	-----------------------------------------
+                            458 ;	 function clcd_put_char
+                            459 ;	-----------------------------------------
+   00D2                     460 _clcd_put_char:
+   00D2 AA 82               461 	mov	r2,dpl
+                            462 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:66: clcd_wait();
+   00D4 C0 02               463 	push	ar2
+   00D6 12 00 90            464 	lcall	_clcd_wait
+   00D9 D0 02               465 	pop	ar2
+                            466 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:67: CLCD_RS=1;CLCD_RW=0;
+   00DB D2 A0               467 	setb	_P2_0
+   00DD C2 A1               468 	clr	_P2_1
+                            469 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:68: CLCD_DB=c;CLCD_E=1;CLCD_E=0;
+   00DF 8A 90               470 	mov	_P1,r2
+   00E1 D2 A2               471 	setb	_P2_2
+   00E3 C2 A2               472 	clr	_P2_2
+   00E5 22                  473 	ret
+                            474 ;------------------------------------------------------------
+                            475 ;Allocation info for local variables in function 'clcd_put_string'
+                            476 ;------------------------------------------------------------
+                            477 ;s                         Allocated to registers r2 r3 r4 
+                            478 ;------------------------------------------------------------
+                            479 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:71: void clcd_put_string(char *s)
+                            480 ;	-----------------------------------------
+                            481 ;	 function clcd_put_string
+                            482 ;	-----------------------------------------
+   00E6                     483 _clcd_put_string:
+   00E6 AA 82               484 	mov	r2,dpl
+   00E8 AB 83               485 	mov	r3,dph
+   00EA AC F0               486 	mov	r4,b
+                            487 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:73: while(*s!=0){clcd_put_char(*s);s++;}
+   00EC                     488 00101$:
+   00EC 8A 82               489 	mov	dpl,r2
+   00EE 8B 83               490 	mov	dph,r3
+   00F0 8C F0               491 	mov	b,r4
+   00F2 12 04 9F            492 	lcall	__gptrget
+   00F5 FD                  493 	mov	r5,a
+   00F6 60 18               494 	jz	00104$
+   00F8 8D 82               495 	mov	dpl,r5
+   00FA C0 02               496 	push	ar2
+   00FC C0 03               497 	push	ar3
+   00FE C0 04               498 	push	ar4
+   0100 12 00 D2            499 	lcall	_clcd_put_char
+   0103 D0 04               500 	pop	ar4
+   0105 D0 03               501 	pop	ar3
+   0107 D0 02               502 	pop	ar2
+   0109 0A                  503 	inc	r2
+   010A BA 00 DF            504 	cjne	r2,#0x00,00101$
+   010D 0B                  505 	inc	r3
+   010E 80 DC               506 	sjmp	00101$
+   0110                     507 00104$:
+   0110 22                  508 	ret
+                            509 ;------------------------------------------------------------
+                            510 ;Allocation info for local variables in function 'clcd_put_byte'
+                            511 ;------------------------------------------------------------
+                            512 ;byte_data                 Allocated to registers r2 
+                            513 ;------------------------------------------------------------
+                            514 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:76: void clcd_put_byte(unsigned char byte_data)
+                            515 ;	-----------------------------------------
+                            516 ;	 function clcd_put_byte
+                            517 ;	-----------------------------------------
+   0111                     518 _clcd_put_byte:
+                            519 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:78: clcd_put_char(ASCII[byte_data/16]);clcd_put_char(ASCII[byte_data%16]);
+   0111 E5 82               520 	mov	a,dpl
+   0113 FA                  521 	mov	r2,a
+   0114 C4                  522 	swap	a
+   0115 54 0F               523 	anl	a,#0x0f
+   0117 90 05 AF            524 	mov	dptr,#_ASCII
+   011A 93                  525 	movc	a,@a+dptr
+   011B F5 82               526 	mov	dpl,a
+   011D C0 02               527 	push	ar2
+   011F 12 00 D2            528 	lcall	_clcd_put_char
+   0122 D0 02               529 	pop	ar2
+   0124 74 0F               530 	mov	a,#0x0F
+   0126 5A                  531 	anl	a,r2
+   0127 90 05 AF            532 	mov	dptr,#_ASCII
+   012A 93                  533 	movc	a,@a+dptr
+   012B F5 82               534 	mov	dpl,a
+   012D 02 00 D2            535 	ljmp	_clcd_put_char
+                            536 ;------------------------------------------------------------
+                            537 ;Allocation info for local variables in function 'clcd_put_word'
+                            538 ;------------------------------------------------------------
+                            539 ;word_data                 Allocated to registers r2 r3 
+                            540 ;------------------------------------------------------------
+                            541 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:81: void clcd_put_word(unsigned int word_data)
+                            542 ;	-----------------------------------------
+                            543 ;	 function clcd_put_word
+                            544 ;	-----------------------------------------
+   0130                     545 _clcd_put_word:
+   0130 AA 82               546 	mov	r2,dpl
+   0132 AB 83               547 	mov	r3,dph
+                            548 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:83: clcd_put_byte(word_data/256);clcd_put_byte(word_data%256);
+   0134 8B 04               549 	mov	ar4,r3
+   0136 8C 82               550 	mov	dpl,r4
+   0138 C0 02               551 	push	ar2
+   013A C0 03               552 	push	ar3
+   013C 12 01 11            553 	lcall	_clcd_put_byte
+   013F D0 03               554 	pop	ar3
+   0141 D0 02               555 	pop	ar2
+   0143 8A 82               556 	mov	dpl,r2
+   0145 02 01 11            557 	ljmp	_clcd_put_byte
+                            558 ;------------------------------------------------------------
+                            559 ;Allocation info for local variables in function 'i2s'
+                            560 ;------------------------------------------------------------
+                            561 ;s                         Allocated to stack - offset -5
+                            562 ;i                         Allocated to stack - offset 1
+                            563 ;sign                      Allocated to stack - offset 3
+                            564 ;len                       Allocated to registers r6 
+                            565 ;p                         Allocated to stack - offset 4
+                            566 ;sloc0                     Allocated to stack - offset 8
+                            567 ;sloc1                     Allocated to stack - offset 7
+                            568 ;sloc2                     Allocated to stack - offset 8
+                            569 ;------------------------------------------------------------
+                            570 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:86: void i2s(int i,char *s)
+                            571 ;	-----------------------------------------
+                            572 ;	 function i2s
+                            573 ;	-----------------------------------------
+   0148                     574 _i2s:
+   0148 C0 08               575 	push	_bp
+   014A 85 81 08            576 	mov	_bp,sp
+   014D C0 82               577 	push	dpl
+   014F C0 83               578 	push	dph
+   0151 E5 81               579 	mov	a,sp
+   0153 24 0A               580 	add	a,#0x0a
+   0155 F5 81               581 	mov	sp,a
+                            582 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:89: sign='+';len=0;p=s;
+   0157 E5 08               583 	mov	a,_bp
+   0159 24 03               584 	add	a,#0x03
+   015B F8                  585 	mov	r0,a
+   015C 76 2B               586 	mov	@r0,#0x2B
+   015E E5 08               587 	mov	a,_bp
+   0160 24 FB               588 	add	a,#0xfb
+   0162 F8                  589 	mov	r0,a
+   0163 E5 08               590 	mov	a,_bp
+   0165 24 04               591 	add	a,#0x04
+   0167 F9                  592 	mov	r1,a
+   0168 E6                  593 	mov	a,@r0
+   0169 F7                  594 	mov	@r1,a
+   016A 08                  595 	inc	r0
+   016B 09                  596 	inc	r1
+   016C E6                  597 	mov	a,@r0
+   016D F7                  598 	mov	@r1,a
+   016E 08                  599 	inc	r0
+   016F 09                  600 	inc	r1
+   0170 E6                  601 	mov	a,@r0
+   0171 F7                  602 	mov	@r1,a
+                            603 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:90: if(i<0){sign='-';i=-i;}
+   0172 A8 08               604 	mov	r0,_bp
+   0174 08                  605 	inc	r0
+   0175 08                  606 	inc	r0
+   0176 E6                  607 	mov	a,@r0
+   0177 30 E7 12            608 	jnb	acc.7,00115$
+   017A E5 08               609 	mov	a,_bp
+   017C 24 03               610 	add	a,#0x03
+   017E F8                  611 	mov	r0,a
+   017F 76 2D               612 	mov	@r0,#0x2D
+   0181 A8 08               613 	mov	r0,_bp
+   0183 08                  614 	inc	r0
+   0184 C3                  615 	clr	c
+   0185 E4                  616 	clr	a
+   0186 96                  617 	subb	a,@r0
+   0187 F6                  618 	mov	@r0,a
+   0188 08                  619 	inc	r0
+   0189 E4                  620 	clr	a
+   018A 96                  621 	subb	a,@r0
+   018B F6                  622 	mov	@r0,a
+                            623 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:91: do{*s=(i%10)+'0';s++;len++;i/=10;}while(i!=0);
+   018C                     624 00115$:
+   018C E5 08               625 	mov	a,_bp
+   018E 24 04               626 	add	a,#0x04
+   0190 F8                  627 	mov	r0,a
+   0191 86 04               628 	mov	ar4,@r0
+   0193 08                  629 	inc	r0
+   0194 86 02               630 	mov	ar2,@r0
+   0196 08                  631 	inc	r0
+   0197 86 03               632 	mov	ar3,@r0
+   0199 7D 00               633 	mov	r5,#0x00
+   019B                     634 00103$:
+   019B C0 02               635 	push	ar2
+   019D C0 03               636 	push	ar3
+   019F C0 04               637 	push	ar4
+   01A1 C0 05               638 	push	ar5
+   01A3 74 0A               639 	mov	a,#0x0A
+   01A5 C0 E0               640 	push	acc
+   01A7 E4                  641 	clr	a
+   01A8 C0 E0               642 	push	acc
+   01AA A8 08               643 	mov	r0,_bp
+   01AC 08                  644 	inc	r0
+   01AD 86 82               645 	mov	dpl,@r0
+   01AF 08                  646 	inc	r0
+   01B0 86 83               647 	mov	dph,@r0
+   01B2 12 04 BB            648 	lcall	__modsint
+   01B5 AE 82               649 	mov	r6,dpl
+   01B7 15 81               650 	dec	sp
+   01B9 15 81               651 	dec	sp
+   01BB D0 05               652 	pop	ar5
+   01BD D0 04               653 	pop	ar4
+   01BF D0 03               654 	pop	ar3
+   01C1 D0 02               655 	pop	ar2
+   01C3 74 30               656 	mov	a,#0x30
+   01C5 2E                  657 	add	a,r6
+   01C6 8C 82               658 	mov	dpl,r4
+   01C8 8A 83               659 	mov	dph,r2
+   01CA 8B F0               660 	mov	b,r3
+   01CC 12 04 64            661 	lcall	__gptrput
+   01CF A3                  662 	inc	dptr
+   01D0 AC 82               663 	mov	r4,dpl
+   01D2 AA 83               664 	mov	r2,dph
+   01D4 0D                  665 	inc	r5
+   01D5 8D 06               666 	mov	ar6,r5
+   01D7 C0 02               667 	push	ar2
+   01D9 C0 03               668 	push	ar3
+   01DB C0 04               669 	push	ar4
+   01DD C0 05               670 	push	ar5
+   01DF 74 0A               671 	mov	a,#0x0A
+   01E1 C0 E0               672 	push	acc
+   01E3 E4                  673 	clr	a
+   01E4 C0 E0               674 	push	acc
+   01E6 A8 08               675 	mov	r0,_bp
+   01E8 08                  676 	inc	r0
+   01E9 86 82               677 	mov	dpl,@r0
+   01EB 08                  678 	inc	r0
+   01EC 86 83               679 	mov	dph,@r0
+   01EE 12 04 F8            680 	lcall	__divsint
+   01F1 A8 08               681 	mov	r0,_bp
+   01F3 08                  682 	inc	r0
+   01F4 A6 82               683 	mov	@r0,dpl
+   01F6 08                  684 	inc	r0
+   01F7 A6 83               685 	mov	@r0,dph
+   01F9 15 81               686 	dec	sp
+   01FB 15 81               687 	dec	sp
+   01FD D0 05               688 	pop	ar5
+   01FF D0 04               689 	pop	ar4
+   0201 D0 03               690 	pop	ar3
+   0203 D0 02               691 	pop	ar2
+   0205 A8 08               692 	mov	r0,_bp
+   0207 08                  693 	inc	r0
+   0208 E6                  694 	mov	a,@r0
+   0209 08                  695 	inc	r0
+   020A 46                  696 	orl	a,@r0
+   020B 70 8E               697 	jnz	00103$
+                            698 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:92: if(sign=='-'){*s='-';s++;len++;}
+   020D 8D 06               699 	mov	ar6,r5
+   020F E5 08               700 	mov	a,_bp
+   0211 24 03               701 	add	a,#0x03
+   0213 F8                  702 	mov	r0,a
+   0214 B6 2D 0E            703 	cjne	@r0,#0x2D,00119$
+   0217 8C 82               704 	mov	dpl,r4
+   0219 8A 83               705 	mov	dph,r2
+   021B 8B F0               706 	mov	b,r3
+   021D 74 2D               707 	mov	a,#0x2D
+   021F 12 04 64            708 	lcall	__gptrput
+   0222 ED                  709 	mov	a,r5
+   0223 04                  710 	inc	a
+   0224 FE                  711 	mov	r6,a
+                            712 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:93: for(i=0;i<len/2;i++){p[len]=p[i];p[i]=p[len-1-i];p[len-1-i]=p[len];}
+   0225                     713 00119$:
+   0225 EE                  714 	mov	a,r6
+   0226 C3                  715 	clr	c
+   0227 13                  716 	rrc	a
+   0228 FA                  717 	mov	r2,a
+   0229 A8 08               718 	mov	r0,_bp
+   022B 08                  719 	inc	r0
+   022C E4                  720 	clr	a
+   022D F6                  721 	mov	@r0,a
+   022E 08                  722 	inc	r0
+   022F F6                  723 	mov	@r0,a
+   0230                     724 00108$:
+   0230 8A 05               725 	mov	ar5,r2
+   0232 7F 00               726 	mov	r7,#0x00
+   0234 A8 08               727 	mov	r0,_bp
+   0236 08                  728 	inc	r0
+   0237 C3                  729 	clr	c
+   0238 E6                  730 	mov	a,@r0
+   0239 9D                  731 	subb	a,r5
+   023A 08                  732 	inc	r0
+   023B E6                  733 	mov	a,@r0
+   023C 64 80               734 	xrl	a,#0x80
+   023E 8F F0               735 	mov	b,r7
+   0240 63 F0 80            736 	xrl	b,#0x80
+   0243 95 F0               737 	subb	a,b
+   0245 40 03               738 	jc	00126$
+   0247 02 03 01            739 	ljmp	00111$
+   024A                     740 00126$:
+   024A C0 02               741 	push	ar2
+   024C E5 08               742 	mov	a,_bp
+   024E 24 04               743 	add	a,#0x04
+   0250 F8                  744 	mov	r0,a
+   0251 EE                  745 	mov	a,r6
+   0252 26                  746 	add	a,@r0
+   0253 FB                  747 	mov	r3,a
+   0254 E4                  748 	clr	a
+   0255 08                  749 	inc	r0
+   0256 36                  750 	addc	a,@r0
+   0257 FC                  751 	mov	r4,a
+   0258 08                  752 	inc	r0
+   0259 86 05               753 	mov	ar5,@r0
+   025B E5 08               754 	mov	a,_bp
+   025D 24 04               755 	add	a,#0x04
+   025F F8                  756 	mov	r0,a
+   0260 A9 08               757 	mov	r1,_bp
+   0262 09                  758 	inc	r1
+   0263 E7                  759 	mov	a,@r1
+   0264 26                  760 	add	a,@r0
+   0265 C0 E0               761 	push	acc
+   0267 09                  762 	inc	r1
+   0268 E7                  763 	mov	a,@r1
+   0269 08                  764 	inc	r0
+   026A 36                  765 	addc	a,@r0
+   026B C0 E0               766 	push	acc
+   026D 08                  767 	inc	r0
+   026E E6                  768 	mov	a,@r0
+   026F C0 E0               769 	push	acc
+   0271 E5 08               770 	mov	a,_bp
+   0273 24 0A               771 	add	a,#0x0a
+   0275 F8                  772 	mov	r0,a
+   0276 D0 E0               773 	pop	acc
+   0278 F6                  774 	mov	@r0,a
+   0279 18                  775 	dec	r0
+   027A D0 E0               776 	pop	acc
+   027C F6                  777 	mov	@r0,a
+   027D 18                  778 	dec	r0
+   027E D0 E0               779 	pop	acc
+   0280 F6                  780 	mov	@r0,a
+   0281 E5 08               781 	mov	a,_bp
+   0283 24 08               782 	add	a,#0x08
+   0285 F8                  783 	mov	r0,a
+   0286 86 82               784 	mov	dpl,@r0
+   0288 08                  785 	inc	r0
+   0289 86 83               786 	mov	dph,@r0
+   028B 08                  787 	inc	r0
+   028C 86 F0               788 	mov	b,@r0
+   028E E5 08               789 	mov	a,_bp
+   0290 24 07               790 	add	a,#0x07
+   0292 F9                  791 	mov	r1,a
+   0293 12 04 9F            792 	lcall	__gptrget
+   0296 F7                  793 	mov	@r1,a
+   0297 8B 82               794 	mov	dpl,r3
+   0299 8C 83               795 	mov	dph,r4
+   029B 8D F0               796 	mov	b,r5
+   029D E5 08               797 	mov	a,_bp
+   029F 24 07               798 	add	a,#0x07
+   02A1 F8                  799 	mov	r0,a
+   02A2 E6                  800 	mov	a,@r0
+   02A3 12 04 64            801 	lcall	__gptrput
+   02A6 8E 07               802 	mov	ar7,r6
+   02A8 7D 00               803 	mov	r5,#0x00
+   02AA 1F                  804 	dec	r7
+   02AB BF FF 01            805 	cjne	r7,#0xff,00127$
+   02AE 1D                  806 	dec	r5
+   02AF                     807 00127$:
+   02AF A8 08               808 	mov	r0,_bp
+   02B1 08                  809 	inc	r0
+   02B2 EF                  810 	mov	a,r7
+   02B3 C3                  811 	clr	c
+   02B4 96                  812 	subb	a,@r0
+   02B5 FF                  813 	mov	r7,a
+   02B6 ED                  814 	mov	a,r5
+   02B7 08                  815 	inc	r0
+   02B8 96                  816 	subb	a,@r0
+   02B9 FD                  817 	mov	r5,a
+   02BA E5 08               818 	mov	a,_bp
+   02BC 24 04               819 	add	a,#0x04
+   02BE F8                  820 	mov	r0,a
+   02BF EF                  821 	mov	a,r7
+   02C0 26                  822 	add	a,@r0
+   02C1 FF                  823 	mov	r7,a
+   02C2 ED                  824 	mov	a,r5
+   02C3 08                  825 	inc	r0
+   02C4 36                  826 	addc	a,@r0
+   02C5 FD                  827 	mov	r5,a
+   02C6 08                  828 	inc	r0
+   02C7 86 02               829 	mov	ar2,@r0
+   02C9 8F 82               830 	mov	dpl,r7
+   02CB 8D 83               831 	mov	dph,r5
+   02CD 8A F0               832 	mov	b,r2
+   02CF 12 04 9F            833 	lcall	__gptrget
+   02D2 FB                  834 	mov	r3,a
+   02D3 E5 08               835 	mov	a,_bp
+   02D5 24 08               836 	add	a,#0x08
+   02D7 F8                  837 	mov	r0,a
+   02D8 86 82               838 	mov	dpl,@r0
+   02DA 08                  839 	inc	r0
+   02DB 86 83               840 	mov	dph,@r0
+   02DD 08                  841 	inc	r0
+   02DE 86 F0               842 	mov	b,@r0
+   02E0 EB                  843 	mov	a,r3
+   02E1 12 04 64            844 	lcall	__gptrput
+   02E4 8F 82               845 	mov	dpl,r7
+   02E6 8D 83               846 	mov	dph,r5
+   02E8 8A F0               847 	mov	b,r2
+   02EA E5 08               848 	mov	a,_bp
+   02EC 24 07               849 	add	a,#0x07
+   02EE F8                  850 	mov	r0,a
+   02EF E6                  851 	mov	a,@r0
+   02F0 12 04 64            852 	lcall	__gptrput
+   02F3 A8 08               853 	mov	r0,_bp
+   02F5 08                  854 	inc	r0
+   02F6 06                  855 	inc	@r0
+   02F7 B6 00 02            856 	cjne	@r0,#0x00,00128$
+   02FA 08                  857 	inc	r0
+   02FB 06                  858 	inc	@r0
+   02FC                     859 00128$:
+   02FC D0 02               860 	pop	ar2
+   02FE 02 02 30            861 	ljmp	00108$
+   0301                     862 00111$:
+                            863 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:94: p[len]=0;
+   0301 E5 08               864 	mov	a,_bp
+   0303 24 04               865 	add	a,#0x04
+   0305 F8                  866 	mov	r0,a
+   0306 EE                  867 	mov	a,r6
+   0307 26                  868 	add	a,@r0
+   0308 FE                  869 	mov	r6,a
+   0309 E4                  870 	clr	a
+   030A 08                  871 	inc	r0
+   030B 36                  872 	addc	a,@r0
+   030C FA                  873 	mov	r2,a
+   030D 08                  874 	inc	r0
+   030E 86 03               875 	mov	ar3,@r0
+   0310 8E 82               876 	mov	dpl,r6
+   0312 8A 83               877 	mov	dph,r2
+   0314 8B F0               878 	mov	b,r3
+   0316 E4                  879 	clr	a
+   0317 12 04 64            880 	lcall	__gptrput
+   031A 85 08 81            881 	mov	sp,_bp
+   031D D0 08               882 	pop	_bp
+   031F 22                  883 	ret
+                            884 ;------------------------------------------------------------
+                            885 ;Allocation info for local variables in function 'clcd_put_integer'
+                            886 ;------------------------------------------------------------
+                            887 ;i                         Allocated to registers r2 r3 
+                            888 ;s                         Allocated to stack - offset 1
+                            889 ;------------------------------------------------------------
+                            890 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:97: void clcd_put_integer(int i)
+                            891 ;	-----------------------------------------
+                            892 ;	 function clcd_put_integer
+                            893 ;	-----------------------------------------
+   0320                     894 _clcd_put_integer:
+   0320 C0 08               895 	push	_bp
+   0322 E5 81               896 	mov	a,sp
+   0324 F5 08               897 	mov	_bp,a
+   0326 24 07               898 	add	a,#0x07
+   0328 F5 81               899 	mov	sp,a
+   032A AA 82               900 	mov	r2,dpl
+   032C AB 83               901 	mov	r3,dph
+                            902 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\/clcd.c:100: i2s(i,s);clcd_put_string(s);
+   032E AC 08               903 	mov	r4,_bp
+   0330 0C                  904 	inc	r4
+   0331 8C 05               905 	mov	ar5,r4
+   0333 7E 00               906 	mov	r6,#0x00
+   0335 7F 40               907 	mov	r7,#0x40
+   0337 C0 04               908 	push	ar4
+   0339 C0 05               909 	push	ar5
+   033B C0 06               910 	push	ar6
+   033D C0 07               911 	push	ar7
+   033F 8A 82               912 	mov	dpl,r2
+   0341 8B 83               913 	mov	dph,r3
+   0343 12 01 48            914 	lcall	_i2s
+   0346 15 81               915 	dec	sp
+   0348 15 81               916 	dec	sp
+   034A 15 81               917 	dec	sp
+   034C D0 04               918 	pop	ar4
+   034E 7A 00               919 	mov	r2,#0x00
+   0350 7B 40               920 	mov	r3,#0x40
+   0352 8C 82               921 	mov	dpl,r4
+   0354 8A 83               922 	mov	dph,r2
+   0356 8B F0               923 	mov	b,r3
+   0358 12 00 E6            924 	lcall	_clcd_put_string
+   035B 85 08 81            925 	mov	sp,_bp
+   035E D0 08               926 	pop	_bp
+   0360 22                  927 	ret
+                            928 ;------------------------------------------------------------
+                            929 ;Allocation info for local variables in function 'main'
+                            930 ;------------------------------------------------------------
+                            931 ;i                         Allocated to registers 
+                            932 ;j                         Allocated to registers 
+                            933 ;sum                       Allocated to registers r6 r7 
+                            934 ;------------------------------------------------------------
+                            935 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\0.c:10: void main(void)
+                            936 ;	-----------------------------------------
+                            937 ;	 function main
+                            938 ;	-----------------------------------------
+   0361                     939 _main:
+                            940 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\0.c:15: clcd_initialize();
+   0361 12 00 64            941 	lcall	_clcd_initialize
+                            942 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\0.c:16: while(1)
+   0364 7A 01               943 	mov	r2,#0x01
+   0366 7B 00               944 	mov	r3,#0x00
+   0368 7C 01               945 	mov	r4,#0x01
+   036A 7D 00               946 	mov	r5,#0x00
+   036C                     947 00102$:
+                            948 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\0.c:18: clcd_set_cursor(0,0);
+   036C C0 02               949 	push	ar2
+   036E C0 03               950 	push	ar3
+   0370 C0 04               951 	push	ar4
+   0372 C0 05               952 	push	ar5
+   0374 E4                  953 	clr	a
+   0375 C0 E0               954 	push	acc
+   0377 C0 E0               955 	push	acc
+   0379 90 00 00            956 	mov	dptr,#0x0000
+   037C 12 00 A8            957 	lcall	_clcd_set_cursor
+   037F 15 81               958 	dec	sp
+   0381 15 81               959 	dec	sp
+                            960 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\0.c:19: clcd_put_string("C110152319");
+   0383 90 05 C0            961 	mov	dptr,#__str_0
+   0386 75 F0 80            962 	mov	b,#0x80
+   0389 12 00 E6            963 	lcall	_clcd_put_string
+                            964 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\0.c:20: clcd_set_cursor(1,0);
+   038C E4                  965 	clr	a
+   038D C0 E0               966 	push	acc
+   038F C0 E0               967 	push	acc
+   0391 90 00 01            968 	mov	dptr,#0x0001
+   0394 12 00 A8            969 	lcall	_clcd_set_cursor
+   0397 15 81               970 	dec	sp
+   0399 15 81               971 	dec	sp
+                            972 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\0.c:21: clcd_put_string("::");
+   039B 90 05 CB            973 	mov	dptr,#__str_1
+   039E 75 F0 80            974 	mov	b,#0x80
+   03A1 12 00 E6            975 	lcall	_clcd_put_string
+   03A4 D0 05               976 	pop	ar5
+   03A6 D0 04               977 	pop	ar4
+   03A8 D0 03               978 	pop	ar3
+   03AA D0 02               979 	pop	ar2
+                            980 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\0.c:22: clcd_put_integer(i);
+   03AC 8A 82               981 	mov	dpl,r2
+   03AE 8B 83               982 	mov	dph,r3
+   03B0 C0 02               983 	push	ar2
+   03B2 C0 03               984 	push	ar3
+   03B4 C0 04               985 	push	ar4
+   03B6 C0 05               986 	push	ar5
+   03B8 12 03 20            987 	lcall	_clcd_put_integer
+                            988 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\0.c:23: clcd_put_string("X");
+   03BB 90 05 CE            989 	mov	dptr,#__str_2
+   03BE 75 F0 80            990 	mov	b,#0x80
+   03C1 12 00 E6            991 	lcall	_clcd_put_string
+   03C4 D0 05               992 	pop	ar5
+   03C6 D0 04               993 	pop	ar4
+                            994 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\0.c:24: clcd_put_integer(j);
+   03C8 8C 82               995 	mov	dpl,r4
+   03CA 8D 83               996 	mov	dph,r5
+   03CC C0 04               997 	push	ar4
+   03CE C0 05               998 	push	ar5
+   03D0 12 03 20            999 	lcall	_clcd_put_integer
+                           1000 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\0.c:25: clcd_put_string("=");
+   03D3 90 05 D0           1001 	mov	dptr,#__str_3
+   03D6 75 F0 80           1002 	mov	b,#0x80
+   03D9 12 00 E6           1003 	lcall	_clcd_put_string
+   03DC D0 05              1004 	pop	ar5
+   03DE D0 04              1005 	pop	ar4
+   03E0 D0 03              1006 	pop	ar3
+   03E2 D0 02              1007 	pop	ar2
+                           1008 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\0.c:26: sum = i * j;
+   03E4 C0 02              1009 	push	ar2
+   03E6 C0 03              1010 	push	ar3
+   03E8 C0 04              1011 	push	ar4
+   03EA C0 05              1012 	push	ar5
+   03EC C0 04              1013 	push	ar4
+   03EE C0 05              1014 	push	ar5
+   03F0 8A 82              1015 	mov	dpl,r2
+   03F2 8B 83              1016 	mov	dph,r3
+   03F4 12 04 7D           1017 	lcall	__mulint
+   03F7 AE 82              1018 	mov	r6,dpl
+   03F9 AF 83              1019 	mov	r7,dph
+   03FB 15 81              1020 	dec	sp
+   03FD 15 81              1021 	dec	sp
+   03FF D0 05              1022 	pop	ar5
+   0401 D0 04              1023 	pop	ar4
+   0403 D0 03              1024 	pop	ar3
+   0405 D0 02              1025 	pop	ar2
+                           1026 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\0.c:27: i++;
+   0407 0A                 1027 	inc	r2
+   0408 BA 00 01           1028 	cjne	r2,#0x00,00110$
+   040B 0B                 1029 	inc	r3
+   040C                    1030 00110$:
+                           1031 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\0.c:28: j++;
+   040C 0C                 1032 	inc	r4
+   040D BC 00 01           1033 	cjne	r4,#0x00,00111$
+   0410 0D                 1034 	inc	r5
+   0411                    1035 00111$:
+                           1036 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\0.c:30: clcd_put_integer(sum);
+   0411 8E 82              1037 	mov	dpl,r6
+   0413 8F 83              1038 	mov	dph,r7
+   0415 C0 02              1039 	push	ar2
+   0417 C0 03              1040 	push	ar3
+   0419 C0 04              1041 	push	ar4
+   041B C0 05              1042 	push	ar5
+   041D 12 03 20           1043 	lcall	_clcd_put_integer
+                           1044 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\0.c:31: delay(590);
+   0420 90 02 4E           1045 	mov	dptr,#0x024E
+   0423 12 04 31           1046 	lcall	_delay
+   0426 D0 05              1047 	pop	ar5
+   0428 D0 04              1048 	pop	ar4
+   042A D0 03              1049 	pop	ar3
+   042C D0 02              1050 	pop	ar2
+                           1051 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\0.c:34: while(1==1);
+   042E 02 03 6C           1052 	ljmp	00102$
+                           1053 ;------------------------------------------------------------
+                           1054 ;Allocation info for local variables in function 'delay'
+                           1055 ;------------------------------------------------------------
+                           1056 ;x                         Allocated to registers r2 r3 
+                           1057 ;n                         Allocated to registers r4 r5 
+                           1058 ;------------------------------------------------------------
+                           1059 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\0.c:37: void delay(int x)
+                           1060 ;	-----------------------------------------
+                           1061 ;	 function delay
+                           1062 ;	-----------------------------------------
+   0431                    1063 _delay:
+   0431 AA 82              1064 	mov	r2,dpl
+   0433 AB 83              1065 	mov	r3,dph
+                           1066 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\0.c:40: while(x>0)
+   0435                    1067 00104$:
+   0435 C3                 1068 	clr	c
+   0436 E4                 1069 	clr	a
+   0437 9A                 1070 	subb	a,r2
+   0438 74 80              1071 	mov	a,#(0x00 ^ 0x80)
+   043A 8B F0              1072 	mov	b,r3
+   043C 63 F0 80           1073 	xrl	b,#0x80
+   043F 95 F0              1074 	subb	a,b
+   0441 50 20              1075 	jnc	00107$
+                           1076 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\0.c:43: while(n>0)n--;
+   0443 7C 78              1077 	mov	r4,#0x78
+   0445 7D 00              1078 	mov	r5,#0x00
+   0447                    1079 00101$:
+   0447 C3                 1080 	clr	c
+   0448 E4                 1081 	clr	a
+   0449 9C                 1082 	subb	a,r4
+   044A 74 80              1083 	mov	a,#(0x00 ^ 0x80)
+   044C 8D F0              1084 	mov	b,r5
+   044E 63 F0 80           1085 	xrl	b,#0x80
+   0451 95 F0              1086 	subb	a,b
+   0453 50 07              1087 	jnc	00103$
+   0455 1C                 1088 	dec	r4
+   0456 BC FF EE           1089 	cjne	r4,#0xff,00101$
+   0459 1D                 1090 	dec	r5
+   045A 80 EB              1091 	sjmp	00101$
+   045C                    1092 00103$:
+                           1093 ;	C:\Users\dht98\DOWNLO~1\NKUST\NKUST_~2\HW17\0.c:44: x--;
+   045C 1A                 1094 	dec	r2
+   045D BA FF D5           1095 	cjne	r2,#0xff,00104$
+   0460 1B                 1096 	dec	r3
+   0461 80 D2              1097 	sjmp	00104$
+   0463                    1098 00107$:
+   0463 22                 1099 	ret
+                           1100 	.area CSEG    (CODE)
+                           1101 	.area CONST   (CODE)
+   05AF                    1102 _ASCII:
+   05AF 30 31 32 33 34 35  1103 	.ascii "0123456789ABCDEF"
+        36 37 38 39 41 42
+        43 44 45 46
+   05BF 00                 1104 	.db 0x00
+   05C0                    1105 __str_0:
+   05C0 43 31 31 30 31 35  1106 	.ascii "C110152319"
+        32 33 31 39
+   05CA 00                 1107 	.db 0x00
+   05CB                    1108 __str_1:
+   05CB 3A 3A              1109 	.ascii "::"
+   05CD 00                 1110 	.db 0x00
+   05CE                    1111 __str_2:
+   05CE 58                 1112 	.ascii "X"
+   05CF 00                 1113 	.db 0x00
+   05D0                    1114 __str_3:
+   05D0 3D                 1115 	.ascii "="
+   05D1 00                 1116 	.db 0x00
+                           1117 	.area XINIT   (CODE)
+                           1118 	.area CABS    (ABS,CODE)
